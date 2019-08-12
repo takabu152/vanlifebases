@@ -18,3 +18,8 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+// 施設一覧の作成
+Route::get('/dispstores', function () {
+    return view('dispstores');
+});
