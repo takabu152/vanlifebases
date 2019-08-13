@@ -85,13 +85,41 @@
                 VanLife
             </div>
 
-            <div class="links">
+            <!-- ここからコンテンツの表示を行う。 -->
+            <!-- 表示領域 -->
+            @if (count($stores) > 0)
+            <div class="panel panel-default">
+                <div class="panel-heading">施設リスト</div>
+                <div class="panel-body">
+                    <table class="table table-striped task-table">
+
+                        <thead>
+                            <th>施設</th>
+                            <th>&nbsp;</th>
+                        </thead>
+
+                        <tbody>
+                            @foreach ($stores as $store)
+                            <tr>
+                                <td class="table-text">
+                                    <div>{{ $store->storename }}</div>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            @endif
+
+            <!-- ここまでタスクリスト -->
+            <!-- <div class="links">
                 <a href="https://laravel.com/docs">Documentation</a>
                 <a href="https://laracasts.com">Laracasts</a>
                 <a href="https://laravel-news.com">News</a>
                 <a href="https://forge.laravel.com">Forge</a>
                 <a href="https://github.com/laravel/laravel">GitHub</a>
-            </div>
+            </div> -->
         </div>
     </div>
 </body>

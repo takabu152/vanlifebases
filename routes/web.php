@@ -1,5 +1,10 @@
 <?php
 
+//これ忘れがち… ここで利用するModelを指定しないとエラーになる。
+use App\Task;
+use App\Store;
+use Illuminate\Http\Request;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,7 +17,12 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+
+    //Welcomeページで施設（コンテンツ）を一覧表示するため、データを取得する。
+    //$tasks = Task::orderBy('id', 'asc')->get();
+    $stores = Store::orderBy('storeid', 'asc')->get();
+    return view('welcome', ['stores' => $stores]);
+    //return view('welcome');
 });
 
 Auth::routes();
