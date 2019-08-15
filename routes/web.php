@@ -20,7 +20,15 @@ Route::get('/', function () {
 
     //Welcomeページで施設（コンテンツ）を一覧表示するため、データを取得する。
     //$tasks = Task::orderBy('id', 'asc')->get();
-    $stores = Store::orderBy('storeid', 'asc')->get();
+
+    $stores = DB::table('stores')
+        ->join('storeimages', 'stores.storeid', '=', 'storeimages.storeid')
+        ->join('storeservices', 'stores.storeid', '=', 'storeservices.storeid')
+        ->join('services', 'storeservices.serviceid', '=', 'services.serviceid')
+        ->where('storeimages.imagedivision', '=', '1')
+        ->get();
+
+    //$stores = Store::orderBy('storeid', 'asc')->get();
     return view('welcome', ['stores' => $stores]);
     //return view('welcome');
 });

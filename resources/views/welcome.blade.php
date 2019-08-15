@@ -94,7 +94,9 @@
                     <table class="table table-striped task-table">
 
                         <thead>
-                            <th>施設</th>
+                            <th>施設名</th>
+                            <th>ユーザーへのメッセージ</th>
+                            <th>セールスポイントメッセージ</th>
                             <th>&nbsp;</th>
                         </thead>
 
@@ -103,6 +105,12 @@
                             <tr>
                                 <td class="table-text">
                                     <div>{{ $store->storename }}</div>
+                                </td>
+                                <td class="table-text">
+                                    <div>{{ $store->forusermessage }}</div>
+                                </td>
+                                <td class="table-text">
+                                    <div>{{ $store->salespointmessage }}</div>
                                 </td>
                             </tr>
                             @endforeach
