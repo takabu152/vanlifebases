@@ -3,6 +3,8 @@
 //これ忘れがち… ここで利用するModelを指定しないとエラーになる。
 use App\Task;
 use App\Store;
+use App\storeservice;
+use App\Service;
 use Illuminate\Http\Request;
 
 /*
@@ -22,14 +24,21 @@ Route::get('/', function () {
     //$tasks = Task::orderBy('id', 'asc')->get();
 
     $stores = DB::table('stores')
-        ->join('storeimages', 'stores.storeid', '=', 'storeimages.storeid')
-        ->join('storeservices', 'stores.storeid', '=', 'storeservices.storeid')
-        ->join('services', 'storeservices.serviceid', '=', 'services.serviceid')
-        ->where('storeimages.imagedivision', '=', '1')
         ->get();
 
+    $storeimages = DB::table('storeimages')
+        ->get();
+
+    $storeservices = DB::table('storeservices')
+        ->get();
+
+    $services = DB::table('services')
+        ->get();
+
+
+
     //$stores = Store::orderBy('storeid', 'asc')->get();
-    return view('welcome', ['stores' => $stores]);
+    return view('welcome', ['stores' => $stores, 'storeimages' => $storeimages, 'storeservices' => $storeservices, 'services' => $services]);
     //return view('welcome');
 });
 

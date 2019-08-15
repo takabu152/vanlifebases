@@ -88,38 +88,57 @@
             <!-- ここからコンテンツの表示を行う。 -->
             <!-- 表示領域 -->
             @if (count($stores) > 0)
-            <div class="panel panel-default">
-                <div class="panel-heading">施設リスト</div>
-                <div class="panel-body">
-                    <table class="table table-striped task-table">
+            <!-- 施設一覧のループ（メインループ） -->
+            @foreach ($stores as $store)
 
-                        <thead>
-                            <th>施設名</th>
-                            <th>ユーザーへのメッセージ</th>
-                            <th>セールスポイントメッセージ</th>
-                            <th>&nbsp;</th>
-                        </thead>
+            <!-- 施設提供サービスの取得 -->
+            @php
+            $selectstoreservices = $storeservices
+            ->where('storeid',$store->storeid);
+            @endphp
 
-                        <tbody>
-                            @foreach ($stores as $store)
-                            <tr>
-                                <td class="table-text">
-                                    <div>{{ $store->storename }}</div>
-                                </td>
-                                <td class="table-text">
-                                    <div>{{ $store->forusermessage }}</div>
-                                </td>
-                                <td class="table-text">
-                                    <div>{{ $store->salespointmessage }}</div>
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+            <!-- 施設写真の取得(トップ画像のみ取得) -->
+            @php
+            $selectstoreimages = $storeimages
+            ->where('storeid',$store->storeid)
+            ->where('imagedivision',1);
+            @endphp
+
+            <!-- 施設イメージのループ -->
+            <!-- ここで施設のTOP画像を表示させる。 -->
+            @foreach($selectstoreimages as $storeimage)
+            <div>画像URL:{{ $storeimage->imageurl }}</div>
+            <img src={{ $storeimage->imageurl }}>
+            @endforeach
+
+            <!-- 施設メイン情報の表示 -->
+            <div>施設名:{{ $store->storename }}</div>
+            <div>ユーザーへの一言:{{$store->forusermessage}}</div>
+            <div>アピールポイント:{{$store->salespointmessage}}</div>
+            <div>websiteURL:{{$store->websiteurl}}</div>
+            <div>郵便番号:{{$store->postalcode}}</div>
+            <div>県名:{{$store->storeaddress01}}</div>
+            <div>住所01:{{$store->storeaddress02}}</div>
+            <div>住所02:{{$store->storeaddress03}}</div>
+            <div>住所02:{{$store->storeaddress03}}</div>
+
+            <!-- 施設サービスのループ -->
+            <!-- ここで施設のTOP画像を表示させる。 -->
+            @foreach($selectstoreservices as $storeservice)
+            <!-- アイコン画像の取得 -->
+            @php
+            $selectservices = $services
+            ->where('serviceid',$storeservice->serviceid);
+            @endphp
+            @foreach($selectservices as $service)
+            <div>アイコンURL:{{$service->serviceiconimageurl}}</div>
+            <img src={{$service->serviceiconimageurl}}>
+            @endforeach
+
+            @endforeach
+
+            @endforeach
             @endif
-
             <!-- ここまでタスクリスト -->
             <!-- <div class="links">
                 <a href="https://laravel.com/docs">Documentation</a>
