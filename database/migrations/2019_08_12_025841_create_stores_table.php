@@ -36,13 +36,8 @@ class CreateStoresTable extends Migration
             $table->string('email2');
             $table->string('phoneno1');
             $table->string('phoneno2');
-            $table->string('topimageurl');
-            $table->string('subimageurl01');
-            $table->string('subimageurl02');
-            $table->string('subimageurl03');
-            $table->string('subimageurl04');
-            $table->string('subimageurl05');
             $table->integer('hostid');
+            $table->boolean('delete');
             $table->timestamps();
         });
     }
