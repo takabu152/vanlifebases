@@ -14,7 +14,13 @@ class CreateStoreservicesTable extends Migration
     public function up()
     {
         Schema::create('storeservices', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('storeserviceid');
+            $table->integer('storeid');
+            $table->integer('serviceid');
+            $table->boolean('paidserviceflg');
+            $table->string('unitpricename');
+            $table->integer('unitprice');
+            $table->boolean('delete');
             $table->timestamps();
         });
     }
