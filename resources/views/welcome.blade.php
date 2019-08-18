@@ -89,55 +89,62 @@
             <!-- 表示領域 -->
             @if (count($stores) > 0)
             <!-- 施設一覧のループ（メインループ） -->
-            @foreach ($stores as $store)
+                @foreach ($stores as $store)
 
-            <!-- 施設提供サービスの取得 -->
-            @php
-            $selectstoreservices = $storeservices
-            ->where('storeid',$store->storeid);
-            @endphp
+                    <!-- 施設提供サービスの取得 -->
+                    @php
+                    $selectstoreservices = $storeservices
+                    ->where('storeid',$store->storeid);
+                    @endphp
 
-            <!-- 施設写真の取得(トップ画像のみ取得) -->
-            @php
-            $selectstoreimages = $storeimages
-            ->where('storeid',$store->storeid)
-            ->where('imagedivision',1);
-            @endphp
+                    <!-- 施設写真の取得(トップ画像のみ取得) -->
+                    @php
+                        $selectstoreimages = $storeimages
+                        ->where('storeid',$store->storeid)
+                        ->where('imagedivision',1);
+                    @endphp
 
-            <!-- 施設イメージのループ -->
-            <!-- ここで施設のTOP画像を表示させる。 -->
-            @foreach($selectstoreimages as $storeimage)
-            <div>画像URL:{{ $storeimage->imageurl }}</div>
-            <img src={{ $storeimage->imageurl }}>
-            @endforeach
+                    <!-- 施設イメージのループ -->
+                    <!-- ここで施設のTOP画像を表示させる。 -->
+                    @foreach($selectstoreimages as $storeimage)
+                        <div>画像URL:{{ $storeimage->imageurl }}</div>
+                        <img src={{ $storeimage->imageurl }}>
+                    @endforeach
 
-            <!-- 施設メイン情報の表示 -->
-            <div>施設名:{{ $store->storename }}</div>
-            <div>ユーザーへの一言:{{$store->forusermessage}}</div>
-            <div>アピールポイント:{{$store->salespointmessage}}</div>
-            <div>websiteURL:{{$store->websiteurl}}</div>
-            <div>郵便番号:{{$store->postalcode}}</div>
-            <div>県名:{{$store->storeaddress01}}</div>
-            <div>住所01:{{$store->storeaddress02}}</div>
-            <div>住所02:{{$store->storeaddress03}}</div>
-            <div>住所02:{{$store->storeaddress03}}</div>
+                    <!-- 施設メイン情報の表示 -->
+                    <div>施設名:{{ $store->storename }}</div>
+                    <div>ユーザーへの一言:{{$store->forusermessage}}</div>
+                    <div>アピールポイント:{{$store->salespointmessage}}</div>
+                    <div>websiteURL:{{$store->websiteurl}}</div>
+                    <div>郵便番号:{{$store->postalcode}}</div>
+                    <div>県名:{{$store->storeaddress01}}</div>
+                    <div>住所01:{{$store->storeaddress02}}</div>
+                    <div>住所02:{{$store->storeaddress03}}</div>
+                    
+                    <!-- 施設サービスのループ -->
+                    <!-- ここで施設のTOP画像を表示させる。 -->
+                    @foreach($selectstoreservices as $storeservice)
+                        <!-- アイコン画像の取得 -->
+                        @php
+                            $selectservices = $services
+                            ->where('serviceid',$storeservice->serviceid);
+                        @endphp
+                
+                        @foreach($selectservices as $service)
+                            <div>アイコンURL:{{$service->serviceiconimageurl}}</div>
+                            <img src={{$service->serviceiconimageurl}}>
+                        @endforeach
 
-            <!-- 施設サービスのループ -->
-            <!-- ここで施設のTOP画像を表示させる。 -->
-            @foreach($selectstoreservices as $storeservice)
-            <!-- アイコン画像の取得 -->
-            @php
-            $selectservices = $services
-            ->where('serviceid',$storeservice->serviceid);
-            @endphp
-            @foreach($selectservices as $service)
-            <div>アイコンURL:{{$service->serviceiconimageurl}}</div>
-            <img src={{$service->serviceiconimageurl}}>
-            @endforeach
+                    @endforeach
 
-            @endforeach
-
-            @endforeach
+                    {{-- 施設詳細画面へ飛ぶリンクを設定 --}}
+                    <!-- 更新ボタン -->
+                    <form action="{{ url('storedetail/'.$store->storeid) }}" method="GET">
+                        {{ csrf_field() }}
+                        <button type="submit" class="btn btn-primary">detail</button>
+                    </form>
+                    
+                @endforeach
             @endif
             <!-- ここまでタスクリスト -->
             <!-- <div class="links">

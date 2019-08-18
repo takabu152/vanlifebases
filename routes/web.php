@@ -42,6 +42,26 @@ Route::get('/', function () {
     //return view('welcome');
 });
 
+Route::get('/storedetail/{id}', function ($id) {
+
+    //Welcomeページで施設（コンテンツ）を一覧表示するため、データを取得する。
+    //$tasks = Task::orderBy('id', 'asc')->get();
+    // dd($id);
+    $store = DB::table('stores')->where('storeid', $id)->first();
+
+    $storeimages = DB::table('storeimages')
+        ->get();
+
+    $storeservices = DB::table('storeservices')
+        ->get();
+
+    $services = DB::table('services')
+        ->get();
+
+    return view('storedetail', ['store' => $store, 'storeimages' => $storeimages, 'storeservices' => $storeservices, 'services' => $services]);
+    //return view('welcome');
+});
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
