@@ -6,10 +6,26 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+
     <title>VanLife</title>
 
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+JP|Roboto&display=swap&subset=japanese"
+        rel="stylesheet">
+
+    <!-- <Bootstrap> -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+    </script>
+
 
     <!-- Styles -->
     <style>
@@ -19,8 +35,23 @@
             color: #636b6f;
             font-family: 'Raleway', sans-serif;
             font-weight: 100;
+            /* color: white; */
             /* height: 100vh; */
             margin: 0;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 80px;
+            background-color: white;
+            border-bottom: solid double #9b9999;
+            color: #59F777;
+            box-shadow: 2px 0.2px 8px #9b9999;
+            padding: 0;
+            margin: 0;
+            z-index: 10;
         }
 
         .full-height {
@@ -40,15 +71,39 @@
         .top-right {
             position: absolute;
             right: 10px;
-            top: 18px;
+            top: 25px;
         }
 
-        .content {
+        .main-container {
             text-align: center;
+            /* position: relative; */
+        }
+
+        .main-container-contents {
+            width: 1120px;
+        }
+
+        .main-container-contents h2 {
+            text-align: left;
+        }
+
+        .main-container-contents p {
+            text-align: right;
+        }
+
+        .mainImg {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 5px;
+            filter: drop-shadow(4px 4px 4px rgba(0, 0, 0, 0.4));
         }
 
         .title {
-            font-size: 84px;
+            font-size: 55px;
+            left: 120px;
+            text-shadow: 1px 2px 1px;
+            position: absolute;
         }
 
         .links>a {
@@ -63,99 +118,137 @@
 
         .m-b-md {
             margin-bottom: 30px;
+            text-align: left;
+        }
+
+        ul {
+            list-style-type: none;
+            float: left;
+        }
+
+        li {
+            float: left;
         }
     </style>
 </head>
 
 <body>
-    <div class="flex-center position-ref full-height">
-        @if (Route::has('login'))
-        <div class="top-right links">
-            @auth
-            <a href="{{ url('/home') }}">Home</a>
-            @else
-            <a href="{{ route('login') }}">ログイン</a>
-            <a href="{{ route('register') }}">ユーザー登録</a>
-            @endauth
-        </div>
-        @endif
 
-        <div class="content">
+
+
+
+
+    <div class="flex-center position-ref full-height">
+
+        <header>
+
             <div class="title m-b-md">
                 VanLife
             </div>
+
+            @if (Route::has('login'))
+            <div class="top-right links">
+                @auth
+                <a href="{{ url('/home') }}">Home</a>
+                @else
+                <a href="{{ route('login') }}">ログイン</a>
+                <a href="{{ route('register') }}">ユーザー登録</a>
+                @endauth
+            </div>
+            @endif
+
+        </header>
+
+        <div class="main-container">
 
             <!-- ここからコンテンツの表示を行う。 -->
             <!-- 表示領域 -->
             @if (count($stores) > 0)
             <!-- 施設一覧のループ（メインループ） -->
-                @foreach ($stores as $store)
+            @foreach ($stores as $store)
 
-                    <!-- 施設提供サービスの取得 -->
-                    @php
-                    $selectstoreservices = $storeservices
-                    ->where('storeid',$store->storeid);
-                    @endphp
+            <!-- 施設提供サービスの取得 -->
+            @php
+            $selectstoreservices = $storeservices
+            ->where('storeid',$store->storeid);
+            @endphp
 
-                    <!-- 施設写真の取得(トップ画像のみ取得) -->
-                    @php
-                        $selectstoreimages = $storeimages
-                        ->where('storeid',$store->storeid)
-                        ->where('imagedivision',1);
-                    @endphp
+            <!-- 施設写真の取得(トップ画像のみ取得) -->
+            @php
+            $selectstoreimages = $storeimages
+            ->where('storeid',$store->storeid)
+            ->where('imagedivision',1);
+            @endphp
 
-                    <!-- 施設イメージのループ -->
-                    <!-- ここで施設のTOP画像を表示させる。 -->
-                    @foreach($selectstoreimages as $storeimage)
-                        <div>画像URL:{{ $storeimage->imageurl }}</div>
-                        <img src={{ $storeimage->imageurl }}>
-                    @endforeach
-
-                    <!-- 施設メイン情報の表示 -->
-                    <div>施設名:{{ $store->storename }}</div>
-                    <div>ユーザーへの一言:{{$store->forusermessage}}</div>
-                    <div>アピールポイント:{{$store->salespointmessage}}</div>
-                    <div>websiteURL:{{$store->websiteurl}}</div>
-                    <div>郵便番号:{{$store->postalcode}}</div>
-                    <div>県名:{{$store->storeaddress01}}</div>
-                    <div>住所01:{{$store->storeaddress02}}</div>
-                    <div>住所02:{{$store->storeaddress03}}</div>
-                    
-                    <!-- 施設サービスのループ -->
-                    <!-- ここで施設のTOP画像を表示させる。 -->
-                    @foreach($selectstoreservices as $storeservice)
-                        <!-- アイコン画像の取得 -->
-                        @php
-                            $selectservices = $services
-                            ->where('serviceid',$storeservice->serviceid);
-                        @endphp
-                
-                        @foreach($selectservices as $service)
-                            <div>アイコンURL:{{$service->serviceiconimageurl}}</div>
-                            <img src={{$service->serviceiconimageurl}}>
-                        @endforeach
-
-                    @endforeach
-
-                    {{-- 施設詳細画面へ飛ぶリンクを設定 --}}
-                    <!-- 更新ボタン -->
-                    <form action="{{ url('storedetail/'.$store->storeid) }}" method="GET">
-                        {{ csrf_field() }}
-                        <button type="submit" class="btn btn-primary">detail</button>
-                    </form>
-                    
+            <!-- 施設イメージのループ -->
+            <!-- ここで施設のTOP画像を表示させる。 -->
+            @foreach($selectstoreimages as $storeimage)
+            <div class="main-container-contents">
+                <form action="{{ url('storedetail/'.$store->storeid) }}" method="GET">
+                    {{ csrf_field() }}
+                    <button type="submit" class="btn">
+                        <img class="mainImg" src={{ $storeimage->imageurl
+                        }}></button>
+                </form>
+                <div class="imgUrl">
+                    <p>画像URL:{{ $storeimage->imageurl }}</p>
+                </div>
                 @endforeach
-            @endif
-            <!-- ここまでタスクリスト -->
-            <!-- <div class="links">
+
+                <!-- 施設メイン情報の表示 -->
+                <div>
+                    <h2>施設名:{{ $store->storename }}</h2>
+                </div>
+                <div><span>Welcom message</span>{{$store->forusermessage}}</div>
+                <div>アピールポイント:{{$store->salespointmessage}}</div>
+                <div>websiteURL:{{$store->websiteurl}}</div>
+                <div>郵便番号:{{$store->postalcode}}</div>
+                <div>県名:{{$store->storeaddress01}}</div>
+                <div>住所01:{{$store->storeaddress02}}</div>
+                <div>住所02:{{$store->storeaddress03}}</div>
+
+                <!-- 施設サービスのループ -->
+                <!-- ここで施設のTOP画像を表示させる。 -->
+                @foreach($selectstoreservices as $storeservice)
+                <!-- アイコン画像の取得 -->
+                @php
+                $selectservices = $services
+                ->where('serviceid',$storeservice->serviceid);
+                @endphp
+
+                @foreach($selectservices as $service)
+                <div>
+                    <ul>
+                        <li>
+                            <!-- <p>アイコンURL:{{$service->serviceiconimageurl}}</p> -->
+                            <img src={{$service->serviceiconimageurl}}>
+                        </li>
+                    </ul>
+                </div>
+
+                @endforeach
+
+                @endforeach
+
+                <!-- {{-- 施設詳細画面へ飛ぶリンクを設定 --}} -->
+                <!-- 更新ボタン -->
+                <!-- <form action="{{ url('storedetail/'.$store->storeid) }}" method="GET">
+                {{ csrf_field() }}
+                <button type="submit" class="btn btn-primary">detail</button>
+            </form> -->
+
+                @endforeach
+                @endif
+                <!-- ここまでタスクリスト -->
+                <!-- <div class="links">
                 <a href="https://laravel.com/docs">Documentation</a>
                 <a href="https://laracasts.com">Laracasts</a>
                 <a href="https://laravel-news.com">News</a>
                 <a href="https://forge.laravel.com">Forge</a>
                 <a href="https://github.com/laravel/laravel">GitHub</a>
             </div> -->
+            </div>
         </div>
-    </div>
 </body>
 
 </html>
