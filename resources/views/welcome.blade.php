@@ -6,6 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <!-- <script src="{{ asset('js/app.js') }}" defer></script>
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet"> -->
+
 
     <title>VanLife</title>
 
@@ -33,7 +36,7 @@
         body {
             background-color: #fff;
             color: #636b6f;
-            font-family: 'Raleway', sans-serif;
+            /* font-family: 'Raleway', sans-serif; */
             font-weight: 100;
             /* color: white; */
             /* height: 100vh; */
@@ -47,11 +50,17 @@
             height: 80px;
             background-color: white;
             border-bottom: solid double #9b9999;
-            color: #59F777;
+            color: #FD7B51;
+            font-weight: bold;
             box-shadow: 2px 0.2px 8px #9b9999;
             padding: 0;
             margin: 0;
             z-index: 10;
+        }
+
+        h2 {
+            font-weight: bold;
+            text-shadow: 1px 1px 1px gray;
         }
 
         .full-height {
@@ -76,7 +85,8 @@
 
         .main-container {
             text-align: center;
-            /* position: relative; */
+            position: relative;
+            top: 80px;
         }
 
         .main-container-contents {
@@ -102,7 +112,7 @@
         .title {
             font-size: 55px;
             left: 120px;
-            text-shadow: 1px 2px 1px;
+            /* text-shadow: 1px 2px 1px; */
             position: absolute;
         }
 
@@ -129,21 +139,25 @@
         li {
             float: left;
         }
+
+        a:hover {
+            opacity: 0.5;
+        }
+
+        .sub-message {
+            text-align: left;
+        }
     </style>
 </head>
 
 <body>
-
-
-
-
 
     <div class="flex-center position-ref full-height">
 
         <header>
 
             <div class="title m-b-md">
-                VanLife
+                VanLifeBases
             </div>
 
             @if (Route::has('login'))
@@ -197,15 +211,15 @@
 
                 <!-- 施設メイン情報の表示 -->
                 <div>
-                    <h2>施設名:{{ $store->storename }}</h2>
+                    <h2>{{ $store->storename }}</h2>
                 </div>
-                <div><span>Welcom message</span>{{$store->forusermessage}}</div>
-                <div>アピールポイント:{{$store->salespointmessage}}</div>
-                <div>websiteURL:{{$store->websiteurl}}</div>
-                <div>郵便番号:{{$store->postalcode}}</div>
-                <div>県名:{{$store->storeaddress01}}</div>
-                <div>住所01:{{$store->storeaddress02}}</div>
-                <div>住所02:{{$store->storeaddress03}}</div>
+                <div class="sub-message"><a>{{$store->websiteurl}}</a></div>
+                <div class="sub-message"><span>Welcom message</span>{{$store->forusermessage}}</div>
+                <div class="sub-message">アピールポイント:{{$store->salespointmessage}}</div>
+                <div class="sub-message">郵便番号:{{$store->postalcode}}</div>
+                <div class="sub-message">県名:{{$store->storeaddress01}}</div>
+                <div class="sub-message">住所01:{{$store->storeaddress02}}</div>
+                <div class="sub-message">住所02:{{$store->storeaddress03}}</div>
 
                 <!-- 施設サービスのループ -->
                 <!-- ここで施設のTOP画像を表示させる。 -->
@@ -249,6 +263,12 @@
             </div> -->
             </div>
         </div>
+        <div id="app">
+            <!--「appというidのdiv要素」の中にcomponentの設置-->
+            <!-- <example-component></example-component> -->
+            <header-component></header-component>
+        </div>
+        <!-- <script src="{{ asset('js/app.js') }}"></script> -->
 </body>
 
 </html>
