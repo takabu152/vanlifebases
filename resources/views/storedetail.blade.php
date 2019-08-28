@@ -31,11 +31,13 @@
         body {
             background-color: #fff;
             color: #636b6f;
-            font-family: 'Raleway', sans-serif;
+            /* font-family: 'Raleway', sans-serif; */
             font-weight: 100;
-            height: 100vh;
-            margin: 0;
+            /* color: white; */
+            /* height: 100vh; */
+            margin: 0 auto;
         }
+
 
         .full-height {
             height: 100vh;
@@ -62,7 +64,7 @@
         }
 
         .title {
-            font-size: 84px;
+            font-size: 55px;
         }
 
         .links>a {
@@ -95,17 +97,10 @@
 </head>
 
 <body>
+        
+    @include('parts.header')
+
     <div class="flex-center position-ref full-height">
-        @if (Route::has('login'))
-        <div class="top-right links">
-            @auth
-            <a href="{{ url('/home') }}">Home</a>
-            @else
-            <a href="{{ route('login') }}">ログイン</a>
-            <a href="{{ route('register') }}">ユーザー登録</a>
-            @endauth
-        </div>
-        @endif
 
         <div class="content">
             <div class="title m-b-md">

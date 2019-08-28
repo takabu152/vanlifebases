@@ -5,9 +5,11 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="stylesheet" href="{{ mix('/css/app.css') }}">
 
-    <!-- <script src="{{ asset('js/app.js') }}" defer></script>
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet"> -->
+    <script src="{{ asset('js/app.js') }}" defer></script>
+    {{-- <link href="{{ asset('css/app.css') }}" rel="stylesheet"> --}}
 
 
     <title>VanLife</title>
@@ -32,76 +34,38 @@
 
     <!-- Styles -->
     <style>
-        html,
-        body {
-            background-color: #fff;
-            color: #636b6f;
-            /* font-family: 'Raleway', sans-serif; */
-            font-weight: 100;
-            /* color: white; */
-            /* height: 100vh; */
-            margin: 0;
-        }
 
-        header {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            height: 80px;
-            background-color: white;
-            border-bottom: solid double #9b9999;
-            color: #FD7B51;
-            font-weight: bold;
-            box-shadow: 2px 0.2px 8px #9b9999;
-            padding: 0;
-            margin: 0;
-            z-index: 10;
-        }
 
         h2 {
-            font-weight: bold;
             text-shadow: 1px 1px 1px gray;
-        }
-
-        .full-height {
-            /* height: 100vh; */
-        }
-
-        .flex-center {
-            align-items: center;
-            display: flex;
-            justify-content: center;
-        }
-
-        .position-ref {
-            position: relative;
-        }
-
-        .top-right {
-            position: absolute;
-            right: 10px;
-            top: 25px;
         }
 
         .main-container {
             text-align: center;
             position: relative;
-            top: 80px;
+            top: 100px;
+            align-items: center;
+            display: flex;
+            justify-content: center;
         }
 
         .main-container-contents {
-            width: 1120px;
+            width: 600px;
+            height: 500px;
+            position: relative;
+            float: left;
         }
 
         .main-container-contents h2 {
             text-align: left;
+            font-size: 30px;
         }
 
         .main-container-contents p {
             text-align: right;
         }
 
-        .mainImg {
+        .main-img {
             width: 100%;
             height: 100%;
             object-fit: contain;
@@ -109,72 +73,36 @@
             filter: drop-shadow(4px 4px 4px rgba(0, 0, 0, 0.4));
         }
 
-        .title {
-            font-size: 55px;
-            left: 120px;
-            /* text-shadow: 1px 2px 1px; */
-            position: absolute;
-        }
-
-        .links>a {
-            color: #636b6f;
-            padding: 0 25px;
-            font-size: 12px;
-            font-weight: 600;
-            letter-spacing: .1rem;
-            text-decoration: none;
-            text-transform: uppercase;
-        }
-
-        .m-b-md {
-            margin-bottom: 30px;
-            text-align: left;
-        }
-
         ul {
             list-style-type: none;
             float: left;
+            margin: 0;
+            padding: 0;
         }
 
         li {
             float: left;
-        }
-
-        a:hover {
-            opacity: 0.5;
+            display: flex;
         }
 
         .sub-message {
             text-align: left;
+        } 
+
+        .icon-img-contents {
+            width: 35%;
         }
+
     </style>
 </head>
 
 <body>
-
-    <div class="flex-center position-ref full-height">
-
-        <header>
-
-            <div class="title m-b-md">
-                VanLifeBases
-            </div>
-
-            @if (Route::has('login'))
-            <div class="top-right links">
-                @auth
-                <a href="{{ url('/home') }}">Home</a>
-                @else
-                <a href="{{ route('login') }}">ログイン</a>
-                <a href="{{ route('register') }}">ユーザー登録</a>
-                @endauth
-            </div>
-            @endif
-
-        </header>
+  
+        @include('parts.header')
 
         <div class="main-container">
 
+            <div class="main-container-img">
             <!-- ここからコンテンツの表示を行う。 -->
             <!-- 表示領域 -->
             @if (count($stores) > 0)
@@ -195,31 +123,33 @@
             @endphp
 
             <!-- 施設イメージのループ -->
-            <!-- ここで施設のTOP画像を表示させる。 -->
+            <!-- {{-- 施設詳細画面へ飛ぶリンクを設定 --}} -->
             @foreach($selectstoreimages as $storeimage)
             <div class="main-container-contents">
                 <form action="{{ url('storedetail/'.$store->storeid) }}" method="GET">
                     {{ csrf_field() }}
                     <button type="submit" class="btn">
-                        <img class="mainImg" src={{ $storeimage->imageurl
+                        <img class="main-img" src={{ $storeimage->imageurl
                         }}></button>
                 </form>
-                <div class="imgUrl">
+
+                <!-- ここで施設のTOP画像を表示させる。 -->
+                <div class="img-url">
                     <p>画像URL:{{ $storeimage->imageurl }}</p>
                 </div>
                 @endforeach
 
+
+
                 <!-- 施設メイン情報の表示 -->
-                <div>
-                    <h2>{{ $store->storename }}</h2>
-                </div>
-                <div class="sub-message"><a>{{$store->websiteurl}}</a></div>
-                <div class="sub-message"><span>Welcom message</span>{{$store->forusermessage}}</div>
-                <div class="sub-message">アピールポイント:{{$store->salespointmessage}}</div>
-                <div class="sub-message">郵便番号:{{$store->postalcode}}</div>
-                <div class="sub-message">県名:{{$store->storeaddress01}}</div>
-                <div class="sub-message">住所01:{{$store->storeaddress02}}</div>
-                <div class="sub-message">住所02:{{$store->storeaddress03}}</div>
+                <div class="main-container-message">
+                        <h2><strong>{{ $store->storename }}</strong>【{{$store->storeaddress01}}】</h2>
+                        <h3 class="sub-message"><strong>Welcom message:</strong>{{$store->forusermessage}}</h3>
+                        <div class="sub-message"><a>{{$store->websiteurl}}</a></div>
+                        {{-- <div class="sub-message">アピールポイント:{{$store->salespointmessage}}</div> --}}
+                        {{-- <div class="sub-message">郵便番号:{{$store->postalcode}}</div> --}}
+                        {{-- <div class="sub-message">住所01:{{$store->storeaddress02}}</div>
+                        <div class="sub-message">住所02:{{$store->storeaddress03}}</div> --}}
 
                 <!-- 施設サービスのループ -->
                 <!-- ここで施設のTOP画像を表示させる。 -->
@@ -231,11 +161,11 @@
                 @endphp
 
                 @foreach($selectservices as $service)
-                <div>
+                <div class="icon-img">
                     <ul>
                         <li>
-                            <!-- <p>アイコンURL:{{$service->serviceiconimageurl}}</p> -->
-                            <img src={{$service->serviceiconimageurl}}>
+                            {{-- <p>アイコンURL:{{$service->serviceiconimageurl}}</p> --}}
+                            <img  class="icon-img-contents"src={{$service->serviceiconimageurl}}>
                         </li>
                     </ul>
                 </div>
@@ -243,32 +173,13 @@
                 @endforeach
 
                 @endforeach
-
-                <!-- {{-- 施設詳細画面へ飛ぶリンクを設定 --}} -->
-                <!-- 更新ボタン -->
-                <!-- <form action="{{ url('storedetail/'.$store->storeid) }}" method="GET">
-                {{ csrf_field() }}
-                <button type="submit" class="btn btn-primary">detail</button>
-            </form> -->
-
+                    </div>
+            </div>
                 @endforeach
                 @endif
-                <!-- ここまでタスクリスト -->
-                <!-- <div class="links">
-                <a href="https://laravel.com/docs">Documentation</a>
-                <a href="https://laracasts.com">Laracasts</a>
-                <a href="https://laravel-news.com">News</a>
-                <a href="https://forge.laravel.com">Forge</a>
-                <a href="https://github.com/laravel/laravel">GitHub</a>
-            </div> -->
+
             </div>
-        </div>
-        <div id="app">
-            <!--「appというidのdiv要素」の中にcomponentの設置-->
-            <!-- <example-component></example-component> -->
-            <header-component></header-component>
-        </div>
-        <!-- <script src="{{ asset('js/app.js') }}"></script> -->
+     
 </body>
 
 </html>
