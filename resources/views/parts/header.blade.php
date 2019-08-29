@@ -28,7 +28,7 @@
                 position: absolute;
             }
 
-            .links>a {
+            header a {
             color: #636b6f;
             padding: 0 25px;
             font-size: 12px;
@@ -38,7 +38,7 @@
             text-transform: uppercase;
             }
 
-            a:hover {
+            header a:hover {
             opacity: 0.5;
             }
     
