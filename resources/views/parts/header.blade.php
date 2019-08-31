@@ -1,4 +1,7 @@
  <!-- Styles -->
+
+ <link href="https://fonts.googleapis.com/css?family=Righteous&display=swap" rel="stylesheet">
+
         <style>
             header {
                 position: fixed;
@@ -7,12 +10,13 @@
                 height: 80px;
                 background-color: white;
                 border-bottom: solid double #9b9999;
-                color: #FD7B51;
+                color: #FE7A52;
                 font-weight: bold;
                 box-shadow: 2px 0.2px 8px #9b9999;
                 padding: 0;
                 margin: 0;
                 z-index: 10;
+                font-family: 'Righteous', cursive;
             }
     
             .top-right {
@@ -23,7 +27,7 @@
 
             .title {
                 font-size: 55px;
-                left: 120px;
+                left: 80px;
                 /* text-shadow: 1px 2px 1px; */
                 position: absolute;
             }
@@ -53,8 +57,8 @@
     
     <header>
 
-        <div class="title m-b-md">
-            VanLifeBases
+        <div class="title col-md-2">
+            VANLIFEBASES
         </div>
 
         @if (Route::has('login'))
