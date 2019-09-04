@@ -93,12 +93,36 @@
             margin: 0;
             z-index: 10;
         }
+
+        .main-img-box {
+            width: 100%;
+            height: 700px;
+        }
+
+        .main-img {
+            object-fit: contain;
+        }
     </style>
 </head>
 
 <body>
         
     @include('parts.header')
+
+    @php
+        $selecttopstoreimages = $storeimages
+        ->where('storeid',$store->storeid)
+        ->where('imagedivision',1);
+    @endphp
+
+    <!-- 施設イメージのループ -->
+            <!-- ここで施設のサブ画像を表示させる。 -->
+            @foreach($selecttopstoreimages as $topstoreimage)
+            {{-- <div>画像URL:{{ $topstoreimage->imageurl }}</div> --}}
+            <div class="main-img-box">
+            <img class="main-img" src={{ $topstoreimage->imageurl }}>
+            </div>
+            @endforeach
 
     <div class="flex-center position-ref full-height">
 
@@ -124,12 +148,12 @@
             @endphp
 
 
-            <!-- 施設写真の取得(トップ画像のみ取得) -->
+            {{-- 施設写真の取得(トップ画像のみ取得)
             @php
             $selecttopstoreimages = $storeimages
             ->where('storeid',$store->storeid)
             ->where('imagedivision',1);
-            @endphp
+            @endphp --}}
 
             <!-- 施設写真の取得(サブ画像のみ取得) -->
             @php
@@ -140,10 +164,10 @@
 
             <!-- 施設イメージのループ -->
             <!-- ここで施設のサブ画像を表示させる。 -->
-            @foreach($selecttopstoreimages as $topstoreimage)
+            {{-- @foreach($selecttopstoreimages as $topstoreimage)
             <div>画像URL:{{ $topstoreimage->imageurl }}</div>
             <img src={{ $topstoreimage->imageurl }}>
-            @endforeach
+            @endforeach --}}
 
             <!-- 施設メイン情報の表示 -->
             <div>施設名:{{ $store->storename }}</div>

@@ -6,6 +6,7 @@ use App\Store;
 use App\storeservice;
 use App\Service;
 use Illuminate\Http\Request;
+use App\Booking;
 
 /*
 |--------------------------------------------------------------------------
@@ -69,4 +70,14 @@ Route::get('/home', 'HomeController@index')->name('home');
 // 施設一覧の作成
 Route::get('/dispstores', function () {
     return view('dispstores');
+});
+
+// 予約一覧の作成
+Route::get('/booking', function () {
+    // return view('booking');
+    // $userid = DB::table('bookings')->where('id', $userid)->first();
+    $bookings = DB::table('bookings')
+        ->get();
+    return view('booking', ['bookings' => $bookings]);
+    //return view('welcome');
 });

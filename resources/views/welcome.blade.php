@@ -31,14 +31,30 @@
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
     </script>
 
+    {{-- jquery --}}
+    <link href="js/slick-theme.css" rel="stylesheet" type="text/css">
+    <link href="js/slick.css" rel="stylesheet" type="text/css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="js/slick.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
     <!-- Styles -->
     <style>
 
+        body {
+            color: #484848;
+            font-family: 'Roboto', sans-serif;
+            font-family: 'Noto Sans JP', sans-serif;
+        }
+
 
         h2 {
-            text-shadow: 1px 1px 1px gray;
+            /* text-shadow: 1px 1px 1px gray; */
+            font-weight: 500;
             text-align: left;
+            color: #f79469;
         }
 
         .card-body {
@@ -53,13 +69,16 @@
             align-items: center;
             display: flex;
             justify-content: center;
+            font-family: 'Roboto', sans-serif;
+            font-family: 'Noto Sans JP', sans-serif;
         }
 
         .main-container-contents {
             width: 600px;
             height: 500px;
             position: relative;
-            float: left;
+            display: flex;
+            align-content: space-between;
         }
 
         .main-container-contents h2 {
@@ -99,13 +118,17 @@
             width: 35%;
         }
 
+        a {
+            color: gray;
+        }
+
         a:hover {
             text-decoration: none;
+            color: gray;
         }
 
         .card {
-            float: left;
-            margin-left: 16px; 
+            border: none;
         }
 
     </style>
@@ -138,7 +161,7 @@
     
     @foreach($selectstoreimages as $storeimage)
 
-    <div class="card" style="width: 40rem;">
+    <div class="card col-md-4 slider">
 
         <form action="{{ url('storedetail/'.$store->storeid) }}" method="GET">
             <a href="{{ url('storedetail/'.$store->storeid) }}.submit()">
@@ -177,6 +200,36 @@
 
     @endforeach
     @endif
+    
+
+    <script>
+    $('.slider').slick({
+    autoplay:true,
+    autoplaySpeed:5000,
+    dots:true,
+    slidesToShow:4,
+    responsive:[
+        {
+            breakpoint: 1024,
+            settings:{
+                slidesToShow:3,
+            }
+        },
+        {
+            breakpoint: 768,
+            settings:{
+                slidesToShow:2,
+            }
+        },
+        {
+            breakpoint: 480,
+            settings:{
+                slidesToShow:1,
+            }
+        },
+    ]
+});
+    </script>
 
 </body>
 
