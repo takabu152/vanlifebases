@@ -46,8 +46,8 @@
 
         body {
             color: #484848;
-            font-family: 'Roboto', sans-serif;
-            font-family: 'Noto Sans JP', sans-serif;
+            /* font-family: 'Roboto', sans-serif;
+            font-family: 'Noto Sans JP', sans-serif; */
             height: 2000px;
         }
         
@@ -131,7 +131,6 @@
         .card {
             border: none;
         }
-
     </style>
 </head>
 

@@ -40,8 +40,11 @@
 
         .flex-center {
             align-items: center;
-            display: flex;
             justify-content: center;
+        }
+
+        .container {
+            display: table;
         }
 
         .position-ref {
@@ -56,6 +59,7 @@
 
         .content {
             text-align: center;
+            display: table-cell;
             z-index: 100;
         }
 
@@ -82,7 +86,13 @@
             width: 100%;
             height: 800px;
             object-fit: cover;
-            padding-bottom: 64px;
+        }
+
+        .message {
+            text-align: left;
+            padding-top: 32px;
+            display: table-cell;
+            color: black;
         }
 
     </style>
@@ -91,6 +101,7 @@
 <body>
         
     @include('parts.header')
+    
 
     @php
         $selecttopstoreimages = $storeimages
@@ -103,15 +114,17 @@
             @foreach($selecttopstoreimages as $topstoreimage)
             {{-- <div>画像URL:{{ $topstoreimage->imageurl }}</div> --}}
             <div class="main-img-box">
-            <img class="main-img" src={{ $topstoreimage->imageurl }}>
+                <img class="main-img" src={{ $topstoreimage->imageurl }}>
             </div>
             @endforeach
 
-    <div class="flex-center position-ref full-height">
+    <div class="container flex-center position-ref full-height">
 
         <div class="content">
+            <div class="message">
                 <h2>{{ $store->storename }}【{{$store->storeaddress01}}】</h2>
-
+                <h3>ユーザーへの一言:{{$store->forusermessage}}</h3>
+            </div>
             <!-- ここからコンテンツの表示を行う。 -->
             <!-- 表示領域 -->
 
@@ -151,8 +164,6 @@
             @endforeach --}}
 
             <!-- 施設メイン情報の表示 -->
-            <div>施設名:{{ $store->storename }}</div>
-            <div>ユーザーへの一言:{{$store->forusermessage}}</div>
             <div>アピールポイント:{{$store->salespointmessage}}</div>
             <div>websiteURL:{{$store->websiteurl}}</div>
             <div>郵便番号:{{$store->postalcode}}</div>
