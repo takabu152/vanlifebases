@@ -45,6 +45,10 @@
                 padding-top: 10px;
                 font-size: 22px;
             }
+
+            .logo {
+                width: 80px;
+            }
     
         </style>
     </head>
@@ -52,6 +56,7 @@
     
     <header>
         <nav class="navbar navbar-expand-sm fixed-top shadow navbar-light bg-light">
+            <img class="logo" src="{{ asset('img/favicon.ico') }}" alt="">
             <a class="navbar-brand" href="#">VANLIFEBASES</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="ナビゲーションの切替">
                     <span class="navbar-toggler-icon"></span>
