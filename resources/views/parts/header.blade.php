@@ -4,22 +4,7 @@
  <link href="https://fonts.googleapis.com/css?family=Righteous&display=swap" rel="stylesheet">
 
         <style>
-            header {
-                position: fixed;
-                top: 0;
-                width: 100%;
-                height: 80px;
-                background-color: white;
-                border-bottom: solid double #9b9999;
-                color: #FE7A52;
-                font-weight: bold;
-                box-shadow: 2px 0.2px 8px #9b9999;
-                padding: 0;
-                margin: 0;
-                z-index: 10;
-                font-family: 'Righteous', cursive;
-            }
-    
+            
             .top-right {
             position: absolute;
             right: 10px;
@@ -33,10 +18,10 @@
                 position: absolute;
             }
 
-            header a {
+            header {
             color: #636b6f;
             padding: 0 25px;
-            font-size: 12px;
+            font-size: 15px;
             font-weight: 600;
             letter-spacing: .1rem;
             text-decoration: none;
@@ -51,13 +36,22 @@
                 margin-bottom: 30px;
                 text-align: left;
             }
+
+            .bg-dark {
+                background-color: none!important;
+            }
+
+            .navbar-brand {
+                padding-top: 10px;
+                font-size: 22px;
+            }
     
         </style>
     </head>
         
     
     <header>
-        <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+        <nav class="navbar navbar-expand-sm fixed-top shadow navbar-light bg-light">
             <a class="navbar-brand" href="#">VANLIFEBASES</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="ナビゲーションの切替">
                     <span class="navbar-toggler-icon"></span>

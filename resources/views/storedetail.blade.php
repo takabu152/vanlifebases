@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>VanLife</title>
+    <title>VanLifebases</title>
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans+JP|Roboto&display=swap&subset=japanese"
@@ -38,11 +38,6 @@
             margin: 0 auto;
         }
 
-
-        .full-height {
-            height: 100vh;
-        }
-
         .flex-center {
             align-items: center;
             display: flex;
@@ -61,6 +56,7 @@
 
         .content {
             text-align: center;
+            z-index: 100;
         }
 
         .title {
@@ -81,27 +77,14 @@
             margin-bottom: 30px;
         }
 
-        footer {
-            position: fixed;
-            width: 100%;
-            height: 80px;
-            /* background-color: white; */
-            border-bottom: solid double #9b9999;
-            /* color: #FF4848; */
-            box-shadow: 2px 0.2px 8px #9b9999;
-            padding: 0;
-            margin: 0;
-            z-index: 10;
-        }
-
-        .main-img-box {
-            width: 100%;
-            height: 700px;
-        }
-
         .main-img {
-            object-fit: contain;
+            vertical-align:bottom;
+            width: 100%;
+            height: 800px;
+            object-fit: cover;
+            padding-bottom: 64px;
         }
+
     </style>
 </head>
 
@@ -127,9 +110,7 @@
     <div class="flex-center position-ref full-height">
 
         <div class="content">
-            <div class="title m-b-md">
-                施設詳細
-            </div>
+                <h2>{{ $store->storename }}【{{$store->storeaddress01}}】</h2>
 
             <!-- ここからコンテンツの表示を行う。 -->
             <!-- 表示領域 -->
@@ -151,7 +132,7 @@
             {{-- 施設写真の取得(トップ画像のみ取得)
             @php
             $selecttopstoreimages = $storeimages
-            ->where('storeid',$store->storeid)
+            ->where('storeid',$store->storeid)´
             ->where('imagedivision',1);
             @endphp --}}
 
@@ -207,7 +188,7 @@
 
             @foreach($selectpaidservices as $paidservice)
             <div>アイコンURL:{{$paidservice->serviceiconimageurl}}</div>
-            <img src={{$paidservice->serviceiconimageurl}}>
+            {{-- <img src={{$paidservice->serviceiconimageurl}}> --}}
             <div>サービス名:{{$paidstoreservice->unitpricename}}</div>
             <div>料金:{{$paidstoreservice->unitprice}}円</div>
             @endforeach
@@ -218,12 +199,13 @@
             <!-- ここで施設のサブ画像を表示させる。 -->
             @foreach($selectsubstoreimages as $substoreimage)
             <div>画像URL:{{ $substoreimage->imageurl }}</div>
-            <img src={{ $substoreimage->imageurl }}>
+            {{-- <img src={{ $substoreimage->imageurl }}> --}}
             @endforeach
 
         </div>
     </div>
-    <footer>
+
+    {{-- <footer>
 
         <div class="title m-b-md">
             VanLife
@@ -240,7 +222,7 @@
         </div>
         @endif
 
-    </footer>
+    </footer> --}}
 </body>
 
 </html>

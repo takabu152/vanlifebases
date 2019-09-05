@@ -47,9 +47,9 @@
             color: #484848;
             font-family: 'Roboto', sans-serif;
             font-family: 'Noto Sans JP', sans-serif;
+            height: 2000px;
         }
-
-
+        
         h2 {
             /* text-shadow: 1px 1px 1px gray; */
             font-weight: 500;
@@ -202,7 +202,7 @@
     @endif
     
 
-    <script>
+    {{-- <script>
     $('.slider').slick({
     autoplay:true,
     autoplaySpeed:5000,
@@ -229,7 +229,7 @@
         },
     ]
 });
-    </script>
+    </script> --}}
 
 </body>
 
