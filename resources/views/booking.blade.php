@@ -108,13 +108,40 @@
 <body>
 
     @include('parts.header')
+
     <div class="flex-center position-ref full-height">
 
         <div class="content">
             <div class="title m-b-md">
-                @php
-                var_dump($bookings);
-                @endphp
+                <table class="table">
+                    <!-- <caption>予約一覧</caption> -->
+                    <thead>
+                        <tr>
+                            <th scope="col">施設名</th>
+                            <th scope="col">チェックイン</th>
+                            <th scope="col">チェックアウト</th>
+                            <th scope="col">支払い金額</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($bookings as $booking)
+                        <!-- 施設名をstoresから取得 -->
+                        @php
+                        $bookingstorenames = $stores
+                        ->where('storeid', $booking->storeid);
+                        @endphp
+                        <tr>
+                            @foreach ($bookingstorenames as $bookingstorename)
+                            <td><a href="{{ url('storedetail/'.$bookingstorename->storeid) }}.submit()">{{
+                                    $bookingstorename->storename }}</td>
+                            <td>{{ $booking->checkinday }}</td>
+                            <td>{{ $booking->checkoutday }}</td>
+                            <td>{{ $booking->paymentmoney }}</td>
+                        </tr>
+                        @endforeach
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
 
             <!-- ここからコンテンツの表示を行う。 -->
@@ -132,7 +159,7 @@
         @if (Route::has('login'))
         <div class="top-right links">
             @auth
-            <a href="{{ url('/home') }}">Home</a>
+            <a href="{{ url('/welcome') }}">Home</a>
             @else
             <a href="{{ route('login') }}">ログイン</a>
             <a href="{{ route('register') }}">ユーザー登録</a>

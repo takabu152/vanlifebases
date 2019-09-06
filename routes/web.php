@@ -73,11 +73,14 @@ Route::get('/dispstores', function () {
 });
 
 // 予約一覧の作成
-Route::get('/booking', function () {
+Route::get('/booking', ['middleware'=>'auth',function () {
     // return view('booking');
-    // $userid = DB::table('bookings')->where('id', $userid)->first();
     $bookings = DB::table('bookings')
+    ->where('guestid', Auth::id())
         ->get();
-    return view('booking', ['bookings' => $bookings]);
+    $stores = DB::table('stores')
+        ->get();
+
+    return view('booking', ['bookings' => $bookings, 'stores' => $stores]);
     //return view('welcome');
-});
+}]);
