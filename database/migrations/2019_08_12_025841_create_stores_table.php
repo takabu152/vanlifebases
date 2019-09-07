@@ -36,6 +36,7 @@ class CreateStoresTable extends Migration
             $table->string('email2');
             $table->string('phoneno1');
             $table->string('phoneno2');
+            $table->integer('price');
             $table->integer('hostid');
             $table->boolean('delete');
             $table->timestamps();
