@@ -59,7 +59,7 @@
 
         .content {
             text-align: center;
-            display: table-cell;
+            display: flex;
             z-index: 100;
         }
 
@@ -95,6 +95,11 @@
             color: black;
         }
 
+        .contents {
+            display: flex;
+            
+        }
+
     </style>
 </head>
 
@@ -110,21 +115,26 @@
     @endphp
 
     <!-- 施設イメージのループ -->
-            <!-- ここで施設のサブ画像を表示させる。 -->
-            @foreach($selecttopstoreimages as $topstoreimage)
-            {{-- <div>画像URL:{{ $topstoreimage->imageurl }}</div> --}}
-            <div class="main-img-box">
-                <img class="main-img" src={{ $topstoreimage->imageurl }}>
-            </div>
-            @endforeach
+    <!-- ここで施設のサブ画像を表示させる。 -->
+    @foreach($selecttopstoreimages as $topstoreimage)
+    {{-- <div>画像URL:{{ $topstoreimage->imageurl }}</div> --}}
+    <div class="main-img-box">
+        <img class="main-img" src={{ $topstoreimage->imageurl }}>
+    </div>
+    @endforeach
 
     <div class="container flex-center position-ref full-height">
 
-        <div class="content">
-            <div class="message">
-                <h2>{{ $store->storename }}【{{$store->storeaddress01}}】</h2>
-                <h3>ユーザーへの一言:{{$store->forusermessage}}</h3>
+        <div class="contents ">
+            <div class="main-message">
+                <h1>{{ $store->storename }}【{{$store->storeaddress01}}】</h1>
+                <h2>県名:{{$store->storeaddress01}}</h2>
+                <h3>郵便番号:{{$store->postalcode}}</h3>
+                <h3>住所01:{{$store->storeaddress02}}</h3>
+            {{-- <div>住所02:{{$store->storeaddress03}}</div> --}}
             </div>
+
+            <div class="sub-message">
             <!-- ここからコンテンツの表示を行う。 -->
             <!-- 表示領域 -->
 
@@ -164,12 +174,9 @@
             @endforeach --}}
 
             <!-- 施設メイン情報の表示 -->
+            <h2>ユーザーへの一言:{{$store->forusermessage}}</h2>
             <div>アピールポイント:{{$store->salespointmessage}}</div>
-            <div>websiteURL:{{$store->websiteurl}}</div>
-            <div>郵便番号:{{$store->postalcode}}</div>
-            <div>県名:{{$store->storeaddress01}}</div>
-            <div>住所01:{{$store->storeaddress02}}</div>
-            <div>住所02:{{$store->storeaddress03}}</div>
+            {{-- <div>websiteURL:{{$store->websiteurl}}</div> --}}
 
             <!-- 無料施設サービスのループ -->
             <div>無料施設サービス一覧</div>
@@ -181,12 +188,16 @@
             @endphp
 
             @foreach($selectfreeservices as $freeservice)
-            <div>アイコンURL:{{$freeservice->serviceiconimageurl}}</div>
+            <ul> 
+            {{-- <div>アイコンURL:{{$freeservice->serviceiconimageurl}}</div> --}}
             <img src={{$freeservice->serviceiconimageurl}}>
             <div>サービス名:{{$freestoreservice->unitpricename}}</div>
             @endforeach
 
             @endforeach
+            </div>
+        </div>
+
 
             <!-- 有料施設サービスのループ -->
             <div>有料施設サービス一覧</div>

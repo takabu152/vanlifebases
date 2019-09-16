@@ -63,7 +63,7 @@
             margin-top: 8px;
         }
 
-        .main-container,.card {
+        .card {
             text-align: center;
             position: relative;
             top: 100px;
@@ -72,23 +72,6 @@
             justify-content: center;
             font-family: 'Roboto', sans-serif;
             font-family: 'Noto Sans JP', sans-serif;
-        }
-
-        .main-container-contents {
-            width: 600px;
-            height: 500px;
-            position: relative;
-            display: flex;
-            align-content: space-between;
-        }
-
-        .main-container-contents h2 {
-            text-align: left;
-            font-size: 30px;
-        }
-
-        .main-container-contents p {
-            text-align: right;
         }
 
         .main-img {
@@ -106,18 +89,9 @@
             padding: 0;
         }
 
-        li {
-            float: left;
-            display: flex;
-        }
-
         .sub-message {
             text-align: left;
         } 
-
-        .icon-img-contents {
-            width: 35%;
-        }
 
         a {
             color: gray;
@@ -131,6 +105,8 @@
         .card {
             border: none;
         }
+
+
     </style>
 </head>
 
@@ -164,7 +140,7 @@
     <div class="card col-md-4 slider">
 
         <form action="{{ url('storedetail/'.$store->storeid) }}" method="GET">
-            <a href="{{ url('storedetail/'.$store->storeid) }}.submit()">
+            <a target="_blank" href="{{ url('storedetail/'.$store->storeid) }}.submit()">
             <img class="card-img-top" src="{{ $storeimage->imageurl
             }}" alt="カードの画像">
             <div class="card-body">
@@ -172,6 +148,7 @@
                 <h3 class="sub-message">{{$store->forusermessage}}</h3>
                 <p class="sub-message"><a>{{$store->websiteurl}}</a></p>
             </div>
+    </div>
             @endforeach
             
             <!-- 施設サービスのループ -->
@@ -183,7 +160,7 @@
             ->where('serviceid',$storeservice->serviceid);
             @endphp
 
-            @foreach($selectservices as $service)
+            {{-- @foreach($selectservices as $service)
             <div class="icon-img">
                 <ul>
                     <li>
@@ -191,12 +168,11 @@
                     </li>
                 </ul>
             </div>
-            @endforeach
+            @endforeach --}}
             @endforeach
         </a>
         </form>
     
-    </div>
 
     @endforeach
     @endif
