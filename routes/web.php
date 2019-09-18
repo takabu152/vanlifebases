@@ -7,6 +7,7 @@ use App\storeservice;
 use App\Service;
 use Illuminate\Http\Request;
 use App\Booking;
+use App\Hostbooking;
 
 /*
 |--------------------------------------------------------------------------
@@ -64,7 +65,6 @@ Route::get('/storedetail/{id}', function ($id) {
 });
 
 Auth::routes();
-
 Route::get('/home', 'HomeController@index')->name('home');
 
 // 施設一覧の作成
@@ -72,5 +72,17 @@ Route::get('/dispstores', function () {
     return view('dispstores');
 });
 
-// 予約一覧の作成
-Route::get('/booking', 'BookingController@index')->name('home');
+// 一般ユーザーでログインした場合
+Route::group(['middleware' => ['auth','can:user-higher']], function () {
+    Route::get('/booking', 'BookingController@index')->name('home');
+});
+
+// ホストでログインした場合
+Route::group(['middleware' => ['auth','can:host-higher']], function () {
+    Route::get('/booking', 'BookingController@index')->name('home');
+    Route::get('/hostbooking', 'HostbookingController@index')->name('home');
+});
+
+// システム管理者でログインした場合
+Route::group(['middleware' => ['auth','can:system-only']], function () {
+});
