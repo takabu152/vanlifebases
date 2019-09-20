@@ -45,7 +45,7 @@
     <style>
 
         body {
-            color: #484848;
+            color: #808080;
             /* font-family: 'Roboto', sans-serif;
             font-family: 'Noto Sans JP', sans-serif; */
             height: 2000px;
@@ -55,7 +55,7 @@
             /* text-shadow: 1px 1px 1px gray; */
             font-weight: 500;
             text-align: left;
-            color: #f79469;
+            color: #808080 ;
         }
 
         .card-body {

@@ -30,74 +30,38 @@
         html,
         body {
             background-color: #fff;
-            color: #636b6f;
-            /* font-family: 'Raleway', sans-serif; */
+            color: #808080;
             font-weight: 100;
-            /* color: white; */
-            /* height: 100vh; */
             margin: 0 auto;
-        }
-
-        .flex-center {
-            align-items: center;
-            justify-content: center;
-        }
-
-        .container {
-            display: table;
-        }
-
-        .position-ref {
-            position: relative;
-        }
-
-        .top-right {
-            position: absolute;
-            right: 10px;
-            top: 18px;
-        }
-
-        .content {
-            text-align: center;
-            display: flex;
-            z-index: 100;
-        }
-
-        .title {
-            font-size: 55px;
-        }
-
-        .links>a {
-            color: #636b6f;
-            padding: 0 25px;
-            font-size: 12px;
-            font-weight: 600;
-            letter-spacing: .1rem;
-            text-decoration: none;
-            text-transform: uppercase;
-        }
-
-        .m-b-md {
-            margin-bottom: 30px;
         }
 
         .main-img {
             vertical-align:bottom;
             width: 100%;
-            height: 800px;
+            height: 700px;
             object-fit: cover;
-        }
-
-        .message {
-            text-align: left;
-            padding-top: 32px;
-            display: table-cell;
-            color: black;
+            margin-bottom: 80px;
         }
 
         .contents {
             display: flex;
-            
+        }
+
+        ul {
+            float: left;
+        } 
+
+        li {
+            float: left;
+            list-style-type: none;
+        }
+
+        h1 {
+            border-bottom: solid 1px;
+        }
+
+        .sub-img {
+            width: 10%;
         }
 
     </style>
@@ -107,7 +71,6 @@
         
     @include('parts.header')
     
-
     @php
         $selecttopstoreimages = $storeimages
         ->where('storeid',$store->storeid)
@@ -125,19 +88,20 @@
 
     <div class="container flex-center position-ref full-height">
 
-        <div class="contents ">
+        <section class="contents">
             <div class="main-message">
                 <h1>{{ $store->storename }}【{{$store->storeaddress01}}】</h1>
-                <h2>県名:{{$store->storeaddress01}}</h2>
                 <h3>郵便番号:{{$store->postalcode}}</h3>
                 <h3>住所01:{{$store->storeaddress02}}</h3>
             {{-- <div>住所02:{{$store->storeaddress03}}</div> --}}
-            </div>
+             <!-- 施設メイン情報の表示 -->
+                <h2>ユーザーへの一言:{{$store->forusermessage}}</h2>
+                <div>アピールポイント:{{$store->salespointmessage}}</div>
+            {{-- <div>websiteURL:{{$store->websiteurl}}</div> --}}            
 
             <div class="sub-message">
             <!-- ここからコンテンツの表示を行う。 -->
-            <!-- 表示領域 -->
-
+            
             <!-- 施設無料提供サービスの取得 -->
             @php
             $selectfreestoreservices = $storeservices
@@ -151,13 +115,6 @@
             ->where('paidserviceflg',1);
             @endphp
 
-
-            {{-- 施設写真の取得(トップ画像のみ取得)
-            @php
-            $selecttopstoreimages = $storeimages
-            ->where('storeid',$store->storeid)´
-            ->where('imagedivision',1);
-            @endphp --}}
 
             <!-- 施設写真の取得(サブ画像のみ取得) -->
             @php
@@ -173,10 +130,6 @@
             <img src={{ $topstoreimage->imageurl }}>
             @endforeach --}}
 
-            <!-- 施設メイン情報の表示 -->
-            <h2>ユーザーへの一言:{{$store->forusermessage}}</h2>
-            <div>アピールポイント:{{$store->salespointmessage}}</div>
-            {{-- <div>websiteURL:{{$store->websiteurl}}</div> --}}
 
             <!-- 無料施設サービスのループ -->
             <div>無料施設サービス一覧</div>
@@ -190,15 +143,17 @@
             @foreach($selectfreeservices as $freeservice)
             <ul> 
             {{-- <div>アイコンURL:{{$freeservice->serviceiconimageurl}}</div> --}}
-            <img src={{$freeservice->serviceiconimageurl}}>
-            <div>サービス名:{{$freestoreservice->unitpricename}}</div>
+                <li><img class="icon" src={{$freeservice->serviceiconimageurl}}></li>
+            {{-- <div>サービス名:{{$freestoreservice->unitpricename}}</div> --}}
+            </ul>
+            @endforeach
             @endforeach
 
-            @endforeach
-            </div>
         </div>
+        </div>
+        
 
-
+</div>
             <!-- 有料施設サービスのループ -->
             <div>有料施設サービス一覧</div>
             @foreach($selectpaidstoreservices as $paidstoreservice)
@@ -209,7 +164,7 @@
             @endphp
 
             @foreach($selectpaidservices as $paidservice)
-            <div>アイコンURL:{{$paidservice->serviceiconimageurl}}</div>
+            {{-- <div>アイコンURL:{{$paidservice->serviceiconimageurl}}</div> --}}
             {{-- <img src={{$paidservice->serviceiconimageurl}}> --}}
             <div>サービス名:{{$paidstoreservice->unitpricename}}</div>
             <div>料金:{{$paidstoreservice->unitprice}}円</div>
@@ -217,15 +172,11 @@
 
             @endforeach
 
-            <!-- 施設イメージのループ -->
-            <!-- ここで施設のサブ画像を表示させる。 -->
-            @foreach($selectsubstoreimages as $substoreimage)
-            <div>画像URL:{{ $substoreimage->imageurl }}</div>
-            {{-- <img src={{ $substoreimage->imageurl }}> --}}
-            @endforeach
+
 
         </div>
-    </div>
+
+    </section>
 
     {{-- <footer>
 
@@ -245,6 +196,31 @@
         @endif
 
     </footer> --}}
+
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+
+    <script>
+    $(function() {
+        var area2PosTop = $('#area2').offset().top;
+        var area3PosTop = $('#area3').offset().top;
+        var ashPosTop = $('#ashColorArea').offset().top;
+        
+        $(window).scroll(function() {
+            var value = $(this).scrollTop();  //スクロール値を取得
+            $('#scrollValue').text(value);
+        
+            // Area1
+            $('#area1').css('background-position-y', value);
+        
+            // Area2
+            if (value > area2PosTop) {
+            $('#area2').css('background-position-y', value - area2PosTop);
+            console.log('area2 variable');
+            } else {
+            $('#area2').css('background-position-y', 'top');
+            console.log('area2 top');
+            }
+    </script>
 </body>
 
 </html>
