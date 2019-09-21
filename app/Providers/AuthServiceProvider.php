@@ -36,7 +36,7 @@ class AuthServiceProvider extends ServiceProvider
         });
         // 一般ユーザ以上（つまり全権限）に許可・・今の所一般ユーザのみ
         Gate::define('user-higher', function ($user) {
-            return ($user->usertypeflg == 0);
+            return ($user->usertypeflg == 0 || $user->usertypeflg == 1 || $user->usertypeflg == 9);
         });
     }
 }

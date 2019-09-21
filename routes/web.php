@@ -79,7 +79,7 @@ Route::group(['middleware' => ['auth','can:user-higher']], function () {
 
 // ホストでログインした場合
 Route::group(['middleware' => ['auth','can:host-higher']], function () {
-    Route::get('/booking', 'BookingController@index')->name('home');
+    // Route::get('/booking', 'BookingController@index')->name('home');
     Route::get('/hostbooking', 'HostbookingController@index')->name('home');
 });
 
