@@ -30,17 +30,11 @@
         html,
         body {
             background-color: #fff;
-            color: #636b6f;
+            color: #808080;
             /* font-family: 'Raleway', sans-serif; */
             font-weight: 100;
-            /* color: white; */
             /* height: 100vh; */
             margin: 0 auto;
-        }
-
-
-        .full-height {
-            height: 100vh;
         }
 
         .flex-center {
@@ -57,10 +51,6 @@
             position: absolute;
             right: 10px;
             top: 18px;
-        }
-
-        .content {
-            text-align: center;
         }
 
         .title {
@@ -102,6 +92,40 @@
         .main-img {
             object-fit: contain;
         }
+
+        .container {
+            top: 232px;
+        }
+
+        .contents {
+            width: 80%;
+        }
+
+        table {
+            color: #808080;
+        }
+
+        th {
+            width: 25%;
+            font-size: 24px;
+        }
+
+        td {
+            font-size: 16px;
+        }
+
+        img {
+            width: 16%;
+        }
+
+        a {
+            color: #808080;
+        }
+
+        a:hover {
+            text-decoration: none;
+            color: #808080;
+        }
     </style>
 </head>
 
@@ -109,33 +133,43 @@
 
     @include('parts.header')
 
-    <div class="flex-center position-ref full-height">
+    <div class="flex-center position-ref container">
 
-        <div class="content">
+        <div class="contents">
             <div class="title m-b-md">
                 <table class="table">
-                    <!-- <caption>予約一覧</caption> -->
+                    <!-- <caption>ホスト予約確認</caption> -->
                     <thead>
                         <tr>
-                            <th scope="col">施設名</th>
-                            <th scope="col">チェックイン</th>
-                            <th scope="col">チェックアウト</th>
-                            <th scope="col">支払い金額</th>
+                            <th scope="col"><img class="host" src="{{ asset('img/host.png') }}" alt=""></th>
+                            <th scope="col"><img class="bookinguser" src="{{ asset('img/host.png') }}" alt=""></th>
+                            <th scope="col"><img class="status" src="{{ asset('img/host.png') }}" alt=""></th>
+                            <th scope="col"><img class="checkin" src="{{ asset('img/checkin.png') }}" alt=""></th>
+                            <th scope="col"><img class="checkout" src="{{ asset('img/checkout.png') }}" alt=""></th>
+                            <th scope="col"><img class="pay" src="{{ asset('img/pay.png') }}" alt=""></th>
+                            <th scope="col"><img class="vacancy" src="{{ asset('img/host.png') }}" alt=""></th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($bookings as $booking)
                         <!-- 施設名をstoresから取得 -->
+                        <!-- @php
+                        var_dump($stores);
+                        @endphp -->
                         @php
                         $bookingstorenames = $stores
-                        ->where('storeid', $booking->storeid);
+                        ->where('hostid', $booking->storeid);
                         @endphp
+
                         <tr>
                             @foreach ($bookingstorenames as $bookingstorename)
                             <td><a href="{{ url('storedetail/'.$bookingstorename->storeid) }}.submit()">{{
                                     $bookingstorename->storename }}</td>
+                            <td>{{ $booking->paymentmoney }}</td>
+                            <td>{{ $booking->paymentmoney }}</td>
                             <td>{{ $booking->checkinday }}</td>
                             <td>{{ $booking->checkoutday }}</td>
+                            <td>{{ $booking->paymentmoney }}</td>
                             <td>{{ $booking->paymentmoney }}</td>
                         </tr>
                         @endforeach
@@ -150,7 +184,7 @@
             <!-- 施設無料提供サービスの取得 -->
         </div>
     </div>
-    <footer>
+    {{-- <footer>
 
         <div class="title m-b-md">
             VanLife
@@ -167,7 +201,7 @@
         </div>
         @endif
 
-    </footer>
+    </footer> --}}
 </body>
 
 </html>
