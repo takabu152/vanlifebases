@@ -7,6 +7,7 @@ use App\storeservice;
 use App\Service;
 use Illuminate\Http\Request;
 use App\Booking;
+use App\Hostbooking;
 
 /*
 |--------------------------------------------------------------------------
@@ -63,7 +64,6 @@ Route::get('/storedetail/{id}', function ($id) {
 });
 
 Auth::routes();
-
 Route::get('/home', 'HomeController@index')->name('home');
 
 // 施設一覧の作成
@@ -79,3 +79,16 @@ Route::post('/storedetail', 'BookingController@store')->name('home');
 
 // 予約キャンセル処理の作成-gimoto
 Route::post('/booking/cancel', 'BookingController@cancel');
+// 一般ユーザーでログインした場合
+Route::group(['middleware' => ['auth', 'can:user-higher']], function () {
+    Route::get('/booking', 'BookingController@index')->name('home');
+});
+
+// ホストでログインした場合
+Route::group(['middleware' => ['auth', 'can:host-higher']], function () {
+    Route::get('/booking', 'BookingController@index')->name('home');
+    Route::get('/hostbooking', 'HostbookingController@index')->name('home');
+});
+
+// システム管理者でログインした場合
+Route::group(['middleware' => ['auth', 'can:system-only']], function () { });

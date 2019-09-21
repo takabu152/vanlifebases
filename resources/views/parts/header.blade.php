@@ -12,7 +12,6 @@
     .title {
         font-size: 55px;
         left: 80px;
-        /* text-shadow: 1px 2px 1px; */
         position: absolute;
     }
 
@@ -68,9 +67,18 @@
         @auth
         <div class="collapse navbar-collapse justify-content-end" id="navbar">
             <ul class="navbar-nav">
+                @can('host-higher') {{-- ホスト権限以上に表示される --}}
                 <li class="nav-item active">
                     <a class="nav-link" href="{{ url('/booking') }}">予約一覧 <span class="sr-only">(現位置)</span></a>
                 </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ url('/hostbooking') }}">ホスト予約確認 <span class="sr-only">(現位置)</span></a>
+                </li>
+                @elsecan('user-higher') {{-- 一般権限以上に表示される --}}
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ url('/booking') }}">予約一覧 <span class="sr-only">(現位置)</span></a>
+                </li>
+                @endcan
                 <li class="nav-item active">
 
                     <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();
@@ -95,13 +103,5 @@
         @endauth
         @endif
     </nav>
-
-
-
-    {{-- <div class="title col-md-2">
-        VANLIFEBASES
-    </div> --}}
-
-
 
 </header>
