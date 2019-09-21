@@ -106,7 +106,6 @@
 <body>
         
     @include('parts.header')
-    
 
     @php
         $selecttopstoreimages = $storeimages
@@ -196,8 +195,8 @@
 
             @endforeach
             </div>
-        </div>
 
+        </div>
 
             <!-- 有料施設サービスのループ -->
             <div>有料施設サービス一覧</div>
@@ -214,7 +213,6 @@
             <div>サービス名:{{$paidstoreservice->unitpricename}}</div>
             <div>料金:{{$paidstoreservice->unitprice}}円</div>
             @endforeach
-
             @endforeach
 
             <!-- 施設イメージのループ -->
@@ -224,27 +222,69 @@
             {{-- <img src={{ $substoreimage->imageurl }}> --}}
             @endforeach
 
+            @if (Route::has('login'))
+             {{-- @include('parts.reservation') --}}
+             @auth
+                <div class="row">
+                    <div class="col-md-12">
+                        @include('common.errors')
+
+                            <form action="{{ url('/storedetail')}}" method="POST">
+                                {{ csrf_field() }}
+
+                                <!-- storename -->
+                                <div class="form-group col-5">
+                                    <label for="storename">施設名</label>
+                                    <input type="text" id="storename" name="storename" class="form-control" value="{{$store->storename}}">
+                                </div>
+                                <!-- checkinday -->
+                                <div class="form-group col-5">
+                                    <label for="checkinday">チェックイン</label>
+                                    <input type="date" id="checkinday" name="checkinday" class="form-control" value="$book->checkinday">
+                                </div>
+                                <!-- checkoutday -->
+                                <div class="form-group col-5">
+                                    <label for="checkoutday">チェックアウト</label>
+                                    <input type="date" id="checkoutday" name="checkoutday" class="form-control" value="$book->checkoutday">
+                                </div>
+                                <!-- paymentmoney -->
+                                <div class="form-group col-5">
+                                    <label for="paymentmoney">料金</label>
+                                    <input type="number" id="paymentmoney" name="paymentmoney" class="form-control" value="$book->paymentmoney">
+                                </div>
+                                <!-- Reserveボタン -->
+                                <div class="well well-sm">
+                                    <button type="submit" class="btn btn-primary">予約</button>
+                                    {{-- <a class="btn btn-link pull-right" href="{{ url('/') }}">Back</a> --}}
+                                </div>
+                                <!-- guestid値を送信 -->
+                                @php
+                                $user=Auth::user();
+                                @endphp
+                                <input type="hidden" name="guestid" value="{{$user->id}}">
+                                <!-- storeid値を送信 -->
+                                <input type="hidden" name="storeid" value="{{$store->storeid}}">
+                                <!-- storeemail1値を送信 -->
+                                <input type="hidden" name="storeemail1" value="{{$store->emai1}}">
+                                <!-- storeemail2を送信 -->
+                                <input type="hidden" name="storeemail2" value="{{$store->email2}}">
+                                
+                            </form>
+
+                        <a class="btn btn-link pull-right" href="{{ url('/welcome') }}">施設一覧へ戻る</a>
+                    </div>
+                </div>
+                
+            @else
+            {{-- partsフォルダのlogin.blade.php読込み --}}
+            @include('parts.login')
+            @endauth
+            @endif
         </div>
     </div>
 
-    {{-- <footer>
+@include('parts.footer')
 
-        <div class="title m-b-md">
-            VanLife
-        </div>
-
-        @if (Route::has('login'))
-        <div class="top-right links">
-            @auth
-            <a href="{{ url('/home') }}">Home</a>
-            @else
-            <a href="{{ route('login') }}">ログイン</a>
-            <a href="{{ route('register') }}">ユーザー登録</a>
-            @endauth
-        </div>
-        @endif
-
-    </footer> --}}
 </body>
 
 </html>
