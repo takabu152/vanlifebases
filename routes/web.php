@@ -36,13 +36,12 @@ Route::get('/', function () {
     $services = DB::table('services')
         ->get();
 
-
-
     //$stores = Store::orderBy('storeid', 'asc')->get();
     return view('welcome', ['stores' => $stores, 'storeimages' => $storeimages, 'storeservices' => $storeservices, 'services' => $services]);
     //return view('welcome');
 });
 
+// 各施設の詳細画面表示
 Route::get('/storedetail/{id}', function ($id) {
 
     //Welcomeページで施設（コンテンツ）を一覧表示するため、データを取得する。
@@ -74,3 +73,9 @@ Route::get('/dispstores', function () {
 
 // 予約一覧の作成
 Route::get('/booking', 'BookingController@index')->name('home');
+
+// 各施設の詳細画面からの予約登録処理-gimoto
+Route::post('/storedetail', 'BookingController@store')->name('home');
+
+// 予約キャンセル処理の作成-gimoto
+Route::post('/booking/cancel', 'BookingController@cancel');

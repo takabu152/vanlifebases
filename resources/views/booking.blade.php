@@ -136,7 +136,6 @@
     @include('parts.header')
 
     <div class="flex-center position-ref container">
-
         <div class="contents">
             <div class="title m-b-md">
                 <table class="table">
@@ -147,6 +146,7 @@
                             <th scope="col"><img class="checkin" src="{{ asset('img/checkin.png') }}" alt=""></th>
                             <th scope="col"><img class="checkout" src="{{ asset('img/checkout.png') }}" alt=""></th>
                             <th scope="col"><img class="pay" src="{{ asset('img/pay.png') }}" alt=""></th>
+                            <th scope="col"><img class="cancel" src="{{ asset('img/') }}" alt=""></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -163,6 +163,42 @@
                             <td>{{ $booking->checkinday }}</td>
                             <td>{{ $booking->checkoutday }}</td>
                             <td>{{ $booking->paymentmoney }}</td>
+                            <td>
+                                <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo">キャンセル</button>
+                                <div id="demo" class="collapse">
+                                    {{-- キャンセル料金の自動計算組み込む？（チェックイン日から計算） --}}
+                                    <p>本日キャンセルを申し込んだ場合、以下のキャンセル料金が発生します。</p>
+                                    <p>キャンセル料：XXXXX円</p>
+
+                                    <label>
+                                        <input type="checkbox" class="chk" name="hage[]" value="299">キャンセルポリシーに同意の上、キャンセルする。
+                                    </label><br>
+
+                                    <!-- キャンセルボタン -->
+                                    <form action="{{ url('booking/cancel') }}" method="POST">
+                                        <div class="form-group">
+                                            <label for="bookingid">予約番号:{{$booking->id}}</label>
+                                            <input type="number" id="bookingid" name="bookingid" class="form-control" value="{{$booking->id}}" readonly>
+                                        </div>
+{{-- 
+                                        <div class="form-group">
+                                        <input class="form-check-input" type="checkbox" value="4" id="defaultCheck1">
+                                        <label class="form-check-label" for="defaultCheck1">
+                                            標準のチェックボックス
+                                        </label>
+                                        </div> --}}
+
+                                        <div class="well well-sm">
+                                            <button type="submit" id="btn1" class="btn btn-danger"></button>
+                                        </div>
+                                         <!--booking statusは、"4(=キャンセル依頼)"値を送信 -->
+                                        <input type="hidden" name="bookingstatus" value="4" />
+                                         <!--booking id値を送信 -->
+                                        {{-- <input type="hidden" name="bookingid" value= "{{$booking->id}}"/> --}}
+                                        {{ csrf_field() }}
+                                    </form>
+                                </div>
+                            </td>
                         </tr>
                         @endforeach
                         @endforeach
@@ -172,28 +208,29 @@
 
             <!-- ここからコンテンツの表示を行う。 -->
             <!-- 表示領域 -->
-
             <!-- 施設無料提供サービスの取得 -->
         </div>
     </div>
-    {{-- <footer>
 
-        <div class="title m-b-md">
-            VanLife
-        </div>
+    <script>
+        // キャンセルポリシーに同意した場合にキャンセル依頼ボタンが有効になる動作
+        $(function(){
+        // 初期状態のボタンは無効
+        $("#btn1").prop("disabled", true);
+            // チェックボックスの状態が変わったら（クリックされたら）
+            $("input[type='checkbox']").on('change', function () {   
+                // チェックされているチェックボックスの数
+                if ($(".chk:checked").length > 0) {
+                // ボタン有効
+                $("#btn1").prop("disabled", false);
+                } else {
+                // ボタン無効
+                $("#btn1").prop("disabled", true);
+                }
+            });
+        });
+    </script>
 
-        @if (Route::has('login'))
-        <div class="top-right links">
-            @auth
-            <a href="{{ url('/welcome') }}">Home</a>
-            @else
-            <a href="{{ route('login') }}">ログイン</a>
-            <a href="{{ route('register') }}">ユーザー登録</a>
-            @endauth
-        </div>
-        @endif
-
-    </footer> --}}
 </body>
 
 </html>
