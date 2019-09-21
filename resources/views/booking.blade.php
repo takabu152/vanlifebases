@@ -162,7 +162,7 @@
                                     $bookingstorename->storename }}</td>
                             <td>{{ $booking->checkinday }}</td>
                             <td>{{ $booking->checkoutday }}</td>
-                            <td>{{ $booking->paymentmoney }}</td>
+                            <td>¥{{ $booking->paymentmoney }}</td>
                         </tr>
                         @endforeach
                         @endforeach

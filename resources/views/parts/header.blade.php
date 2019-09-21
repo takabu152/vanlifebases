@@ -12,7 +12,6 @@
     .title {
         font-size: 55px;
         left: 80px;
-        /* text-shadow: 1px 2px 1px; */
         position: absolute;
     }
 
@@ -104,13 +103,5 @@
         @endauth
         @endif
     </nav>
-
-
-
-    {{-- <div class="title col-md-2">
-        VANLIFEBASES
-    </div> --}}
-
-
 
 </header>
