@@ -142,46 +142,46 @@
                     <thead>
                         <tr>
                             <th scope="col"><img class="host" src="{{ asset('img/host.png') }}" alt=""></th>
-                            <th scope="col"><img class="bookinguser" src="{{ asset('img/host.png') }}" alt=""></th>
-                            <th scope="col"><img class="status" src="{{ asset('img/host.png') }}" alt=""></th>
+                            <th scope="col">status</th>
+                            <th scope="col">guestid</th>
                             <th scope="col"><img class="checkin" src="{{ asset('img/checkin.png') }}" alt=""></th>
                             <th scope="col"><img class="checkout" src="{{ asset('img/checkout.png') }}" alt=""></th>
                             <th scope="col"><img class="pay" src="{{ asset('img/pay.png') }}" alt=""></th>
-                            <th scope="col"><img class="vacancy" src="{{ asset('img/host.png') }}" alt=""></th>
+                            <th scope="col">空室</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($bookings as $booking)
                         <!-- 施設名をstoresから取得 -->
-                        <!-- @php
-                        var_dump($stores);
-                        @endphp -->
-                        @php
-                        $bookingstorenames = $stores
-                        ->where('hostid', $booking->storeid);
-                        @endphp
-
+                        @foreach ($hostbookings as $hostbooking)
                         <tr>
-                            @foreach ($bookingstorenames as $bookingstorename)
-                            <td><a href="{{ url('storedetail/'.$bookingstorename->storeid) }}.submit()">{{
-                                    $bookingstorename->storename }}</td>
-                            <td>{{ $booking->paymentmoney }}</td>
-                            <td>{{ $booking->paymentmoney }}</td>
-                            <td>{{ $booking->checkinday }}</td>
-                            <td>{{ $booking->checkoutday }}</td>
-                            <td>{{ $booking->paymentmoney }}</td>
-                            <td>{{ $booking->paymentmoney }}</td>
+                            <td>{{ $hostbooking->storename }}</td>
+                            @if($hostbooking->bookingstatus === 0)
+                            <td>空き状況確認</td>
+                            @elseif($hostbooking->bookingstatus === 1)
+                            <td>支払URL発行待ち</td>
+                            @elseif($hostbooking->bookingstatus === 2)
+                            <td>支払URL発行済み</td>
+                            @elseif($hostbooking->bookingstatus === 3)
+                            <td>支払完了</td>
+                            @elseif($hostbooking->bookingstatus === 4)
+                            <td>キャンセル申し込み</td>
+                            @elseif($hostbooking->bookingstatus === 5)
+                            <td>キャンセル承諾</td>
+                            @elseif($hostbooking->bookingstatus === 6)
+                            <td>キャンセル料支払待ち</td>
+                            @elseif($hostbooking->bookingstatus === 7)
+                            <td>キャンセル完了</td>
+                            @endif
+                            <td>{{ $hostbooking->guestid }}</td>
+                            <td>{{ $hostbooking->checkinday }}</td>
+                            <td>{{ $hostbooking->checkoutday }}</td>
+                            <td>{{ $hostbooking->paymentmoney }}</td>
+                            <td><button type="submit" class="btn btn-primary">OK</button></td>
                         </tr>
-                        @endforeach
                         @endforeach
                     </tbody>
                 </table>
             </div>
-
-            <!-- ここからコンテンツの表示を行う。 -->
-            <!-- 表示領域 -->
-
-            <!-- 施設無料提供サービスの取得 -->
         </div>
     </div>
     {{-- <footer>
@@ -202,6 +202,7 @@
         @endif
 
     </footer> --}}
+
 </body>
 
 </html>
