@@ -74,11 +74,14 @@ Route::get('/dispstores', function () {
 // 予約一覧の作成
 Route::get('/booking', 'BookingController@index')->name('home');
 
-// 各施設の詳細画面からの予約登録処理-gimoto
-Route::post('/storedetail', 'BookingController@store')->name('home');
+// 各施設の詳細画面から
+Route::post('/booking/cancelreq', 'BookingController@cancelreq');
 
-// 予約キャンセル処理の作成-gimoto
-Route::post('/booking/cancel', 'BookingController@cancel');
+//ajaxがaddにPOSTした際にデータ登録のdataaddcon.phpが発動し、データ登録処理
+// Route::any('add', 'dataaddcon@add');
+
+// 予約登録処理
+Route::post('/storedetail', 'BookingController@store')->name('home');
 
 // 一般ユーザーでログインした場合
 Route::group(['middleware' => ['auth', 'can:user-higher']], function () {

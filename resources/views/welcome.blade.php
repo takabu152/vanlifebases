@@ -137,18 +137,18 @@
     
     @foreach($selectstoreimages as $storeimage)
 
-    <div class="card col-md-4 slider">
+        <div class="card col-md-4 slider">
 
-        <form action="{{ url('storedetail/'.$store->storeid) }}" method="GET">
-            <a target="_blank" href="{{ url('storedetail/'.$store->storeid) }}.submit()">
-            <img class="card-img-top" src="{{ $storeimage->imageurl
-            }}" alt="カードの画像">
-            <div class="card-body">
-                <h2>{{ $store->storename }}【{{$store->storeaddress01}}】</h2>
-                <h3 class="sub-message">{{$store->forusermessage}}</h3>
-                <p class="sub-message"><a>{{$store->websiteurl}}</a></p>
-            </div>
-    </div>
+            <form action="{{ url('storedetail/'.$store->storeid) }}" method="GET">
+                <a target="_blank" href="{{ url('storedetail/'.$store->storeid) }}.submit()">
+                <img class="card-img-top" src="{{ $storeimage->imageurl
+                }}" alt="カードの画像">
+                <div class="card-body">
+                    <h2>{{ $store->storename }}【{{$store->storeaddress01}}】</h2>
+                    <h3 class="sub-message">{{$store->forusermessage}}</h3>
+                    <p class="sub-message"><a>{{$store->websiteurl}}</a></p>
+                </div>
+        </div>
             @endforeach
             
             <!-- 施設サービスのループ -->

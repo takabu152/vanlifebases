@@ -15,6 +15,7 @@ use Validator;
 // Import Mail Facade
 use Illuminate\Support\Facades\Mail;
 use App\Mail\PostSend;
+use App\Mail\CancelReqMail;
 
 class BookingController extends Controller
 {
@@ -23,6 +24,7 @@ class BookingController extends Controller
     {
         $this->middleware('auth');
     }
+
     //表示処理関数
     public function index()
     {
@@ -76,46 +78,76 @@ class BookingController extends Controller
         return redirect('/booking');
     }
 
-    // 予約キャンセル関数-gimoto
-    public function cancel(Request $request)
+    // 予約キャンセル関数
+    public function cancelreq(Request $request)
     {
-        dd($request->bookingstatus);
-
         //バリデーション
         $validator = Validator::make($request->all(), [
-            'id' => 'required',
-            'bookingstatus' => 'required',
+            'bookingid' => 'required',
+            'storeid' => 'required',
+            'guestid' => 'required'
         ]);
         //バリデーション:エラー
         if ($validator->fails()) {
-            return redirect('/booking')
+            return redirect('/')
                 ->withInput()
                 ->withErrors($validator);
         }
+        //データ更新処理
+        // bookingsテーブルのbookingstatusカラムに整数4（キャンセル依頼）を入れる
+        $cancelnum = '4';
+        $bookingid = $request->bookingid;
+        $book = Booking::find($bookingid);
+        $book->bookingstatus = $cancelnum;
+        $book->save();
 
-        //bookingsテーブルbookingstatusデータ更新処理
-        $booking = Booking::find($request->id);
-        $booking->bookingstatus = $request->bookingstatus;
-        $booking->save();
+        // 文字列を直接そのままメールしたい場合は、rawメソッドを使う。
+        Mail::raw(
+            'キャンセルリクエストがありました。',
+            function ($message) {
+                $message
+                    ->to('yanagimotoaki@gmail.com')
+                    // ->cc()
+                    // ->bcc()
+                    ->subject("キャンセルリクエストがありました。")
+                    ->from('VanlifeBases');
+            }
+        );
+
 
         // メール通知機能
         // Mail::send(
-        //     // どんな内容を？テンプレートのファイル指定
-        //     'emails.cancelrequest',
+        //     // メールの文章。テンプレートとなるviewファイル指定
+        //     'emails.cancelrequestmail',
         //     [
-        //         // "message"がview/emails/cancelrequest.blade.phpへ渡る
-        //         "message" => "予約のキャンセルが申し込まれました。"
-
+        //         // viewに渡す配列 "message"がview/emails/cancelrequestmail.blade.phpへ渡る
+        //         "message" => "キャンセルリクエストがありました。"
         //     ],
         //     function ($message) {
-        //         $user = Auth::user();
+        //         // $user = Auth::user();
         //         $message
-        //             ->to($user->email)
+        //             ->to("yanagimotoaki@gmail.com")
         //             ->subject("お知らせ")
         //             ->from('connect@vanlifebases.com');
         //     }
         // );
 
+        // ゲストのメールアドレスを取得
+        // $user = Auth::user();
+
+        // // 施設のメールアドレスを取得
+        // $store = DB::table('stores')
+        //     ->where('storeid', $request->storeid)
+        //     ->get();
+        // // $storeemail1 = $store->emai1;
+        // // $storeemail2 = $store->email2;
+
+        // Mail::to($user->email)
+        //     ->cc('connect@vanlifebases.com')
+        //     // ->bcc([$storeemail1, $storeemail2])
+        //     ->send(new CancelReqMail($user, $book, $store));
+
+        //リダイレクト
         return redirect('/booking');
     }
 }
