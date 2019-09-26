@@ -10,7 +10,8 @@
     <link rel="shortcut icon" href="{{ asset('img/favicon.ico') }}">
 
     <script src="{{ asset('js/app.js') }}" defer></script>
-    {{-- <link href="{{ asset('css/app.css') }}" rel="stylesheet"> --}}
+    {{--
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet"> --}}
 
 
     <title>VanLife</title>
@@ -43,19 +44,18 @@
 
     <!-- Styles -->
     <style>
-
         body {
             color: #808080;
             /* font-family: 'Roboto', sans-serif;
             font-family: 'Noto Sans JP', sans-serif; */
             height: 2000px;
         }
-        
+
         h2 {
             /* text-shadow: 1px 1px 1px gray; */
             font-weight: 500;
             text-align: left;
-            color: #808080 ;
+            color: #808080;
         }
 
         .card-body {
@@ -91,7 +91,7 @@
 
         .sub-message {
             text-align: left;
-        } 
+        }
 
         a {
             color: gray;
@@ -105,13 +105,11 @@
         .card {
             border: none;
         }
-
-
     </style>
 </head>
 
 <body>
-  
+
     {{-- partsフォルダのheaderを読み込む --}}
     @include('parts.header')
 
@@ -134,77 +132,76 @@
     ->where('storeid',$store->storeid)
     ->where('imagedivision',1);
     @endphp
-    
+
     @foreach($selectstoreimages as $storeimage)
 
-        <div class="card col-md-4 slider">
+    <div class="card col-md-4 slider">
 
-            <form action="{{ url('storedetail/'.$store->storeid) }}" method="GET">
-                <a target="_blank" href="{{ url('storedetail/'.$store->storeid) }}.submit()">
+        <form action="{{ url('storedetail/'.$store->storeid) }}" method="GET">
+            <a target="_blank" href="{{ url('storedetail/'.$store->storeid) }}.submit()">
                 <img class="card-img-top" src="{{ $storeimage->imageurl
-                }}" alt="カードの画像">
+            }}" alt="カードの画像">
                 <div class="card-body">
                     <h2>{{ $store->storename }}【{{$store->storeaddress01}}】</h2>
                     <h3 class="sub-message">{{$store->forusermessage}}</h3>
                     <p class="sub-message"><a>{{$store->websiteurl}}</a></p>
                 </div>
-        </div>
-            @endforeach
-            
-            <!-- 施設サービスのループ -->
-            @foreach($selectstoreservices as $storeservice)
+    </div>
+    @endforeach
 
-            <!-- アイコン画像の取得 -->
-            @php
-            $selectservices = $services
-            ->where('serviceid',$storeservice->serviceid);
-            @endphp
+    <!-- 施設サービスのループ -->
+    @foreach($selectstoreservices as $storeservice)
 
-            {{-- @foreach($selectservices as $service)
-            <div class="icon-img">
-                <ul>
-                    <li>
-                        <img  class="icon-img-contents" src="{{$service->serviceiconimageurl}}">
-                    </li>
-                </ul>
-            </div>
-            @endforeach --}}
-            @endforeach
-        </a>
-        </form>
-    
+    <!-- アイコン画像の取得 -->
+    @php
+    $selectservices = $services
+    ->where('serviceid',$storeservice->serviceid);
+    @endphp
+
+    {{-- @foreach($selectservices as $service)
+    <div class="icon-img">
+        <ul>
+            <li>
+                <img class="icon-img-contents" src="{{$service->serviceiconimageurl}}">
+            </li>
+        </ul>
+    </div>
+    @endforeach --}}
+    @endforeach
+    </a>
+    </form>
+
 
     @endforeach
     @endif
-    
+
 
     {{-- <script>
-    $('.slider').slick({
-    autoplay:true,
-    autoplaySpeed:5000,
-    dots:true,
-    slidesToShow:4,
-    responsive:[
-        {
-            breakpoint: 1024,
-            settings:{
-                slidesToShow:3,
-            }
-        },
-        {
-            breakpoint: 768,
-            settings:{
-                slidesToShow:2,
-            }
-        },
-        {
-            breakpoint: 480,
-            settings:{
-                slidesToShow:1,
-            }
-        },
-    ]
-});
+        $('.slider').slick({
+            autoplay: true,
+            autoplaySpeed: 5000,
+            dots: true,
+            slidesToShow: 4,
+            responsive: [{
+                    breakpoint: 1024,
+                    settings: {
+                        slidesToShow: 3,
+                    }
+                },
+                {
+                    breakpoint: 768,
+                    settings: {
+                        slidesToShow: 2,
+                    }
+                },
+                {
+                    breakpoint: 480,
+                    settings: {
+                        slidesToShow: 1,
+                    }
+                },
+            ]
+        });
     </script> --}}
 
 </body>

@@ -89,10 +89,11 @@ Route::group(['middleware' => ['auth', 'can:user-higher']], function () {
 });
 
 // ホストでログインした場合
-Route::group(['middleware' => ['auth', 'can:host-higher']], function () {
-    Route::get('/booking', 'BookingController@index')->name('home');
+Route::group(['middleware' => ['auth','can:host-higher']], function () {
+    // Route::get('/booking', 'BookingController@index')->name('home');
     Route::get('/hostbooking', 'HostbookingController@index')->name('home');
 });
 
 // システム管理者でログインした場合
-Route::group(['middleware' => ['auth', 'can:system-only']], function () { });
+Route::group(['middleware' => ['auth', 'can:system-only']], function () {
+});
