@@ -362,7 +362,6 @@
                 $('#check').removeAttr('disabled'); 
                 $('.cancelbtn').attr('disabled', 'disabled');
                 alerttext.innerHTML="キャンセルポリシーに同意する。";
-
             }
         });
 
@@ -415,7 +414,7 @@
         .then(response => {
             console.log(response);
             alert('キャンセルリクエストが送信されました。');
-            // window.location.reload();
+            window.location.reload();
         });
         
         //  {{-- ajaxのスクリプトを読み込むと"jquery": "^3.2",と競合してモーダルが動かなくなる --}}

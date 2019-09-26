@@ -24,11 +24,12 @@ class CancelReqMail extends Mailable
      *
      * @return void
      */
-    public function __construct($user, $book, $store)
+    public function __construct($user, $book, $storename)
     {
         $this->user = $user;
         $this->book = $book;
-        $this->store = $store;
+        $this->storename = $storename;
+        // dd($storename);
     }
 
     /**
@@ -44,7 +45,7 @@ class CancelReqMail extends Mailable
                 'UserName' => $this->user->name,
                 'Checkinday' => $this->book->checkinday,
                 'Checkoutday' => $this->book->checkoutday,
-                'StoreName' => $this->store->storename,
+                'StoreName' => $this->storename,
             ])
             ->subject('Vanlifebases キャンセル申込')
             ->view('emails.cancelrequestmail');

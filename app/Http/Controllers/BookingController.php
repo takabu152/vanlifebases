@@ -101,51 +101,22 @@ class BookingController extends Controller
         $book->bookingstatus = $cancelnum;
         $book->save();
 
-        // 文字列を直接そのままメールしたい場合は、rawメソッドを使う。
-        Mail::raw(
-            'キャンセルリクエストがありました。',
-            function ($message) {
-                $message
-                    ->to('yanagimotoaki@gmail.com')
-                    // ->cc()
-                    // ->bcc()
-                    ->subject("キャンセルリクエストがありました。")
-                    ->from('VanlifeBases');
-            }
-        );
-
-
-        // メール通知機能
-        // Mail::send(
-        //     // メールの文章。テンプレートとなるviewファイル指定
-        //     'emails.cancelrequestmail',
-        //     [
-        //         // viewに渡す配列 "message"がview/emails/cancelrequestmail.blade.phpへ渡る
-        //         "message" => "キャンセルリクエストがありました。"
-        //     ],
-        //     function ($message) {
-        //         // $user = Auth::user();
-        //         $message
-        //             ->to("yanagimotoaki@gmail.com")
-        //             ->subject("お知らせ")
-        //             ->from('connect@vanlifebases.com');
-        //     }
-        // );
-
         // ゲストのメールアドレスを取得
-        // $user = Auth::user();
+        $user = Auth::user();
+        // dd($user);
 
-        // // 施設のメールアドレスを取得
-        // $store = DB::table('stores')
-        //     ->where('storeid', $request->storeid)
-        //     ->get();
-        // // $storeemail1 = $store->emai1;
-        // // $storeemail2 = $store->email2;
+        // 施設のメールアドレスを取得
+        $store = DB::table('stores')
+            ->where('storeid', $request->storeid)
+            ->first();
+        $storename = $store->storename;
+        $storeemail1 = $store->emai1;
+        $storeemail2 = $store->email2;
 
-        // Mail::to($user->email)
-        //     ->cc('connect@vanlifebases.com')
-        //     // ->bcc([$storeemail1, $storeemail2])
-        //     ->send(new CancelReqMail($user, $book, $store));
+        Mail::to($user->email)
+            ->cc('connect@vanlifebases.com')
+            // ->bcc([$storeemail1, $storeemail2])
+            ->send(new CancelReqMail($user, $book, $storename));
 
         //リダイレクト
         return redirect('/booking');
