@@ -15,6 +15,7 @@ use Validator;
 // Import Mail Facade
 use Illuminate\Support\Facades\Mail;
 use App\Mail\PostSend;
+use App\Mail\CancelReqMail;
 
 class BookingController extends Controller
 {
@@ -23,6 +24,7 @@ class BookingController extends Controller
     {
         $this->middleware('auth');
     }
+
     //表示処理関数
     public function index()
     {
@@ -76,46 +78,47 @@ class BookingController extends Controller
         return redirect('/booking');
     }
 
-    // 予約キャンセル関数-gimoto
-    public function cancel(Request $request)
+    // 予約キャンセル関数
+    public function cancelreq(Request $request)
     {
-        dd($request->bookingstatus);
-
         //バリデーション
         $validator = Validator::make($request->all(), [
-            'id' => 'required',
-            'bookingstatus' => 'required',
+            'bookingid' => 'required',
+            'storeid' => 'required',
+            'guestid' => 'required'
         ]);
         //バリデーション:エラー
         if ($validator->fails()) {
-            return redirect('/booking')
+            return redirect('/')
                 ->withInput()
                 ->withErrors($validator);
         }
+        //データ更新処理
+        // bookingsテーブルのbookingstatusカラムに整数4（キャンセル依頼）を入れる
+        $cancelnum = '4';
+        $bookingid = $request->bookingid;
+        $book = Booking::find($bookingid);
+        $book->bookingstatus = $cancelnum;
+        $book->save();
 
-        //bookingsテーブルbookingstatusデータ更新処理
-        $booking = Booking::find($request->id);
-        $booking->bookingstatus = $request->bookingstatus;
-        $booking->save();
+        // ゲストのメールアドレスを取得
+        $user = Auth::user();
+        // dd($user);
 
-        // メール通知機能
-        // Mail::send(
-        //     // どんな内容を？テンプレートのファイル指定
-        //     'emails.cancelrequest',
-        //     [
-        //         // "message"がview/emails/cancelrequest.blade.phpへ渡る
-        //         "message" => "予約のキャンセルが申し込まれました。"
+        // 施設のメールアドレスを取得
+        $store = DB::table('stores')
+            ->where('storeid', $request->storeid)
+            ->first();
+        $storename = $store->storename;
+        $storeemail1 = $store->emai1;
+        $storeemail2 = $store->email2;
 
-        //     ],
-        //     function ($message) {
-        //         $user = Auth::user();
-        //         $message
-        //             ->to($user->email)
-        //             ->subject("お知らせ")
-        //             ->from('connect@vanlifebases.com');
-        //     }
-        // );
+        Mail::to($user->email)
+            ->cc('connect@vanlifebases.com')
+            // ->bcc([$storeemail1, $storeemail2])
+            ->send(new CancelReqMail($user, $book, $storename));
 
+        //リダイレクト
         return redirect('/booking');
     }
 }

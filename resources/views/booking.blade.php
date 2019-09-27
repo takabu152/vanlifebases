@@ -5,6 +5,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    {{-- CSRF対策 --}}
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>VanLife</title>
 
@@ -24,6 +27,9 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
     </script>
+
+    {{-- ajax制御用 --}}
+    {{-- <script type="text/javascript" src="js/add.js"></script>  --}}
 
     <!-- Styles -->
     <style>
@@ -137,6 +143,7 @@
 
     <div class="flex-center position-ref container">
         <div class="contents">
+            <!-- ここからコンテンツの表示を行う。 -->
             <div class="title m-b-md">
                 <table class="table">
                     <!-- <caption>予約一覧</caption> -->
@@ -146,89 +153,299 @@
                             <th scope="col"><img class="checkin" src="{{ asset('img/checkin.png') }}" alt=""></th>
                             <th scope="col"><img class="checkout" src="{{ asset('img/checkout.png') }}" alt=""></th>
                             <th scope="col"><img class="pay" src="{{ asset('img/pay.png') }}" alt=""></th>
-                            <th scope="col"><img class="cancel" src="{{ asset('img/') }}" alt=""></th>
+                            <th scope="col"><img class="status" src="{{ asset('img/checkout.png') }}" alt=""></th>
+                            <th scope="col"><img class="cancel" src="{{ asset('img/checkout.png') }}" alt=""></th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($bookings as $booking)
-                        <!-- 施設名をstoresから取得 -->
-                        @php
-                        $bookingstorenames = $stores
-                        ->where('storeid', $booking->storeid);
-                        @endphp
-                        <tr>
-                            @foreach ($bookingstorenames as $bookingstorename)
-                            <td><a href="{{ url('storedetail/'.$bookingstorename->storeid) }}.submit()">{{
-                                    $bookingstorename->storename }}</td>
-                            <td>{{ $booking->checkinday }}</td>
-                            <td>{{ $booking->checkoutday }}</td>
-                            <td>{{ $booking->paymentmoney }}</td>
-                            <td>
-                                <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo">キャンセル</button>
-                                <div id="demo" class="collapse">
-                                    {{-- キャンセル料金の自動計算組み込む？（チェックイン日から計算） --}}
-                                    <p>本日キャンセルを申し込んだ場合、以下のキャンセル料金が発生します。</p>
-                                    <p>キャンセル料：XXXXX円</p>
+                            <!-- 施設名をstoresから取得 -->
+                            @php
+                            $bookingstorenames = $stores
+                            ->where('storeid', $booking->storeid);
+                            @endphp
+                            <tr>
+                                @foreach ($bookingstorenames as $bookingstorename)
+                                    <td><a href="{{ url('storedetail/'.$bookingstorename->storeid) }}.submit()">{{
+                                            $bookingstorename->storename }}</td>
+                                    <td>{{ $booking->checkinday}}</td>
+                                    <td>{{ $booking->checkoutday }}</td>                                    
+                                    <td>{{ $booking->paymentmoney }}</td>
+                                    <td>
+                                        @if ($booking->bookingstatus == 0)
+                                        <p>予約未確定</p>
+                                        @elseif ($booking->bookingstatus == 1)
+                                        <p>空き状況確認済み</p>
+                                        @elseif ($booking->bookingstatus == 2)
+                                        <p>支払い待ち</p>
+                                        @elseif ($booking->bookingstatus == 3)
+                                        <p>予約完了</p>
+                                        @elseif ($booking->bookingstatus == 4)
+                                        <p>キャンセル申し込み</p>
+                                        @elseif ($booking->bookingstatus == 5)
+                                        <p>キャンセル承諾</p>
+                                        @elseif ($booking->bookingstatus == 6)
+                                        <p>キャンセル料未払い</p>
+                                        @elseif ($booking->bookingstatus == 7)
+                                        <p>キャンセル済み</p>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        {{-- Modal btn --}}
+                                        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#detailModal" 
+                                        {{-- 必要なパラメーターを渡す --}}
+                                        data-bookingid={{$booking->id}} 
+                                        data-storename={{$bookingstorename->storename}}
+                                        data-storeid={{$bookingstorename->storeid}}
+                                        data-checkinday={{$booking->checkinday}}
+                                        data-checkoutday={{$booking->checkoutday}}
+                                        data-createdat={{$booking->created_at}}
+                                        data-paymentmoney={{$booking->paymentmoney}}
+                                        data-bookingstatus={{$booking->bookingstatus}}>
+                                        詳細
+                                        </button>
+                                        
+                                        {{-- Modal --}}
+                                        <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" 
+                                        aria-labelledby="detailModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
 
-                                    <label>
-                                        <input type="checkbox" class="chk" name="hage[]" value="299">キャンセルポリシーに同意の上、キャンセルする。
-                                    </label><br>
+                                                {{-- Modal content --}}
+                                                <div class="modal-content">
+                                                    {{-- Modal header --}}
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="detailModalLabel">New message</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
 
-                                    <!-- キャンセルボタン -->
-                                    <form action="{{ url('booking/cancel') }}" method="POST">
-                                        <div class="form-group">
-                                            <label for="bookingid">予約番号:{{$booking->id}}</label>
-                                            <input type="number" id="bookingid" name="bookingid" class="form-control" value="{{$booking->id}}" readonly>
+                                                    {{-- 予約の詳細表示 Form --}}
+                                                    <form role="form" id="cancelreq_form">
+
+                                                        {{-- Modal body --}}
+                                                        <div class="modal-body">
+                                                            
+                                                            <div class="form-group">
+                                                                <label for="bookingid" class="col-form-label">予約番号:</label>
+                                                                <input class="form-control" id="bookingid" readonly>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="storename" class="col-form-label">施設名:</label>
+                                                                <input class="form-control" id="storename" readonly>
+                                                            </div>        
+                                                            <div class="form-group">
+                                                                <label for="checkinday" class="col-form-label">チェックイン:</label>
+                                                                <input class="form-control" id="checkinday" readonly>
+                                                            </div>     
+                                                            <div class="form-group">
+                                                                <label for="checkoutday" class="col-form-label">チェックアウト:</label>
+                                                                <input class="form-control" id="checkoutday" readonly>
+                                                            </div> 
+                                                            <div class="form-group">
+                                                                <label for="paymentmoney" class="col-form-label">料金:</label>
+                                                                <input class="form-control" id="paymentmoney" readonly>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="bookingstatus" class="col-form-label">予約状況:</label>
+                                                                <input class="form-control" id="bookingstatus" readonly>
+                                                            </div>
+                                                            {{-- <div class="form-group">
+                                                                <label for="message-text" class="col-form-label">ホストへのメッセージ:</label>
+                                                                <textarea class="form-control" id="message-text"></textarea>
+                                                            </div> --}}
+                                                            <div>
+                                                    
+                                                                <p>キャンセルポリシー：</p>
+                                                                <p>チェックインの5日前までに解約すれば、宿泊料金は全額返金されます。
+                                                                    チェックインまで5日を切ってからの解約やチェックイン後の解約では、
+                                                                    正式なキャンセルから24時間の宿泊料金は返金不可ですが、
+                                                                    それ以降の未泊分は50%返金されます。<a href="#">キャンセルポリシーの詳細</a></p>
+                                                                <input type="checkbox" id="check"/>
+                                                                <span id="alert">キャンセルポリシーに同意する。</p>
+                                                                <label for="check" id="cancelpolicy"></label>
+                                                                
+                                                            </div>
+                                                            <!-- キャンセルボタン -->
+                                                            <div class="well well-sm text-right">
+                                                                <button type="button" class="cancelbtn" >キャンセル</button>
+                                                            </div>
+                                                            <!-- guestid値を送信 -->
+                                                            <input type="hidden" id="guestid" value="{{Auth::user()->id}}" />
+                                                            <!-- storeid値を送信 -->
+                                                            <input type="hidden" id="storeid" />
+                                                        </div>
+                                                        {{-- Modal body ここまで--}}
+                                                    
+                                                    </form>
+                                                    {{-- 予約の詳細表示 Form ここまで--}}
+                                                        
+                                                    {{-- Modal footer --}}
+                                                    <div class="modal-footer">
+                                                    </div>
+                                                    {{-- Modal footer ここまで --}}
+
+                                                </div>
+                                                {{-- Modal content ここまで --}}
                                         </div>
-{{-- 
-                                        <div class="form-group">
-                                        <input class="form-check-input" type="checkbox" value="4" id="defaultCheck1">
-                                        <label class="form-check-label" for="defaultCheck1">
-                                            標準のチェックボックス
-                                        </label>
-                                        </div> --}}
-
-                                        <div class="well well-sm">
-                                            <button type="submit" id="btn1" class="btn btn-danger"></button>
-                                        </div>
-                                         <!--booking statusは、"4(=キャンセル依頼)"値を送信 -->
-                                        <input type="hidden" name="bookingstatus" value="4" />
-                                         <!--booking id値を送信 -->
-                                        {{-- <input type="hidden" name="bookingid" value= "{{$booking->id}}"/> --}}
-                                        {{ csrf_field() }}
-                                    </form>
-                                </div>
-                            </td>
-                        </tr>
+                                    </div>
+    
+                                </td>                               
+                                </tr>
                         @endforeach
                         @endforeach
                     </tbody>
                 </table>
             </div>
 
-            <!-- ここからコンテンツの表示を行う。 -->
-            <!-- 表示領域 -->
-            <!-- 施設無料提供サービスの取得 -->
         </div>
     </div>
 
+    {{-- vueからajaxリクエストを利用してデータを取得するためにaxiosを利用 --}}
+    {{-- <script>src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>src="https://unpkg.com/axios/dist/axios.min.js"></script> --}}
+
+    {{-- ajaxのスクリプトを読み込むと"jquery": "^3.2",と競合してモーダルが動かなくなる --}}
+    {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> --}}
+    
     <script>
-        // キャンセルポリシーに同意した場合にキャンセル依頼ボタンが有効になる動作
+    // モーダルへのデータ受け渡し
+    $('#detailModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget) // Button that triggered the modal
+        var storename = button.data('storename') // Extract info from data-* attributes
+        var storeid = button.data('storeid')
+        var bookingid = button.data('bookingid')
+        var checkinday = button.data('checkinday')
+        var checkoutday = button.data('checkoutday')
+        var paymentmoney = button.data('paymentmoney')
+        var bookingstatus = button.data('bookingstatus') // 
+        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+        var modal = $(this)
+        modal.find('.modal-title').text(storename + 'の予約をキャンセルしますか？')
+        modal.find('#bookingid').val(bookingid)
+        modal.find('#storename').val(storename)
+        modal.find('#storeid').val(storeid)
+        modal.find('#checkinday').val(checkinday)
+        modal.find('#checkoutday').val(checkoutday)
+        modal.find('#paymentmoney').val(paymentmoney)
+        if(bookingstatus == 0){
+            modal.find('#bookingstatus').text("予約未確定").val("0")
+        }else if (bookingstatus == 1){
+            modal.find('#bookingstatus').text("空き状況確認済み").val("1")
+        }else if (bookingstatus == 2){
+            modal.find('#bookingstatus').text("支払い待ち").val("2")
+        }else if (bookingstatus == 3){
+            modal.find('#bookingstatus').text("予約完了").val("3")
+        }else if (bookingstatus == 4){
+            modal.find('#bookingstatus').text("キャンセル申し込み").val("4")
+        }else if (bookingstatus == 5){
+            modal.find('#bookingstatus').text("キャンセル承諾").val("5")
+        }else if (bookingstatus == 6){
+            modal.find('#bookingstatus').text("キャンセル料未払い").val("6")
+        }else if (bookingstatus == 7){
+            modal.find('#bookingstatus').text("キャンセル済み").val("7")
+        }
+
+        // 予約状況が0-3の場合は、キャンセルリクエスト不可
+        $(function() {
+            console.log(bookingstatus);
+            $('#check').attr('disabled', 'disabled');
+            $('.cancelbtn').attr('disabled', 'disabled');
+            var alerttext = document.getElementById("alert");
+            
+            if(bookingstatus > "3"){
+                $('#check').attr('disabled', 'disabled');
+                alerttext.innerHTML="現在の予約状況からはキャンセルリクエストはできません。";
+                $('.cancelbtn').attr('disabled', 'disabled');
+            }else{
+                $('#check').removeAttr('disabled'); 
+                $('.cancelbtn').attr('disabled', 'disabled');
+                alerttext.innerHTML="キャンセルポリシーに同意する。";
+            }
+        });
+
+        //  キャンセルポリシーに同意した場合にキャンセル依頼ボタンが有効になる動作
         $(function(){
-        // 初期状態のボタンは無効
-        $("#btn1").prop("disabled", true);
-            // チェックボックスの状態が変わったら（クリックされたら）
-            $("input[type='checkbox']").on('change', function () {   
-                // チェックされているチェックボックスの数
-                if ($(".chk:checked").length > 0) {
-                // ボタン有効
-                $("#btn1").prop("disabled", false);
-                } else {
-                // ボタン無効
-                $("#btn1").prop("disabled", true);
+            $('.cancelbtn').attr('disabled', 'disabled');
+                $('#check').click(function(){
+                    if(this.checked){
+                    // ボタンを有効化
+                    $('.cancelbtn').attr('disabled', false);
+                }else{
+                    // ボタンを無効化
+                    $('.cancelbtn').attr('disabled', true); 
                 }
             });
         });
+    });
+    
+    // cancelbtnを押したらcontrollerへデータを送信
+    $('.cancelbtn').on('click', function(){
+
+        // データを格納
+        var jsondata = {
+            // storename:$('#storename').val(),
+            storeid:$('#storeid').val(),
+            bookingid:$('#bookingid').val(),
+            // checkinday:$('#checkinday').val(),
+            // checkoutday:$('#checkoutday').val(),
+            // paymentmoney:$('#paymentmoney').val(),
+            guestid:$('#guestid').val()
+            // message:$('#message-text').val()
+        };
+        console.log(jsondata);
+
+        const url = '/booking/cancelreq'; // 送信先 URL
+        fetch(url, {
+            method: "POST", // *GET, POST, PUT, DELETE, etc.
+            mode: "cors", // no-cors, cors, *same-origin
+            cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+            // credentials: "same-origin", // include, same-origin, *omit
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                "Content-Type": "application/json; charset=utf-8",
+                // "Content-Type": "application/x-www-form-urlencoded",
+            },
+            // redirect: "follow", // manual, *follow, error
+            // referrer: "no-referrer", // no-referrer, *client
+            body: JSON.stringify(jsondata), // 本文のデータ型は "Content-Type" ヘッダーと一致する必要があります
+        })
+        .then(response => {
+            console.log(response);
+            alert('キャンセルリクエストが送信されました。');
+            window.location.reload();
+        });
+        
+        //  {{-- ajaxのスクリプトを読み込むと"jquery": "^3.2",と競合してモーダルが動かなくなる --}}
+        // // CSRF対策
+        // $.ajaxSetup({
+        //     headers: {
+        //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+        //     }
+        // });
+
+        // $.ajax({
+        //     url: '/booking/cancelreq', // 送信先 URL
+        //     type: "POST", 
+        //     data: JSON.stringify(jsondata),
+        //     dataType: "json",
+        // }).done(function(data,textStatus,jqXHR){
+        //     $("#p1").text(jqXHR.status); //例：200
+        // 	console.log(data.code); //1
+        // 	console.log(data.name); //eigyou
+        // 	$("#p2").text(JSON.stringify(data));
+        // }).fail(function (jqXHR, textStatus, errorThrown) {
+        //     $("#p1").text("err:"+jqXHR.status); //例：404
+        // 	$("#p2").text(textStatus); //例：error
+        // 	$("#p3").text(errorThrown); //例：NOT FOUND
+        // }).always(function(data){
+        //     console.log('post:complete');
+        // })
+
+    });
+
+
     </script>
 
 </body>

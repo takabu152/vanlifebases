@@ -22,12 +22,14 @@ class HostbookingController extends Controller
     //表示処理
     public function index()
     {
-        $stores = DB::table('stores')
-    ->where('hostid', Auth::id())
-        ->get();
-        $bookings = DB::table('bookings')
+        $hostbookings = DB::table('stores')->where('hostid', Auth::id())
+        ->leftJoin('bookings', 'stores.storeid', '=', 'bookings.storeid')
         ->get();
 
-        return view('hostbooking', ['bookings' => $bookings, 'stores' => $stores]);
+        $users = DB::table('users')
+        ->leftJoin('bookings', 'users.id', '=', 'bookings.guestid')
+        ->get();
+
+        return view('hostbooking', ['hostbookings' => $hostbookings, 'users' => $users]);
     }
 }
