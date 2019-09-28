@@ -66,6 +66,12 @@ Route::get('/storedetail/{id}', function ($id) {
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
+// TOP画面の表示（仮）
+Route::get('/top', function () {
+
+    return view('top');
+});
+
 // 施設一覧の作成
 Route::get('/dispstores', function () {
     return view('dispstores');
@@ -89,11 +95,10 @@ Route::group(['middleware' => ['auth', 'can:user-higher']], function () {
 });
 
 // ホストでログインした場合
-Route::group(['middleware' => ['auth','can:host-higher']], function () {
+Route::group(['middleware' => ['auth', 'can:host-higher']], function () {
     // Route::get('/booking', 'BookingController@index')->name('home');
     Route::get('/hostbooking', 'HostbookingController@index')->name('home');
 });
 
 // システム管理者でログインした場合
-Route::group(['middleware' => ['auth', 'can:system-only']], function () {
-});
+Route::group(['middleware' => ['auth', 'can:system-only']], function () { });
