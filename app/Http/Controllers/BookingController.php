@@ -66,12 +66,12 @@ class BookingController extends Controller
         $user = Auth::user();
         $storename = $request->storename;
         $storeemail1 = $request->storeemail1;
-        $storeemail2 = $request->storeemail2;
+        // $storeemail2 = $request->storeemail2;
 
         Mail::to($user->email)
             ->cc('connect@vanlifebases.com')
-            ->bcc([$storeemail1, $storeemail2])
-            // ->bcc($store_address)
+            ->bcc([$storeemail1])
+            // ->bcc([$storeemail1, $storeemail2])
             ->send(new PostSend($user, $book, $storename));
 
         //「/」ルートにリダイレクト
@@ -111,10 +111,11 @@ class BookingController extends Controller
             ->first();
         $storename = $store->storename;
         $storeemail1 = $store->emai1;
-        $storeemail2 = $store->email2;
+        // $storeemail2 = $store->email2;
 
         Mail::to($user->email)
             ->cc('connect@vanlifebases.com')
+            ->bcc([$storeemail1])
             // ->bcc([$storeemail1, $storeemail2])
             ->send(new CancelReqMail($user, $book, $storename));
 
