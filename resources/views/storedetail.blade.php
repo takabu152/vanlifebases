@@ -86,8 +86,7 @@
     </div>
     @endforeach
 
-    <div class="container flex-center position-ref full-height">
-        <section class="contents">
+        <section class="contents container flex-center position-ref full-height">
 
             <div class="main-message">
 
@@ -147,26 +146,28 @@
                                 </ul>
                             @endforeach
                             @endforeach
+
+                            <div>
+                                <!-- 有料施設サービスのループ -->
+                                <div>有料施設サービス一覧</div>
+                                @foreach($selectpaidstoreservices as $paidstoreservice)
+                                <!-- アイコン画像の取得 -->
+                                @php
+                                $selectpaidservices = $services
+                                ->where('serviceid',$paidstoreservice->serviceid);
+                                @endphp
+    
+                                @foreach($selectpaidservices as $paidservice)
+                                {{-- <div>アイコンURL:{{$paidservice->serviceiconimageurl}}</div> --}}
+                                {{-- <img src={{$paidservice->serviceiconimageurl}}> --}}
+                                <div>サービス名:{{$paidstoreservice->unitpricename}}</div>
+                                <div>料金:{{$paidstoreservice->unitprice}}円</div>
+                                @endforeach
+                                @endforeach
+    
                         </div>
-
-                        <div>
-
-                            <!-- 有料施設サービスのループ -->
-                            <div>有料施設サービス一覧</div>
-                            @foreach($selectpaidstoreservices as $paidstoreservice)
-                            <!-- アイコン画像の取得 -->
-                            @php
-                            $selectpaidservices = $services
-                            ->where('serviceid',$paidstoreservice->serviceid);
-                            @endphp
-
-                            @foreach($selectpaidservices as $paidservice)
-                            {{-- <div>アイコンURL:{{$paidservice->serviceiconimageurl}}</div> --}}
-                            {{-- <img src={{$paidservice->serviceiconimageurl}}> --}}
-                            <div>サービス名:{{$paidstoreservice->unitpricename}}</div>
-                            <div>料金:{{$paidstoreservice->unitprice}}円</div>
-                            @endforeach
-                            @endforeach
+                    </div>
+                    </div>
 
                             {{-- ユーザーログインしている場合のみ、予約画面が表示される。 --}}
                             @if (Route::has('login'))
@@ -233,10 +234,8 @@
                         </div>
 
                     </div>
-                </div>
-            </div>
+            
         </section>
-    </div>
 
 @include('parts.footer')
 

@@ -21,9 +21,9 @@ class CreateBookingsTable extends Migration
             $table->datetime('checkinday');
             $table->datetime('checkoutday');
             $table->integer('paymentmoney');
-            $table->integer('bookingstatus');
-            $table->integer('checkinstatus');
-            $table->boolean('delete');
+            $table->integer('bookingstatus')->default(0);
+            $table->integer('checkinstatus')->default(0);;
+            $table->boolean('delete')->default(0);;
             $table->timestamps();
         });
     }

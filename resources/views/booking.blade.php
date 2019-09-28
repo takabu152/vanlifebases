@@ -166,8 +166,10 @@
                             @endphp
                             <tr>
                                 @foreach ($bookingstorenames as $bookingstorename)
-                                    <td><a href="{{ url('storedetail/'.$bookingstorename->storeid) }}.submit()">{{
-                                            $bookingstorename->storename }}</td>
+                                    <td>
+                                        <a href="{{ url('storedetail/'.$bookingstorename->storeid) }}.submit()">{{
+                                            $bookingstorename->storename }}
+                                    </td>
                                     <td>{{ $booking->checkinday}}</td>
                                     <td>{{ $booking->checkoutday }}</td>                                    
                                     <td>{{ $booking->paymentmoney }}</td>
@@ -193,7 +195,7 @@
                                     <td>
                                         {{-- Modal btn --}}
                                         <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#detailModal" 
-                                        {{-- 必要なパラメーターを渡す --}}
+                                        {{-- 必要なパラメーターを一緒に渡す --}}
                                         data-bookingid={{$booking->id}} 
                                         data-storename={{$bookingstorename->storename}}
                                         data-storeid={{$bookingstorename->storeid}}
@@ -201,9 +203,7 @@
                                         data-checkoutday={{$booking->checkoutday}}
                                         data-createdat={{$booking->created_at}}
                                         data-paymentmoney={{$booking->paymentmoney}}
-                                        data-bookingstatus={{$booking->bookingstatus}}>
-                                        詳細
-                                        </button>
+                                        data-bookingstatus={{$booking->bookingstatus}}>詳細</button>
                                         
                                         {{-- Modal --}}
                                         <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" 
@@ -222,10 +222,8 @@
 
                                                     {{-- 予約の詳細表示 Form --}}
                                                     <form role="form" id="cancelreq_form">
-
                                                         {{-- Modal body --}}
                                                         <div class="modal-body">
-                                                            
                                                             <div class="form-group">
                                                                 <label for="bookingid" class="col-form-label">予約番号:</label>
                                                                 <input class="form-control" id="bookingid" readonly>
@@ -287,12 +285,12 @@
 
                                                 </div>
                                                 {{-- Modal content ここまで --}}
+                                            </div>
                                         </div>
-                                    </div>
-    
-                                </td>                               
-                                </tr>
-                        @endforeach
+                                    </td>
+                                      
+                                @endforeach           
+                            </tr>
                         @endforeach
                     </tbody>
                 </table>
