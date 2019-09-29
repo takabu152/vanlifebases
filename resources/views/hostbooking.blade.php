@@ -134,6 +134,9 @@
     @include('parts.header')
 
     <div class="flex-center position-ref container">
+        <a href="{{ url('/hostbooking')}}" class="btn btn-primary">リロード</a>
+    </div>
+    <div class="flex-center position-ref container">
 
         <div class="contents">
             <div class="title m-b-md">
@@ -170,13 +173,33 @@
                             @elseif($hostbooking->bookingstatus === 6)
                             <td>キャンセル料支払待ち</td>
                             @elseif($hostbooking->bookingstatus === 7)
-                            <td>キャンセル完了</td>
+                            <td>キャンセル</td>
                             @endif
                             <td>{{ $hostbooking->guestid }}</td>
                             <td>{{ $hostbooking->checkinday }}</td>
                             <td>{{ $hostbooking->checkoutday }}</td>
                             <td>{{ $hostbooking->paymentmoney }}</td>
-                            <td><button type="submit" class="btn btn-primary">OK</button></td>
+                            @if($hostbooking->bookingstatus === 0)
+                            <td>
+                                <form action="{{ url('hostbooking' }}" method="POST">
+                                    {{ csrf_field() }}
+                                    <button type="submit" class="btn btn-danger">OK</button>
+                                </form>
+                                <form action="{{ url('hostbooking/' }}" method="POST">
+                                    {{ csrf_field() }}
+                                    <button type="submit" class="btn btn-danger">NG</button>
+                                </form>
+                            </td>
+                            @elseif($hostbooking->bookingstatus === 7)
+                            <td>
+                                <p>NG</p>
+                            </td>
+                            @else
+                            <td>
+                                <p>OK</p>
+                            </td>
+                            @endif
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>
@@ -203,6 +226,9 @@
 
     </footer> --}}
 
+    <script>
+
+    </script>
 </body>
 
 </html>
