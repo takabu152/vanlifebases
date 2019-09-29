@@ -144,6 +144,7 @@
                     <!-- <caption>ホスト予約確認</caption> -->
                     <thead>
                         <tr>
+                            <th scope="col">No.</th>
                             <th scope="col"><img class="host" src="{{ asset('img/host.png') }}" alt=""></th>
                             <th scope="col">status</th>
                             <th scope="col">guestid</th>
@@ -157,6 +158,7 @@
                         <!-- 施設名をstoresから取得 -->
                         @foreach ($hostbookings as $hostbooking)
                         <tr>
+                            <td>{{$loop->index+1}}</td>
                             <td>{{ $hostbooking->storename }}</td>
                             @if($hostbooking->bookingstatus === 0)
                             <td>空き状況確認</td>
@@ -181,12 +183,14 @@
                             <td>{{ $hostbooking->paymentmoney }}</td>
                             @if($hostbooking->bookingstatus === 0)
                             <td>
-                                <form action="{{ url('hostbooking' }}" method="POST">
+                                <form action="{{ url('hostbooking/bookingok') }}" method="POST">
                                     {{ csrf_field() }}
-                                    <button type="submit" class="btn btn-danger">OK</button>
+                                    <input type="hidden" name="bookingid" value="{{$hostbooking->id}}">
+                                    <button type="submit" class="btn btn-primary">OK</button>
                                 </form>
-                                <form action="{{ url('hostbooking/' }}" method="POST">
+                                <form action="{{ url('hostbooking/bookingng') }}" method="POST">
                                     {{ csrf_field() }}
+                                    <input type="hidden" name="bookingid" value="{{$hostbooking->id}}">
                                     <button type="submit" class="btn btn-danger">NG</button>
                                 </form>
                             </td>

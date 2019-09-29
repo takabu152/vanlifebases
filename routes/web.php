@@ -68,7 +68,6 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 // TOP画面の表示（仮）
 Route::get('/top', function () {
-
     return view('top');
 });
 
@@ -98,7 +97,10 @@ Route::group(['middleware' => ['auth', 'can:user-higher']], function () {
 Route::group(['middleware' => ['auth', 'can:host-higher']], function () {
     // Route::get('/booking', 'BookingController@index')->name('home');
     Route::get('/hostbooking', 'HostbookingController@index')->name('home');
+    Route::post('/hostbooking/bookingok', 'HostbookingController@bookingok');
+    Route::post('/hostbooking/bookingng', 'HostbookingController@bookingng');
 });
 
 // システム管理者でログインした場合
-Route::group(['middleware' => ['auth', 'can:system-only']], function () { });
+Route::group(['middleware' => ['auth', 'can:system-only']], function () {
+});

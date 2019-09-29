@@ -10,6 +10,7 @@ use App\Store;
 use App\storeservice;
 use App\Service;
 use App\Hostbooking;
+use App\Booking;
 use Validator;
 
 class HostbookingController extends Controller
@@ -31,5 +32,27 @@ class HostbookingController extends Controller
         ->get();
 
         return view('hostbooking', ['hostbookings' => $hostbookings, 'users' => $users]);
+    }
+
+    //空室確認OKの場合の更新表示
+    public function bookingok(Request $request)
+    {
+        //bookingテーブルのbookingstatusをURL発行に変更
+        $hostbookingcheck = Booking::find($request->bookingid);
+        $hostbookingcheck->bookingstatus = '1';
+        $hostbookingcheck->save();
+        //リダイレクト
+        return redirect('/hostbooking');
+    }
+    
+    //空室確認NGの場合の更新表示
+    public function bookingng(Request $request)
+    {
+        //bookingテーブルのbookingstatusをキャンセルに変更
+        $hostbookingcheck = Booking::find($request->bookingid);
+        $hostbookingcheck->bookingstatus = '7';
+        $hostbookingcheck->save();
+        //リダイレクト
+        return redirect('/hostbooking');
     }
 }
