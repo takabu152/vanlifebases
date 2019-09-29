@@ -48,7 +48,7 @@
             color: #808080;
             /* font-family: 'Roboto', sans-serif;
             font-family: 'Noto Sans JP', sans-serif; */
-            /* height: 2000px; */
+            height: 2000px;
         }
 
         h2 {
@@ -56,10 +56,6 @@
             font-weight: 500;
             text-align: left;
             color: #808080;
-        }
-
-        .event {
-            height: 400px;
         }
 
         .card-body {
@@ -104,13 +100,11 @@
         a:hover {
             text-decoration: none;
             color: gray;
-            cursor: pointer;
         }
 
         .card {
             border: none;
         }
-
     </style>
 </head>
 
@@ -118,11 +112,6 @@
 
     {{-- partsフォルダのheaderを読み込む --}}
     @include('parts.header')
-
-    {{-- イベントページ表示 --}}
-    <div class="event">
-        <img class="logo" src="{{ asset('img/host.png') }}" alt="">
-    </div>
 
     <!-- ここからコンテンツの表示を行う。 -->
     <!-- 表示領域 -->
@@ -144,11 +133,7 @@
     ->where('imagedivision',1);
     @endphp
 
-    
-    
     @foreach($selectstoreimages as $storeimage)
-
-    
 
     <div class="card col-md-4 slider">
 

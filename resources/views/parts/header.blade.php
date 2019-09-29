@@ -55,7 +55,7 @@
 
 <header>
     <nav class="navbar navbar-expand-sm fixed-top shadow navbar-light bg-light">
-        <img class="logo" src="{{ asset('img/logo.png') }}" alt="">
+        <img class="logo" src="{{ asset('landscape/sampleimg.jpg') }}" alt="">
         <a class="navbar-brand" href="/"><strong>VANLIFE</strong>BASES</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar"
             aria-expanded="false" aria-label="ナビゲーションの切替">

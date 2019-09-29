@@ -141,19 +141,6 @@
 
     @include('parts.header')
 
-    @foreach ($bookings as $booking)
-        <!-- 施設名をstoresから取得 -->
-        @php
-        $bookingstorenames = $stores
-        ->where('storeid', $booking->storeid);
-        @endphp
-        {{-- <a href="{{ url('storedetail/'.$bookingstorename->storeid) }}">{{
-        $bookingstorename->storename }} --}}
-    <div>{{ $booking->checkinday}}</div>
-
-
-
-
     <div class="flex-center position-ref container">
         <div class="contents">
             <!-- ここからコンテンツの表示を行う。 -->
@@ -166,17 +153,17 @@
                             <th scope="col"><img class="checkin" src="{{ asset('img/checkin.png') }}" alt=""></th>
                             <th scope="col"><img class="checkout" src="{{ asset('img/checkout.png') }}" alt=""></th>
                             <th scope="col"><img class="pay" src="{{ asset('img/pay.png') }}" alt=""></th>
-                            <th scope="col"><img class="status" src="{{ asset('img/checkout.png') }}" alt="" style="visibility:hidden"></th>
-                            <th scope="col"><img class="cancel" src="{{ asset('img/checkout.png') }}" alt="" style="visibility:hidden"></th>
+                            <th scope="col"><img class="status" src="{{ asset('img/checkout.png') }}" alt=""></th>
+                            <th scope="col"><img class="cancel" src="{{ asset('img/checkout.png') }}" alt=""></th>
                         </tr>
                     </thead>
                     <tbody>
-                        {{-- @foreach ($bookings as $booking)
+                        @foreach ($bookings as $booking)
                             <!-- 施設名をstoresから取得 -->
                             @php
                             $bookingstorenames = $stores
                             ->where('storeid', $booking->storeid);
-                            @endphp --}}
+                            @endphp
                             <tr>
                                 @foreach ($bookingstorenames as $bookingstorename)
                                     <td>

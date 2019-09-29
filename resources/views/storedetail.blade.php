@@ -27,38 +27,12 @@
 
     <!-- Styles -->
     <style>
-        html {
-            font-size: 62.5%;
-        }
-
+        html,
         body {
             background-color: #fff;
             color: #808080;
-            font-size: 3.0rem;
             font-weight: 100;
             margin: 0 auto;
-        }
-
-        .nav-link {
-            margin-right: 18px;
-        }
-
-        h1 {
-            border-bottom: solid 1px;
-            font-size: 3vmin;
-            font-weight: bold;
-            margin-bottom: 48px;
-            width: 90%;
-        }
-
-        h2 {
-            font-size: 2.8rem;
-            margin-bottom: 64px;
-        }
-
-        h3 {
-            font-size: 2.4rem;
-            margin-bottom: 24px;
         }
 
         .main-img {
@@ -70,29 +44,24 @@
         }
 
         .contents {
-            display: table;
-            position: relative;
-        }
-
-        .services {
             display: flex;
-            margin-bottom: 48px; 
         }
 
-        .free-services {
-            margin-bottom: 48px; 
-        }
+        ul {
+            float: left;
+        } 
 
         li {
+            float: left;
             list-style-type: none;
+        }
+
+        h1 {
+            border-bottom: solid 1px;
         }
 
         .sub-img {
             width: 10%;
-        }
-
-        .post {
-            margin-bottom: 16px;
         }
 
         button {
@@ -100,41 +69,19 @@
         }
 
         .split-box {
-            display: table-cell;
-            width:40%;
+            position:absolute;
+            width:50%;
+            height:100%;
         }
         
         .left-box {
             left:0;
-            overflow-y:scroll;
         }
         
-        .card {
-            margin-top: 56px;
-            position: -webkit-sticky;
-            position: sticky;
-            height: 100%;
-            top: 120px;
+        .right-box {
+            right:0;
+            overflow-y:scroll;
         }
-
-        .form-control,.btn-primary {
-            font-size: 2.0rem;
-        }
-
-        .back {
-            font-size: 3.0rem;
-            color: #808080;
-        }
-
-        .back:hover {
-            color: #808080;
-            text-decoration: none;
-        }
-
-        iframe {
-            margin-bottom: 64px;
-        }
-
     </style>
 </head>
 
@@ -159,14 +106,15 @@
 
         <section class="contents container flex-center position-ref full-height">
 
-            <div class="split-box　main-message ">
+            <div class="split-box　main-message row-6">
 
                 <h1>{{ $store->storename }}【{{$store->storeaddress01}}】</h1>
-                <h2>{{$store->forusermessage}}</h2>
-                <h2>{{$store->salespointmessage}}</h2>
+                <h3>郵便番号:{{$store->postalcode}}</h3>
+                <h3>住所01:{{$store->storeaddress02}}</h3>
+                {{-- <div>住所02:{{$store->storeaddress03}}</div> --}}
                 <!-- 施設メイン情報の表示 -->
-                
-                
+                <h2>ユーザーへの一言:{{$store->forusermessage}}</h2>
+                <div>アピールポイント:{{$store->salespointmessage}}</div>
                 {{-- <div>websiteURL:{{$store->websiteurl}}</div> --}}            
                     <div class="sub-message">
                     <!-- ここからコンテンツの表示を行う。 -->
@@ -199,9 +147,7 @@
                         @endforeach --}}
 
                         <!-- 無料施設サービスのループ -->
-                        
-                        <h3>無料施設サービス一覧</h3>
-                        <div class="services">
+                        <div>無料施設サービス一覧</div>
                         @foreach($selectfreestoreservices as $freestoreservice)
                         <!-- アイコン画像の取得 -->
                         @php
@@ -217,37 +163,23 @@
                             </ul>
                         @endforeach
                         @endforeach
-                        </div>
-                        
-                        <!-- 有料施設サービスのループ -->
-                        
-                        <h3>有料施設サービス一覧</h3>
 
-                        <div class="free-services">
-                        @foreach($selectpaidstoreservices as $paidstoreservice)
-                        <!-- アイコン画像の取得 -->
-                        @php
-                        $selectpaidservices = $services
-                        ->where('serviceid',$paidstoreservice->serviceid);
-                        @endphp
+                            <!-- 有料施設サービスのループ -->
+                            <div>有料施設サービス一覧</div>
+                            @foreach($selectpaidstoreservices as $paidstoreservice)
+                            <!-- アイコン画像の取得 -->
+                            @php
+                            $selectpaidservices = $services
+                            ->where('serviceid',$paidstoreservice->serviceid);
+                            @endphp
 
-                        @foreach($selectpaidservices as $paidservice)
-                        {{-- <div>アイコンURL:{{$paidservice->serviceiconimageurl}}</div> --}}
-                        {{-- <img src={{$paidservice->serviceiconimageurl}}> --}}
-                        <div>サービス名:{{$paidstoreservice->unitpricename}}</div>
-                        <div>料金:{{$paidstoreservice->unitprice}}円</div>
-                        @endforeach
-                        @endforeach
-                        </div>
-
-                        <h3 class="post">〒{{$store->postalcode}}&nbsp;{{$store->storeaddress02}}</h3>
-
-                        {{-- Googlemapswp差し込みたいですがDBいじってないので具体例として --}}
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3324.105904470004!2d130.39798231551552!3d33.57659945009173!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3541919d51550001%3A0x6eea2b4cdf483e49!2sNO%20COFFEE!5e0!3m2!1sja!2sjp!4v1569686590593!5m2!1sja!2sjp" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
-                        
-                        {{-- <div>住所02:{{$store->storeaddress03}}</div> --}}
-                        
-                        <a class="back btn btn-link pull-right" href="{{ url('/') }}"><strong>＜</strong>&nbsp;施設一覧へ戻る</a>
+                            @foreach($selectpaidservices as $paidservice)
+                            {{-- <div>アイコンURL:{{$paidservice->serviceiconimageurl}}</div> --}}
+                            {{-- <img src={{$paidservice->serviceiconimageurl}}> --}}
+                            <div>サービス名:{{$paidstoreservice->unitpricename}}</div>
+                            <div>料金:{{$paidstoreservice->unitprice}}円</div>
+                            @endforeach
+                            @endforeach
                     </div>
                     </div>
 
@@ -256,6 +188,7 @@
                             {{-- @include('parts.reservation') --}}
                             @auth
                                 <div class="row split-box">
+                                    <div class="col-md-12 ">
 
                                     @include('common.errors')
 
@@ -297,6 +230,7 @@
                                         <!-- storeemail2を送信 -->
                                         <input type="hidden" name="storeemail2" value="{{$store->email2}}">
                                     </form>
+                                </div>
 
                             @endauth
                             @guest
@@ -304,9 +238,10 @@
                             @endguest
                             @endif
 
-                            
+                            <a class="btn btn-link pull-right" href="{{ url('/welcome') }}">施設一覧へ戻る</a>
 
                     </div>
+            
         </section>
 
 @include('parts.footer')
