@@ -134,6 +134,9 @@
     @include('parts.header')
 
     <div class="flex-center position-ref container">
+        <a href="{{ url('/hostbooking')}}" class="btn btn-primary">リロード</a>
+    </div>
+    <div class="flex-center position-ref container">
 
         <div class="contents">
             <div class="title m-b-md">
@@ -141,6 +144,7 @@
                     <!-- <caption>ホスト予約確認</caption> -->
                     <thead>
                         <tr>
+                            <th scope="col">No.</th>
                             <th scope="col"><img class="host" src="{{ asset('img/host.png') }}" alt=""></th>
                             <th scope="col">status</th>
                             <th scope="col">guestid</th>
@@ -154,6 +158,7 @@
                         <!-- 施設名をstoresから取得 -->
                         @foreach ($hostbookings as $hostbooking)
                         <tr>
+                            <td>{{$loop->index+1}}</td>
                             <td>{{ $hostbooking->storename }}</td>
                             @if($hostbooking->bookingstatus === 0)
                             <td>空き状況確認</td>
@@ -170,13 +175,35 @@
                             @elseif($hostbooking->bookingstatus === 6)
                             <td>キャンセル料支払待ち</td>
                             @elseif($hostbooking->bookingstatus === 7)
-                            <td>キャンセル完了</td>
+                            <td>キャンセル</td>
                             @endif
                             <td>{{ $hostbooking->guestid }}</td>
                             <td>{{ $hostbooking->checkinday }}</td>
                             <td>{{ $hostbooking->checkoutday }}</td>
                             <td>{{ $hostbooking->paymentmoney }}</td>
-                            <td><button type="submit" class="btn btn-primary">OK</button></td>
+                            @if($hostbooking->bookingstatus === 0)
+                            <td>
+                                <form action="{{ url('hostbooking/bookingok') }}" method="POST">
+                                    {{ csrf_field() }}
+                                    <input type="hidden" name="bookingid" value="{{$hostbooking->id}}">
+                                    <button type="submit" class="btn btn-primary">OK</button>
+                                </form>
+                                <form action="{{ url('hostbooking/bookingng') }}" method="POST">
+                                    {{ csrf_field() }}
+                                    <input type="hidden" name="bookingid" value="{{$hostbooking->id}}">
+                                    <button type="submit" class="btn btn-danger">NG</button>
+                                </form>
+                            </td>
+                            @elseif($hostbooking->bookingstatus === 7)
+                            <td>
+                                <p>NG</p>
+                            </td>
+                            @else
+                            <td>
+                                <p>OK</p>
+                            </td>
+                            @endif
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>
@@ -203,6 +230,9 @@
 
     </footer> --}}
 
+    <script>
+
+    </script>
 </body>
 
 </html>
