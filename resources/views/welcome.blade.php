@@ -58,6 +58,10 @@
             color: #808080;
         }
 
+        .event {
+            height: 400px;
+        }
+
         .card-body {
             padding: 0;
             margin-top: 8px;
@@ -112,6 +116,8 @@
 
     {{-- partsフォルダのheaderを読み込む --}}
     @include('parts.header')
+
+    <div class="event"></div>
 
     <!-- ここからコンテンツの表示を行う。 -->
     <!-- 表示領域 -->
