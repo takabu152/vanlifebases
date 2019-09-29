@@ -47,13 +47,13 @@
             border-bottom: solid 1px;
             font-size: 3vmin;
             font-weight: bold;
-            margin-bottom: 48px;
+            margin-bottom: 96px;
             width: 90%;
         }
 
         h2 {
             font-size: 2.8rem;
-            margin-bottom: 64px;
+            margin-bottom: 96px;
         }
 
         h3 {
@@ -85,6 +85,10 @@
 
         li {
             list-style-type: none;
+        }
+
+        .icon {
+            width: 60%;
         }
 
         .sub-img {
@@ -132,7 +136,7 @@
         }
 
         iframe {
-            margin-bottom: 64px;
+            margin-bottom: 32px;
         }
 
     </style>

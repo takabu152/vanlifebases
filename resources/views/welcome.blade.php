@@ -60,6 +60,7 @@
 
         .event {
             height: 400px;
+            font-size: 200px;
         }
 
         .card-body {
@@ -117,7 +118,7 @@
     {{-- partsフォルダのheaderを読み込む --}}
     @include('parts.header')
 
-    <div class="event"></div>
+    <div class="event">イベント要素</div>
 
     <!-- ここからコンテンツの表示を行う。 -->
     <!-- 表示領域 -->
