@@ -146,8 +146,8 @@
                         <tr>
                             <th scope="col">No.</th>
                             <th scope="col"><img class="host" src="{{ asset('img/host.png') }}" alt=""></th>
-                            <th scope="col">status</th>
-                            <th scope="col">guestid</th>
+                            <th scope="col">予約状況</th>
+                            <th scope="col">ユーザーID</th>
                             <th scope="col"><img class="checkin" src="{{ asset('img/checkin.png') }}" alt=""></th>
                             <th scope="col"><img class="checkout" src="{{ asset('img/checkout.png') }}" alt=""></th>
                             <th scope="col"><img class="pay" src="{{ asset('img/pay.png') }}" alt=""></th>
@@ -155,7 +155,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- 施設名をstoresから取得 -->
+                        <!-- ホストの施設予約情報を取得 -->
                         @foreach ($hostbookings as $hostbooking)
                         <tr>
                             <td>{{$loop->index+1}}</td>
@@ -181,6 +181,7 @@
                             <td>{{ $hostbooking->checkinday }}</td>
                             <td>{{ $hostbooking->checkoutday }}</td>
                             <td>{{ $hostbooking->paymentmoney }}</td>
+                            <!-- 予約ステータスが0のとき空室確認のOK、NGボタン表示 -->
                             @if($hostbooking->bookingstatus === 0)
                             <td>
                                 <form action="{{ url('hostbooking/bookingok') }}" method="POST">
@@ -194,10 +195,12 @@
                                     <button type="submit" class="btn btn-danger">NG</button>
                                 </form>
                             </td>
+                            <!-- 予約ステータスが7のときNG表示 -->
                             @elseif($hostbooking->bookingstatus === 7)
                             <td>
                                 <p>NG</p>
                             </td>
+                            <!-- 予約ステータスが0、7以外のときOK表示 -->
                             @else
                             <td>
                                 <p>OK</p>
