@@ -133,6 +133,10 @@
             color: #808080;
         }
 
+        .detail {
+            width: 30px;
+        }
+
 
     </style>
 </head>
@@ -153,6 +157,8 @@
         <li><img class="checkin" src="{{ asset('img/checkin.png') }}" alt="">{{ $booking->checkinday}}</li>
         <li><img class="checkout" src="{{ asset('img/checkout.png') }}" alt="">{{ $booking->checkoutday}}</li>
     </ul>
+
+
 
 
 
@@ -218,7 +224,9 @@
                                         data-checkoutday={{$booking->checkoutday}}
                                         data-createdat={{$booking->created_at}}
                                         data-paymentmoney={{$booking->paymentmoney}}
-                                        data-bookingstatus={{$booking->bookingstatus}}>詳細</button>
+                                        data-bookingstatus={{$booking->bookingstatus}}>
+                                        <img class="detail" src="{{ asset('img/detail.png') }}" alt="">
+                                    </button>
                                         
                                         {{-- Modal --}}
                                         <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" 
@@ -343,21 +351,21 @@
         modal.find('#checkoutday').val(checkoutday)
         modal.find('#paymentmoney').val(paymentmoney)
         if(bookingstatus == 0){
-            modal.find('#bookingstatus').text("予約未確定").val("0")
+            modal.find('#bookingstatus').val("予約未確定")
         }else if (bookingstatus == 1){
-            modal.find('#bookingstatus').text("空き状況確認済み").val("1")
+            modal.find('#bookingstatus').val("空き状況確認済み")
         }else if (bookingstatus == 2){
-            modal.find('#bookingstatus').text("支払い待ち").val("2")
+            modal.find('#bookingstatus').val("支払い待ち")
         }else if (bookingstatus == 3){
-            modal.find('#bookingstatus').text("予約完了").val("3")
+            modal.find('#bookingstatus').val("予約完了")
         }else if (bookingstatus == 4){
-            modal.find('#bookingstatus').text("キャンセル申し込み").val("4")
+            modal.find('#bookingstatus').val("キャンセル申し込み")
         }else if (bookingstatus == 5){
-            modal.find('#bookingstatus').text("キャンセル承諾").val("5")
+            modal.find('#bookingstatus').val("キャンセル承諾")
         }else if (bookingstatus == 6){
-            modal.find('#bookingstatus').text("キャンセル料未払い").val("6")
+            modal.find('#bookingstatus').val("キャンセル料未払い")
         }else if (bookingstatus == 7){
-            modal.find('#bookingstatus').text("キャンセル済み").val("7")
+            modal.find('#bookingstatus').val("キャンセル済み")
         }
 
         // 予約状況が0-3の場合は、キャンセルリクエスト不可

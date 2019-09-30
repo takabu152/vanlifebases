@@ -65,7 +65,11 @@
         @if (Route::has('login'))
         @auth
         <div class="collapse navbar-collapse justify-content-end" id="navbar">
-            <ul class="navbar-nav">
+                {{-- 施設一覧ページ --}}
+                <ul class="navbar-nav">
+                    <li class="nav-item active">
+                    <a class="nav-link" href="{{ url('/storeslist') }}">施設一覧 <span class="sr-only">(現位置)</span></a>
+                </li>
                 @can('host-higher') {{-- ホスト権限以上に表示される --}}
                 <li class="nav-item active">
                     <a class="nav-link" href="{{ url('/booking') }}">予約一覧 <span class="sr-only">(現位置)</span></a>
@@ -79,12 +83,10 @@
                 </li>
                 @endcan
                 <li class="nav-item active">
-
                     <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                         ログアウト<span class="sr-only">(現位置)</span>
                     </a>
-
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                         {{ csrf_field() }}
                     </form>
@@ -93,6 +95,11 @@
         </div>
         @else
         <div class="collapse navbar-collapse justify-content-end" id="navbar">
+            {{-- 施設一覧ページ --}}
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                <a class="nav-link" href="{{ url('/storeslist') }}">施設一覧 <span class="sr-only">(現位置)</span></a>
+            </li>
             <ul class="navbar-nav">
                 <li class="nav-item active">
                     <a class="nav-link" href="{{ route('login') }}">ログイン <span class="sr-only">(現位置)</span></a>

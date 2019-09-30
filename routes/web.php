@@ -8,6 +8,7 @@ use App\Service;
 use Illuminate\Http\Request;
 use App\Booking;
 use App\Hostbooking;
+use App\Mail;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,7 +21,7 @@ use App\Hostbooking;
 |
 */
 
-Route::get('/', function () {
+Route::get('/storeslist', function () {
 
     //Welcomeページで施設（コンテンツ）を一覧表示するため、データを取得する。
     //$tasks = Task::orderBy('id', 'asc')->get();
@@ -67,7 +68,8 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 // TOP画面の表示（仮）
-Route::get('/top', function () {
+Route::get('/', function () {
+
     return view('top');
 });
 
@@ -82,8 +84,11 @@ Route::get('/booking', 'BookingController@index')->name('home');
 // 各施設の詳細画面から
 Route::post('/booking/cancelreq', 'BookingController@cancelreq');
 
-//ajaxがaddにPOSTした際にデータ登録のdataaddcon.phpが発動し、データ登録処理
-// Route::any('add', 'dataaddcon@add');
+// ホスティング資料請求メール送信
+Route::post('/affiliate', 'MailController@affiliaterequest');
+// Route::post('/affiliaterequest', function () {
+//     return Input::all();
+// });
 
 // 予約登録処理
 Route::post('/storedetail', 'BookingController@store')->name('home');
@@ -102,5 +107,4 @@ Route::group(['middleware' => ['auth', 'can:host-higher']], function () {
 });
 
 // システム管理者でログインした場合
-Route::group(['middleware' => ['auth', 'can:system-only']], function () {
-});
+Route::group(['middleware' => ['auth', 'can:system-only']], function () { });
