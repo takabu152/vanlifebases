@@ -20,7 +20,7 @@ class HostbookingController extends Controller
     {
         $this->middleware('auth');
     }
-    //表示処理
+    //ホストの施設予約一覧表示処理
     public function index()
     {
         $hostbookings = DB::table('stores')->where('hostid', Auth::id())
