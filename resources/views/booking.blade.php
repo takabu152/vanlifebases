@@ -328,21 +328,21 @@
         modal.find('#checkoutday').val(checkoutday)
         modal.find('#paymentmoney').val(paymentmoney)
         if(bookingstatus == 0){
-            modal.find('#bookingstatus').text("予約未確定").val("0")
+            modal.find('#bookingstatus').val("予約未確定")
         }else if (bookingstatus == 1){
-            modal.find('#bookingstatus').text("空き状況確認済み").val("1")
+            modal.find('#bookingstatus').val("空き状況確認済み")
         }else if (bookingstatus == 2){
-            modal.find('#bookingstatus').text("支払い待ち").val("2")
+            modal.find('#bookingstatus').val("支払い待ち")
         }else if (bookingstatus == 3){
-            modal.find('#bookingstatus').text("予約完了").val("3")
+            modal.find('#bookingstatus').val("予約完了")
         }else if (bookingstatus == 4){
-            modal.find('#bookingstatus').text("キャンセル申し込み").val("4")
+            modal.find('#bookingstatus').val("キャンセル申し込み")
         }else if (bookingstatus == 5){
-            modal.find('#bookingstatus').text("キャンセル承諾").val("5")
+            modal.find('#bookingstatus').val("キャンセル承諾")
         }else if (bookingstatus == 6){
-            modal.find('#bookingstatus').text("キャンセル料未払い").val("6")
+            modal.find('#bookingstatus').val("キャンセル料未払い")
         }else if (bookingstatus == 7){
-            modal.find('#bookingstatus').text("キャンセル済み").val("7")
+            modal.find('#bookingstatus').val("キャンセル済み")
         }
 
         // 予約状況が0-3の場合は、キャンセルリクエスト不可

@@ -64,173 +64,216 @@
             width: 10%;
         }
 
+        .jumbotron-extend-top {
+            position: relative;
+            height: 100vh;
+            min-height: 200px;
+            background: url('/img/landscape/sampleimg16.jpg') no-repeat center;
+            background-size: cover;
+            background-attachment:fixed;
+            filter: grayscale(100%);
+            object-position: 100% 100%;
+        }
+
+        .jumbotron-container{
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #ffffff;
+        }
+
+        .coverimage{
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            filter: grayscale(100%);
+        }
+
+        .img-fluid{
+            filter: grayscale(100%);
+        }
+
+        .card-img-top{
+            filter: grayscale(100%);
+        }
+    
     </style>
 </head>
 
 <body>
 
-{{-- Facebook Plugin Snipet JavaScript SDK 読み込み場所指定あり--}}
+{{-- Facebook Plugin Snipet JavaScript SDK 読み込み場所指定あり --}}
 <div id="fb-root"></div>
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v4.0"></script>
 
 @include('parts.header') 
 
-<!-- ページタイトル -->
-<header class="jumbotron my-5 py-5">
-    <h1 class="display-2">VANLIFE BASES</h1>
-</header>
+<div class="jumbotron jumbotron-extend-top">
+    <div class="container-fluid jumbotron-container">
+        <h2 class="leadtext">明日は、どのまちで、誰と会おうか？</h2>     
+    </div>
+</div>
 
+<!-- ページタイトル -->
 <div class="container py-5">
     <p class="lead">旅先で「軒先を借りる」、旅人に「軒先を貸す」感覚で、食・住・楽のサービスを通じて訪問者と地元民がつながるプラットフォームです。</p>
 </div>
 
-<!-- Vanlifeとは -->
-<section class="py-5">
-    <div class="container">
-    <h1>Vanlifeとは</h1>
-    <section class="py-5">
-    <p class="lead">思い立って、ふらっと出た車旅。</p>
-    <p class="lead">何気ない田舎道、立ち寄った喫茶店で珈琲一杯とお手洗いを使わせてもらった。</p>
-    <p class="lead">やんわりとした抑揚ともに耳に入ってきた「よう来たね、いらっしゃい」が、あの町の思い出になった。</p>
-    </div>
-</section>
-
 <!-- イメージ写真の挿入 -->
-<!-- Image Section - set the background image for the header in the line below -->
-<section class="py-5 bg-image-full" style="background-image: url('https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(78).jpg');">
-    <!-- Put anything you want here! There is just a spacer below for demo purposes! -->
-    <div style="height: 200px;"></div>
-</section>
+<div class="view overlay z-depth-1-half">
+    <img src="{{ asset('img/landscape/sampleimg22.jpg') }}" class="img-fluid coverimage" alt="">
+        <a href="">
+            <div class="mask rgba-white-light"></div>
+        </a>
+</div>
 
-<!-- 主なサービス -->
-<section class="features-icons bg-light text-center py-5">
-    <div class="container">
-    <div class="row">
-        <div class="col-lg-6">
-        <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
-            <div class="features-icons-icon d-flex">
-            <i class="icon-screen-desktop m-auto text-primary"></i>
-            </div>
-            <h3>Bases for Vanlifers</h3>
-            <p class="lead mb-0">車での長距離旅行や車中泊などで必要な生活インフラを提供</p>
-        </div>
-        </div>
-        <div class="col-lg-6">
-        <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
-            <div class="features-icons-icon d-flex">
-            <i class="icon-layers m-auto text-primary"></i>
-            </div>
-            <h3>Welcome Network</h3>
-            <p class="lead mb-0">もてなし方は人それぞれ。自慢のお風呂、地場の野菜などの「逸品」、そして町の良さを伝えたいと行動する「まちびと」が主役となるネットワークです。</p>
-        </div>
-        </div>
+<!-- Vanlifeとは -->
+<div class="container py-5">
+    <h2 class="leadtext">Vanlife(車泊)の魅力</h2>
+
+<div class="container py-5">
+  <div class="row">
+    <div class="col-md-6 col-sm-12 pm-2 flex-column justify-content-center">
+        <p class="lead">つながる新しい旅のカタチ</p>
+        <p>家を貸す人はホスト、借りる人はゲストと呼ばれ、ホストが心を尽くして用意してくれる家に泊まれば、きっとわが家のようにくつろげるはず。</p>
     </div>
+    <div class="col-md-6 col-sm-12">
+        <img class="img-fluid" src="{{ asset('img/landscape/sampleimg17.jpg') }}" alt="...">
     </div>
-</section>
+    <div class="col-md-6 col-sm-12">
+    <img class="img-fluid" src="{{ asset('img/landscape/sampleimg19.jpg') }}" alt="...">
+    </div>
+    <div class="col-md-6 col-sm-12 flex-column justify-content-center">
+        <p class="lead">その土地の暮らしを味わえる旅</p>
+        <p>地元のめずらしい食材に挑戦してみたり、お店で近所の人たちと仲良くなったり、ガイドブックには載っていない名所を発見したり。滞在中、まるでその土地の人になったように、現地の風土や文化を体験できます。</p>
+    </div>
+    <div class="col-md-6 col-sm-12 flex-column justify-content-center">
+        <p class="lead">あなたにぴったりの旅の選択肢</p>
+        <p>オーシャンビューから森の中まで、旅の予算、目的、そして好みに合った場所があなたのホームになります。</p>
+    </div>
+    <div class="col-md-6 col-sm-12">
+        <img class="img-fluid" src="{{ asset('img/landscape/sampleimg23.jpg') }}" alt="...">
+    </div>
+  </div>
+</div>
+
+</div>
+
+<!-- サービス -->
+<div class="container">
+<div class="row">
+      <div class="col-md-6 mb-5">
+        <div class="card h-100">
+          <img class="card-img-top" src="{{ asset('img/landscape/sampleimg21.jpg') }}" alt="">
+          <div class="card-body">
+            <h4 class="card-title">Bases for Vanlifers</h4>
+            <p class="card-text">VanlifeBases(バンライフベイシズ)は、車で泊まる場所を探す人と、駐車スペース・生活サービスを提供したい人をつなぐオンラインサービスです。</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 mb-5">
+        <div class="card h-100">
+          <img class="card-img-top" src="{{ asset('img/landscape/sampleimg25.jpg') }}" alt="">
+          <div class="card-body">
+            <h4 class="card-title">Welcome Network</h4>
+            <p class="card-text">もてなし方は人それぞれ。自慢のお風呂、地場の野菜などの「逸品」、そして町の良さを伝えたいと行動する「まちびと」が主役となるネットワークです。</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+</div>
 
 <!-- スポットの紹介 -->
 <section class="py-5">
     <div class="container">
-    <h1 class="nav-link" href="">Vanlifeスポット</h1>
-    <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, suscipit, rerum quos facilis repellat architecto commodi officia atque nemo facere eum non illo voluptatem quae delectus odit vel itaque amet.</p>
+    <h2 class="nav-link" >BASES for Vanlifers<span class="sr-only">(現位置)</span></h2>
+    {{-- <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, suscipit, 
+        rerum quos facilis repellat architecto commodi officia atque nemo facere eum non illo 
+        voluptatem quae delectus odit vel itaque amet.</p> --}}
     </div>
 </section>
 
 <!-- オススメのスポット画像表示 -->
 <div class="container">
-    <div class="row">
-        <div class="col-lg-2 col-md-12 mb-4">
-        <div class="view overlay z-depth-1-half">
-            <img src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(73).jpg" class="img-fluid"
-            alt="">
-            <a href="">
-            <div class="mask rgba-white-light"></div>
-            </a>
+    <!--Carousel Wrapper-->
+    <div id="carousel-example-1z" class="carousel slide carousel-fade" data-ride="carousel">
+    <!--Indicators-->
+    <ol class="carousel-indicators">
+        <li data-target="#carousel-example-1z" data-slide-to="0" class="active"></li>
+        <li data-target="#carousel-example-1z" data-slide-to="1"></li>
+        <li data-target="#carousel-example-1z" data-slide-to="2"></li>
+        <li data-target="#carousel-example-1z" data-slide-to="3"></li> 
+        <li data-target="#carousel-example-1z" data-slide-to="4"></li>
+    </ol>
+    <!--/.Indicators-->
+    <!--Slides-->
+    <div class="carousel-inner" role="listbox">
+        <div class="carousel-item active">
+        <img class="d-block w-100" src="{{ asset('img/landscape/sampleimg04.jpg') }}" alt="First slide">
         </div>
+        <div class="carousel-item">
+        <img class="d-block w-100" src="{{ asset('img/landscape/sampleimg05.jpg') }}" alt="Second slide">
         </div>
-        <div class="col-lg-2 col-md-6 mb-4">
-        <div class="view overlay z-depth-1-half">
-            <img src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(78).jpg" class="img-fluid"
-            alt="">
-            <a href="">
-            <div class="mask rgba-white-light"></div>
-            </a>
+        <div class="carousel-item">
+        <img class="d-block w-100" src="{{ asset('img/landscape/sampleimg06.jpg') }}" alt="Third slide">
+        </div>    
+        <div class="carousel-item">
+        <img class="d-block w-100" src="{{ asset('img/landscape/sampleimg09.jpg') }}" alt="Forth slide">
         </div>
-        </div>
-        <div class="col-lg-2 col-md-6 mb-4">
-        <div class="view overlay z-depth-1-half">
-            <img src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(79).jpg" class="img-fluid"
-            alt="">
-            <a href="">
-            <div class="mask rgba-white-light"></div>
-            </a>
-        </div>
-        </div>
-        <div class="col-lg-2 col-md-12 mb-4">
-        <div class="view overlay z-depth-1-half">
-            <img src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(81).jpg" class="img-fluid"
-            alt="">
-            <a href="">
-            <div class="mask rgba-white-light"></div>
-            </a>
-        </div>
-        </div>
-        <div class="col-lg-2 col-md-6 mb-4">
-        <div class="view overlay z-depth-1-half">
-            <img src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(82).jpg" class="img-fluid"
-            alt="">
-            <a href="">
-            <div class="mask rgba-white-light"></div>
-            </a>
-        </div>
-        </div>
-        <div class="col-lg-2 col-md-6 mb-4">
-        <div class="view overlay z-depth-1-half">
-            <img src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(84).jpg" class="img-fluid"
-            alt="">
-            <a href="">
-            <div class="mask rgba-white-light"></div>
-            </a>
-        </div>
+        <div class="carousel-item">
+        <img class="d-block w-100" src="{{ asset('img/landscape/sampleimg10.jpg') }}" alt="Fifth slide">
         </div>
     </div>
-
-    <button type="submit" class="btn btn-block btn-lg btn-primary">施設一覧へ</button>
+    <!--/.Slides-->
+    <!--Controls-->
+    <a class="carousel-control-prev" href="#carousel-example-1z" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carousel-example-1z" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+    <!--/.Controls-->
+    </div>
+    <!--/.Carousel Wrapper-->
+    {{-- 施設一覧ページへのリンクボタン --}}
+    <a href="{{ url('/storeslist') }}" class="btn btn-outline-secondary btn-block rounded-0" role="button" >施設一覧へ</a>
 </div>
-
 
 <!-- ユーザーの声 -->
 <section class="py-5">
     <div class="container">
-    <h1>Vanlifers</h1>
-    <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, suscipit, rerum quos facilis repellat architecto commodi officia atque nemo facere eum non illo voluptatem quae delectus odit vel itaque amet.</p>
+    <h2>Vanlifers</h2>
+    <p class="lead">体験者の声</p>
+    {{-- <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, suscipit, rerum quos facilis repellat architecto commodi officia atque nemo facere eum non illo voluptatem quae delectus odit vel itaque amet.</p> --}}
     </div>
 </section>
 
 <!-- ユーザーの声と顔写真 -->
 <section class="testimonials text-center bg-light py-5">
     <div class="container">
-    <h2 class="mb-5">体験者の声</h2>
+    <h2 class="mb-5"></h2>
     <div class="row">
         <div class="col-lg-4">
         <div class="testimonial-item mx-auto mb-5 mb-lg-0">
-        <img class="img-fluid rounded-circle mb-3" src="https://mdbootstrap.com/img/Photos/Avatars/img(30).jpg" alt="50px">
+        <img class="img-fluid rounded-circle mb-3" src="{{ asset('img/landscape/users01.jpg') }}" alt="...">
             <h5>Margaret E.さん</h5>
             <p class="font-weight-light mb-0">"This experience was incredible! I am a solo traveler and this experience, and people that were on it were incredible. If we were all to go out we would not have found the food, and drink deals that the locals have."</p>
         </div>
         </div>
         <div class="col-lg-4">
         <div class="testimonial-item mx-auto mb-5 mb-lg-0">
-            <img class="img-fluid rounded-circle mb-3" src="https://mdbootstrap.com/img/Photos/Avatars/img(31).jpg" alt="50px">
+            <img class="img-fluid rounded-circle mb-3" src="{{ asset('img/landscape/users02.jpg') }}" alt="...">
             <h5>Fred S.さん</h5>
             <p class="font-weight-light mb-0">「場所は水天宮の近くで､すごく便利です｡近くの銭湯も午後11時30分までやっていてよかったです｡」</p>
         </div>
         </div>
         <div class="col-lg-4">
         <div class="testimonial-item mx-auto mb-5 mb-lg-0">
-            <img class="img-fluid rounded-circle mb-3" src="https://mdbootstrap.com/img/Photos/Avatars/img(30).jpg" alt="50px">
+            <img class="img-fluid rounded-circle mb-3" src="{{ asset('img/landscape/users03.jpg') }}" alt="...">
             <h5>Sarah W.さん</h5>
             <p class="font-weight-light mb-0">"If you wish to learn and immerse yourself in the ways of the Samurai, there is no better teacher than Yusuke. He exudes his love and passion, for his culture and history, in the knowledge he shares with you. It is an amazing experience."</p>
         </div>
@@ -241,7 +284,7 @@
 
 <!-- サイト利用方法 -->
 <div class="container py-5">
-    <h1>3STEPで簡単予約</h1>
+    <h2>予約はシンプルに "3 STEPs"</h2>
     <!-- Icons Grid -->
     <section class="features-icons bg-light text-center py-5">
         <div class="container">
@@ -251,8 +294,8 @@
                 <div class="features-icons-icon d-flex">
                 <i class="icon-screen-desktop m-auto text-primary"></i>
                 </div>
-                <h3>vanlifebases.comで「旅行」にアクセス</h3>
-                <p class="lead mb-0">共有のリビングルームから別荘に至るまで、どんなスペースでも登録料なしで共有しましょう。</p>
+                <h3>STEP 1</h3>
+                <p class="lead mb-0">vanlifebases.comから、施設一覧ページにアクセス</p>
             </div>
             </div>
             <div class="col-lg-4">
@@ -260,8 +303,8 @@
                 <div class="features-icons-icon d-flex">
                 <i class="icon-layers m-auto text-primary"></i>
                 </div>
-                <h3>予約したい施設を見つける</h3>
-                <p class="lead mb-0">ご希望のスケジュール、料金、ゲストの要件を選びます。設定の際にはヒントも表示されます。</p>
+                <h3>STEP 2</h3>
+                <p class="lead mb-0">リストから、予約したい施設を見つける！</p>
             </div>
             </div>
             <div class="col-lg-4">
@@ -269,8 +312,8 @@
                 <div class="features-icons-icon d-flex">
                 <i class="icon-layers m-auto text-primary"></i>
                 </div>
-                <h3>「予約をリクエスト」をクリック</h3>
-                <p class="lead mb-0">リスティングが掲載され次第、条件にかなったゲストから連絡を受けとることができます。ゲストの宿泊前にご質問があればメッセージを送信できます。</p>
+                <h3>STEP 3</h3>
+                <p class="lead mb-0">予約したい日程を指定し、「予約をリクエスト」をクリック！</p>
             </div>
             </div>
         </div>
@@ -278,21 +321,22 @@
     </section>
 </div>
 
+<!-- イメージ写真の挿入 -->
+<div class="view overlay z-depth-1-half">
+    <img src="{{ asset('img/landscape/sampleimg15.jpg') }}" class="img-fluid coverimage" alt="">
+        <a href="">
+            <div class="mask rgba-white-light"></div>
+        </a>
+</div>
+
 <!-- ユーザー登録 -->
 <section class="py-5">
     <div class="container">
-    <h1>ユーザー登録へ</h1>
-    <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, suscipit, rerum quos facilis repellat architecto commodi officia atque nemo facere eum non illo voluptatem quae delectus odit vel itaque amet.</p>
-    <button type="submit" class="btn btn-block btn-lg btn-primary">Ready to get started? Sign up now!</button>
-</div>
-</section>
-
-<!-- ユーザー登録 -->
-<section class="call-to-action text-white text-center py-5">
-    <div class="overlay"></div>
-    <div class="container">
-
+        <h2>ユーザー登録へ</h2>
+        {{-- <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, suscipit, rerum quos facilis repellat architecto commodi officia atque nemo facere eum non illo voluptatem quae delectus odit vel itaque amet.</p> --}}
+        {{-- ユーザー登録ページへのリンクボタン --}}
+        <a href="{{ url('/login') }}" class="btn btn-outline-secondary btn-block rounded-0" role="button" >新規登録・ログイン</a>
     </div>
 </section>
 
@@ -349,28 +393,72 @@
 <!-- Q & A -->
 <section class="py-5">
     <div class="container">
-    <h1>よくあるご質問</h1>
-    <p class="lead">どんな支払方法が選べますか？</p>
-    <p>ホストに求められる詳しい要件につきましては、安全・セキュリティ・信頼性に関するAirbnbコミュニティの基準、高評価レビューを獲得するためのポイントをまとめたホスピタリティの基準をチェックしてみましょう。</p>
-    <p class="lead">保留中の予約リクエストは変更できますか？</p>
-    <p>はい。 ホストが承認する前であれば、予約リクエストを撤回し、変更後の内容で新規予約リクエストを送ることができます。</p>
-    <p class="lead">予約する方法は？</p>
+    <h2>よくあるご質問</h2>
+
+    <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true">
+    <div class="card">
+        <div class="card-header" role="tab" id="headingOne">
+        <h5 class="mb-0">
+            <a class="text-body" data-toggle="collapse" href="#collapseOne" role="button" aria-expanded="true" aria-controls="collapseOne">
+            どんな支払方法が選べますか？
+            </a>
+        </h5>
+        </div><!-- /.card-header -->
+        <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion">
+        <div class="card-body">
+            ホストに求められる詳しい要件につきましては、安全・セキュリティ・信頼性に関するAirbnbコミュニティの基準、高評価レビューを獲得するためのポイントをまとめたホスピタリティの基準をチェックしてみましょう。
+        </div><!-- /.card-body -->
+        </div><!-- /.collapse -->
+    </div><!-- /.card -->
+    <div class="card">
+        <div class="card-header" role="tab" id="headingTwo">
+        <h5 class="mb-0">
+            <a class="collapsed text-body" data-toggle="collapse" href="#collapseTwo" role="button" aria-expanded="false" aria-controls="collapseTwo">
+            保留中の予約リクエストは変更できますか？
+            </a>
+        </h5>
+        </div><!-- /.card-header -->
+        <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo" data-parent="#accordion">
+        <div class="card-body">
+            はい。 ホストが承認する前であれば、予約リクエストを撤回し、変更後の内容で新規予約リクエストを送ることができます。
+        </div><!-- /.card-body -->
+        </div><!-- /.collapse -->
+    </div><!-- /.card -->
+    <div class="card">
+        <div class="card-header" role="tab" id="headingThree">
+        <h5 class="mb-0">
+            <a class="collapsed text-body" data-toggle="collapse" href="#collapseThree" role="button" aria-expanded="false" aria-controls="collapseThree">
+            キャンセルしても100%返金してもらえますか？
+            </a>
+        </h5>
+        </div><!-- /.card-header -->
+        <div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree" data-parent="#accordion">
+        <div class="card-body">
+            ゲスト都合による予約キャンセルの場合、返金額は各ホストのキャンセルポリシーの種別と、何日前の解約かによって決まります。
+        </div><!-- /.card-body -->
+        </div><!-- /.collapse -->
+    </div><!-- /.card -->
+    </div><!-- /#accordion -->
     </div>
 </section>
 
+
+
 <!-- イメージ写真の挿入 -->
 <!-- Image Section - set the background image for the header in the line below -->
-<section class="py-5 bg-image-full" style="background-image: url('https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(73).jpg');">
-    <!-- Put anything you want here! There is just a spacer below for demo purposes! -->
-    <div style="height: 200px;"></div>
-</section>
+<div class="view overlay z-depth-1-half">
+    <img src="{{ asset('img/landscape/sampleimg14.jpg') }}" class="img-fluid coverimage" alt="">
+        <a href="">
+            <div class="mask rgba-white-light"></div>
+        </a>
+</div>
 
 <!-- 施設募集 -->
 <section class="py-5">
     <div class="container">
-    <h1>ホスティング</h1>
+    <h2>ホスティング</h2>
     <p class="lead">なぜVanlifeBasesでホスト?</p>
-    <p>どんなお家やお部屋でも、Airbnbなら簡単かつ安全にシェアして、世界中の旅好きな仲間とつながれます。 予約可能日から料金、ハウスルール、ゲストとの交流頻度まで、すべて自分で決めることができます。</p>
+    <p>簡単かつ安全にシェアして、世界中の旅好きな仲間とつながれます。 予約可能日から料金、ハウスルール、ゲストとの交流頻度まで、すべて自分で決めることができます。</p>
     <p class="lead">困ったときも安心</p>
     <p>万一に備えるUS$1,000,000の財物補償、US$1,000,000の賠償責任保険が全予約に自動付帯。ホストのみなさまと建物・家財の安全をお守りするため全力で取り組んでいます。</p>
     </div>
@@ -378,7 +466,7 @@
 
 <!-- 施設募集について -->
 <div class="container">
-    <h1>3STEPで簡単ホスティング</h1>
+    <h2>3 STEPで簡単ホスティング</h2>
     <!-- Icons Grid -->
     <section class="features-icons bg-light text-center py-5">
         <div class="container">
@@ -415,33 +503,119 @@
     </section>
 
 <!-- ホスティングに関する資料請求 -->
-<section class="py-5">
-    <div class="container">
-    <h1>ホスティングに関する資料請求</h1>
-    <p class="lead">Base(Vanlifeスポット)提供者を募集中しています。</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, suscipit, rerum quos facilis repellat architecto commodi officia atque nemo facere eum non illo voluptatem quae delectus odit vel itaque amet.</p>
-    <button type="submit" class="btn btn-block btn-lg btn-primary">Ready to get started? Sign up now!</button>
+<div class="container py-5">
+    <h2>まずは資料請求</h2>
+    <p class="lead">Base(Vanlifeスポット)提供者として、Vanliferをもてなして見ませんか？</p>
+    {{-- <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, suscipit, rerum quos facilis repellat architecto commodi officia atque nemo facere eum non illo voluptatem quae delectus odit vel itaque amet.</p> --}}
+
+    {{-- ユーザーログインしている場合 --}}
+    @if (Route::has('login'))
+    @auth
+        <!-- ホスティングに関する資料請求のフォーム -->
+        <p>
+            <button type="button" class="btn btn-outline-secondary btn-block rounded-0" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                ホスティングに関する資料請求
+            </button>
+        </p>
+        <!-- ホスティングに関する資料請求のメールフォーム -->
+        <div class="collapse" id="collapseExample">
+            <div class="card card-body border border-0">
+                <form action="{{ url('/affiliate') }}" method="POST">
+                    {{ csrf_field() }}
+                    <div class="form-group">
+                        <label for="name" class="col-form-label">お名前:</label>
+                        <input type="text" class="form-control" id="name" name="name">
+                    </div>      
+                    <div class="form-group">
+                        <label for="email" class="col-form-label">Emailアドレス:</label>
+                        <input type="email" class="form-control" id="email" name="email">
+                    </div>     
+                    <div class="form-group">
+                        <label for="message-text" class="col-form-label">メッセージ:</label>
+                        <textarea class="form-control" id="message" name="message"></textarea>
+                    </div>
+                    <input type="submit" class="btn btn-default" value="送信">
+                </form>
+            </div>
+        </div>
+    @endauth
+    @guest
+        {{-- ユーザーログインしていない場合 --}}
+        <p>
+            <button type="button" class="btn btn-outline-secondary btn-block rounded-0" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                ホスティングに関する資料請求
+            </button>
+        </p>
+        <div class="collapse" id="collapseExample">
+            <div class="card card-body">
+                <div class="container">
+                    <p class="lead">ユーザー登録はお済みですか？</p>
+                    <p>ユーザーログイン後、トップページから資料請求ができます。まずはユーザー登録をお願いします。</p>
+                    {{-- ユーザー登録ページへのリンクボタン --}}
+                    <a href="{{ url('/login') }}" class="btn btn-outline-secondary btn-block rounded-0" role="button" >新規登録・ログイン</a>
+                </div>
+            </div>
+        </div>
+
+    @endguest
+    @endif
 </div>
-</section>
 
 <!-- ホスティングに関するQ&A -->
 <section class="py-5">
     <div class="container">
-    <h1>よくあるご質問</h1>
-    <p class="lead">Airbnbホストになれるのはどんな人？</p>
-    <p>ホストに求められる詳しい要件につきましては、安全・セキュリティ・信頼性に関するAirbnbコミュニティの基準、高評価レビューを獲得するためのポイントをまとめたホスピタリティの基準をチェックしてみましょう。</p>
-    <p class="lead">お部屋を掲載するには、いくらかかるの？</p>
-    <p>Airbnbへのアカウント登録、お部屋の掲載は完全無料です。予約がとれたら、Airbnbは運営費として宿泊料金からサービス料（通常3％）をいただきます。</p>
-    <p class="lead">リスティングの料金はどうやって決めたらいいの？</p>
-    <p>料金選びは100%ホストの裁量に任されています。 値付けの目安が欲しい場合には、お住まいの都市やエリアで類似のリスティングを検索すると大体の相場感がつかめます。 </p>
+    <h2>よくあるご質問</h2>
+    <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true">
+    <div class="card">
+        <div class="card-header" role="tab" id="headingOne">
+        <h5 class="mb-0">
+            <a class="text-body" data-toggle="collapse" href="#collapseOne" role="button" aria-expanded="true" aria-controls="collapseOne">
+            ホストになれるのはどんな人？
+            </a>
+        </h5>
+        </div><!-- /.card-header -->
+        <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion">
+        <div class="card-body">
+            ホストに求められる詳しい要件につきましては、安全・セキュリティ・信頼性に関する基準、高評価レビューを獲得するためのポイントをまとめたホスピタリティの基準をチェックしてみましょう。
+        </div><!-- /.card-body -->
+        </div><!-- /.collapse -->
+    </div><!-- /.card -->
+    <div class="card">
+        <div class="card-header" role="tab" id="headingTwo">
+        <h5 class="mb-0">
+            <a class="collapsed text-body" data-toggle="collapse" href="#collapseTwo" role="button" aria-expanded="false" aria-controls="collapseTwo">
+            お部屋を掲載するには、いくらかかるの？
+            </a>
+        </h5>
+        </div><!-- /.card-header -->
+        <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo" data-parent="#accordion">
+        <div class="card-body">
+            アカウント登録、お部屋の掲載は完全無料です。予約がとれたら、運営費として宿泊料金からサービス料（通常3％）をいただきます。
+        </div><!-- /.card-body -->
+        </div><!-- /.collapse -->
+    </div><!-- /.card -->
+    <div class="card">
+        <div class="card-header" role="tab" id="headingThree">
+        <h5 class="mb-0">
+            <a class="collapsed text-body" data-toggle="collapse" href="#collapseThree" role="button" aria-expanded="false" aria-controls="collapseThree">
+            リスティングの料金はどうやって決めたらいいの？
+            </a>
+        </h5>
+        </div><!-- /.card-header -->
+        <div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree" data-parent="#accordion">
+        <div class="card-body">
+            料金選びは100%ホストの裁量に任されています。 値付けの目安が欲しい場合には、お住まいの都市やエリアで類似のリスティングを検索すると大体の相場感がつかめます。
+        </div><!-- /.card-body -->
+        </div><!-- /.collapse -->
+    </div><!-- /.card -->
+    </div><!-- /#accordion -->
     </div>
 </section>
 
-
 <!-- アライアンス・パートナー -->
-<section class="features-icons bg-light text-center py-5">
+{{-- <section class="features-icons bg-light text-center py-5">
     <div class="container">
-    <h1>アライアンス</h1>
+    <h2>アライアンス</h2>
     <div class="row">
         <div class="col-lg-3">
         <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
@@ -481,24 +655,18 @@
         </div>
     </div>
     </div>
-</section>
+</section> --}}
 
 
 <!-- Footer -->
-<footer class="page-footer font-small blue">
-
-  <!-- Copyright -->
-  <div class="footer-copyright text-center py-3">© 2018 Copyright:
-    <a href="https://mdbootstrap.com/education/bootstrap/"> MDBootstrap.com</a>
-  </div>
-  <!-- Copyright -->
-
-</footer>
+@include('parts.footer')
 <!-- Footer -->
 
 <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 <script>
+    //
 </script>
+
 
 </body>
 
