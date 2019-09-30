@@ -27,12 +27,38 @@
 
     <!-- Styles -->
     <style>
-        html,
+        html {
+            font-size: 62.5%;
+        }
+
         body {
             background-color: #fff;
             color: #808080;
+            font-size: 3.0rem;
             font-weight: 100;
             margin: 0 auto;
+        }
+
+        .nav-link {
+            margin-right: 18px;
+        }
+
+        h1 {
+            border-bottom: solid 1px;
+            font-size: 3vmin;
+            font-weight: bold;
+            margin-bottom: 96px;
+            width: 90%;
+        }
+
+        h2 {
+            font-size: 2.8rem;
+            margin-bottom: 96px;
+        }
+
+        h3 {
+            font-size: 2.4rem;
+            margin-bottom: 24px;
         }
 
         .main-img {
@@ -44,24 +70,73 @@
         }
 
         .contents {
-            display: flex;
+            display: table;
+            position: relative;
         }
 
-        ul {
-            float: left;
-        } 
+        .services {
+            display: flex;
+            margin-bottom: 48px; 
+        }
+
+        .free-services {
+            margin-bottom: 48px; 
+        }
 
         li {
-            float: left;
             list-style-type: none;
         }
 
-        h1 {
-            border-bottom: solid 1px;
+        .icon {
+            width: 60%;
         }
 
         .sub-img {
             width: 10%;
+        }
+
+        .post {
+            margin-bottom: 16px;
+        }
+
+        button {
+            margin: 16px 0 16px 0;
+        }
+
+        .split-box {
+            display: table-cell;
+            width:40%;
+        }
+        
+        .left-box {
+            left:0;
+            overflow-y:scroll;
+        }
+        
+        .card {
+            margin-top: 56px;
+            position: -webkit-sticky;
+            position: sticky;
+            height: 100%;
+            top: 120px;
+        }
+
+        .form-control,.btn-primary {
+            font-size: 2.0rem;
+        }
+
+        .back {
+            font-size: 3.0rem;
+            color: #808080;
+        }
+
+        .back:hover {
+            color: #808080;
+            text-decoration: none;
+        }
+
+        iframe {
+            margin-bottom: 32px;
         }
 
     </style>
@@ -88,84 +163,95 @@
 
         <section class="contents container flex-center position-ref full-height">
 
-            <div class="main-message">
+            <div class="split-box　main-message ">
 
                 <h1>{{ $store->storename }}【{{$store->storeaddress01}}】</h1>
-                <h3>郵便番号:{{$store->postalcode}}</h3>
-                <h3>住所01:{{$store->storeaddress02}}</h3>
-                {{-- <div>住所02:{{$store->storeaddress03}}</div> --}}
+                <h2>{{$store->forusermessage}}</h2>
+                <h2>{{$store->salespointmessage}}</h2>
                 <!-- 施設メイン情報の表示 -->
-                <h2>ユーザーへの一言:{{$store->forusermessage}}</h2>
-                <div>アピールポイント:{{$store->salespointmessage}}</div>
+                
+                
                 {{-- <div>websiteURL:{{$store->websiteurl}}</div> --}}            
                     <div class="sub-message">
                     <!-- ここからコンテンツの表示を行う。 -->
-            
-                        <div>
-                            <!-- 施設無料提供サービスの取得 -->
-                            @php
-                            $selectfreestoreservices = $storeservices
-                            ->where('storeid',$store->storeid)
-                            ->where('paidserviceflg',0);
-                            @endphp
 
-                            @php
-                            $selectpaidstoreservices = $storeservices
-                            ->where('storeid',$store->storeid)
-                            ->where('paidserviceflg',1);
-                            @endphp
+                        <!-- 施設無料提供サービスの取得 -->
+                        @php
+                        $selectfreestoreservices = $storeservices
+                        ->where('storeid',$store->storeid)
+                        ->where('paidserviceflg',0);
+                        @endphp
 
-                            <!-- 施設写真の取得(サブ画像のみ取得) -->
-                            @php
-                            $selectsubstoreimages = $storeimages
-                            ->where('storeid',$store->storeid)
-                            ->where('imagedivision',2);
-                            @endphp
+                        @php
+                        $selectpaidstoreservices = $storeservices
+                        ->where('storeid',$store->storeid)
+                        ->where('paidserviceflg',1);
+                        @endphp
 
-                            <!-- 施設イメージのループ -->
-                            <!-- ここで施設のサブ画像を表示させる。 -->
-                            {{-- @foreach($selecttopstoreimages as $topstoreimage)
-                            <div>画像URL:{{ $topstoreimage->imageurl }}</div>
-                            <img src={{ $topstoreimage->imageurl }}>
-                            @endforeach --}}
+                        <!-- 施設写真の取得(サブ画像のみ取得) -->
+                        @php
+                        $selectsubstoreimages = $storeimages
+                        ->where('storeid',$store->storeid)
+                        ->where('imagedivision',2);
+                        @endphp
 
-                            <!-- 無料施設サービスのループ -->
-                            <div>無料施設サービス一覧</div>
-                            @foreach($selectfreestoreservices as $freestoreservice)
-                            <!-- アイコン画像の取得 -->
-                            @php
-                            $selectfreeservices = $services
-                            ->where('serviceid',$freestoreservice->serviceid);
-                            @endphp
+                        <!-- 施設イメージのループ -->
+                        <!-- ここで施設のサブ画像を表示させる。 -->
+                        {{-- @foreach($selecttopstoreimages as $topstoreimage)
+                        <div>画像URL:{{ $topstoreimage->imageurl }}</div>
+                        <img src={{ $topstoreimage->imageurl }}>
+                        @endforeach --}}
 
-                            @foreach($selectfreeservices as $freeservice)
-                                <ul> 
-                                    {{-- <div>アイコンURL:{{$freeservice->serviceiconimageurl}}</div> --}}
-                                    <li><img class="icon" src={{$freeservice->serviceiconimageurl}}></li>
-                                    {{-- <div>サービス名:{{$freestoreservice->unitpricename}}</div> --}}
-                                </ul>
-                            @endforeach
-                            @endforeach
+                        <!-- 無料施設サービスのループ -->
+                        
+                        <h3>無料施設サービス一覧</h3>
+                        <div class="services">
+                        @foreach($selectfreestoreservices as $freestoreservice)
+                        <!-- アイコン画像の取得 -->
+                        @php
+                        $selectfreeservices = $services
+                        ->where('serviceid',$freestoreservice->serviceid);
+                        @endphp
 
-                            <div>
-                                <!-- 有料施設サービスのループ -->
-                                <div>有料施設サービス一覧</div>
-                                @foreach($selectpaidstoreservices as $paidstoreservice)
-                                <!-- アイコン画像の取得 -->
-                                @php
-                                $selectpaidservices = $services
-                                ->where('serviceid',$paidstoreservice->serviceid);
-                                @endphp
-    
-                                @foreach($selectpaidservices as $paidservice)
-                                {{-- <div>アイコンURL:{{$paidservice->serviceiconimageurl}}</div> --}}
-                                {{-- <img src={{$paidservice->serviceiconimageurl}}> --}}
-                                <div>サービス名:{{$paidstoreservice->unitpricename}}</div>
-                                <div>料金:{{$paidstoreservice->unitprice}}円</div>
-                                @endforeach
-                                @endforeach
-    
+                        @foreach($selectfreeservices as $freeservice)
+                            <ul> 
+                                {{-- <div>アイコンURL:{{$freeservice->serviceiconimageurl}}</div> --}}
+                                <li><img class="icon" src={{$freeservice->serviceiconimageurl}}></li>
+                                {{-- <div>サービス名:{{$freestoreservice->unitpricename}}</div> --}}
+                            </ul>
+                        @endforeach
+                        @endforeach
                         </div>
+                        
+                        <!-- 有料施設サービスのループ -->
+                        
+                        <h3>有料施設サービス一覧</h3>
+
+                        <div class="free-services">
+                        @foreach($selectpaidstoreservices as $paidstoreservice)
+                        <!-- アイコン画像の取得 -->
+                        @php
+                        $selectpaidservices = $services
+                        ->where('serviceid',$paidstoreservice->serviceid);
+                        @endphp
+
+                        @foreach($selectpaidservices as $paidservice)
+                        {{-- <div>アイコンURL:{{$paidservice->serviceiconimageurl}}</div> --}}
+                        {{-- <img src={{$paidservice->serviceiconimageurl}}> --}}
+                        <div>サービス名:{{$paidstoreservice->unitpricename}}</div>
+                        <div>料金:{{$paidstoreservice->unitprice}}円</div>
+                        @endforeach
+                        @endforeach
+                        </div>
+
+                        <h3 class="post">〒{{$store->postalcode}}&nbsp;{{$store->storeaddress02}}</h3>
+
+                        {{-- Googlemapswp差し込みたいですがDBいじってないので具体例として --}}
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3324.105904470004!2d130.39798231551552!3d33.57659945009173!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3541919d51550001%3A0x6eea2b4cdf483e49!2sNO%20COFFEE!5e0!3m2!1sja!2sjp!4v1569686590593!5m2!1sja!2sjp" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
+                        
+                        {{-- <div>住所02:{{$store->storeaddress03}}</div> --}}
+                        
+                        <a class="back btn btn-link pull-right" href="{{ url('/') }}"><strong>＜</strong>&nbsp;施設一覧へ戻る</a>
                     </div>
                     </div>
 
@@ -173,42 +259,36 @@
                             @if (Route::has('login'))
                             {{-- @include('parts.reservation') --}}
                             @auth
-                                <div class="row">
-                                    <div class="col-md-12">
+                                <div class="row split-box">
 
                                     @include('common.errors')
 
-                                    <form action="{{ url('/storedetail')}}" method="POST">
+                                    <form class="card form-group col-10" action="{{ url('/storedetail')}}" method="POST">
                                         {{ csrf_field() }}
 
                                         <!-- storename -->
-                                        <div class="form-group col-5">
                                             <label for="storename">施設名</label>
                                             <input type="text" id="storename" name="storename" class="form-control" value="{{$store->storename}}">
-                                        </div>
+
                                         <!-- checkinday -->
-                                        <div class="form-group col-5">
                                             <label for="checkinday">チェックイン</label>
                                             <input type="date" id="checkinday" name="checkinday" class="form-control" >
                                             {{-- <input type="date" id="checkinday" name="checkinday" class="form-control" value="{{$book->checkinday}}"> --}}
-                                        </div>
+
                                         <!-- checkoutday -->
-                                        <div class="form-group col-5">
                                             <label for="checkoutday">チェックアウト</label>
                                             <input type="date" id="checkoutday" name="checkoutday" class="form-control" >
                                             {{-- <input type="date" id="checkoutday" name="checkoutday" class="form-control" value="{{$book->checkoutday}}"> --}}
-                                        </div>
+
                                         <!-- paymentmoney -->
-                                        <div class="form-group col-5">
                                             <label for="paymentmoney">料金</label>
                                             <input type="number" id="paymentmoney" name="paymentmoney" class="form-control" >
                                             {{-- <input type="number" id="paymentmoney" name="paymentmoney" class="form-control" value="{{$book->paymentmoney}}"> --}}
-                                        </div>
+
                                         <!-- Reserveボタン -->
-                                        <div class="well well-sm">
-                                            <button type="submit" class="btn btn-primary">予約</button>
+                                            <button type="submit" class="btn btn-primary col-4">予約</button>
                                             {{-- <a class="btn btn-link pull-right" href="{{ url('/') }}">Back</a> --}}
-                                        </div>
+
                                         <!-- guestid値を送信 -->
                                         @php
                                         $user=Auth::user();
@@ -221,7 +301,6 @@
                                         <!-- storeemail2を送信 -->
                                         <input type="hidden" name="storeemail2" value="{{$store->email2}}">
                                     </form>
-                                </div>
 
                             @endauth
                             @guest
@@ -229,17 +308,14 @@
                             @endguest
                             @endif
 
-                        <div>
-                            <a class="btn btn-link pull-right" href="{{ url('/welcome') }}">施設一覧へ戻る</a>
-                        </div>
+                            
 
                     </div>
-            
         </section>
 
 @include('parts.footer')
 
-    </footer> --}}
+    </footer>
 
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 

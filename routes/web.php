@@ -102,6 +102,8 @@ Route::group(['middleware' => ['auth', 'can:user-higher']], function () {
 Route::group(['middleware' => ['auth', 'can:host-higher']], function () {
     // Route::get('/booking', 'BookingController@index')->name('home');
     Route::get('/hostbooking', 'HostbookingController@index')->name('home');
+    Route::post('/hostbooking/bookingok', 'HostbookingController@bookingok');
+    Route::post('/hostbooking/bookingng', 'HostbookingController@bookingng');
 });
 
 // システム管理者でログインした場合
