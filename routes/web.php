@@ -69,7 +69,6 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 // TOP画面の表示（仮）
 Route::get('/', function () {
-
     return view('top');
 });
 
@@ -79,7 +78,7 @@ Route::get('/dispstores', function () {
 });
 
 // 予約一覧の作成
-Route::get('/booking', 'BookingController@index')->name('home');
+Route::get('/booking', 'BookingController@index');
 
 // 各施設の詳細画面から
 Route::post('/booking/cancelreq', 'BookingController@cancelreq');
@@ -91,20 +90,20 @@ Route::post('/affiliate', 'MailController@affiliaterequest');
 // });
 
 // 予約登録処理
-Route::post('/storedetail', 'BookingController@store')->name('home');
+Route::post('/storedetail', 'BookingController@store');
 
 // 一般ユーザーでログインした場合
 Route::group(['middleware' => ['auth', 'can:user-higher']], function () {
-    Route::get('/booking', 'BookingController@index')->name('home');
+    Route::get('/booking', 'BookingController@index');
 });
 
 // ホストでログインした場合
 Route::group(['middleware' => ['auth', 'can:host-higher']], function () {
-    // Route::get('/booking', 'BookingController@index')->name('home');
-    Route::get('/hostbooking', 'HostbookingController@index')->name('home');
+    Route::get('/hostbooking', 'HostbookingController@index');
     Route::post('/hostbooking/bookingok', 'HostbookingController@bookingok');
     Route::post('/hostbooking/bookingng', 'HostbookingController@bookingng');
 });
 
 // システム管理者でログインした場合
-Route::group(['middleware' => ['auth', 'can:system-only']], function () { });
+Route::group(['middleware' => ['auth', 'can:system-only']], function () {
+});
