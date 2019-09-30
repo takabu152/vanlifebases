@@ -61,12 +61,18 @@
             margin-bottom: 24px;
         }
 
-        .main-img {
+        .main-img,.sub-img {
             vertical-align:bottom;
             width: 100%;
             height: 700px;
             object-fit: cover;
             margin-bottom: 80px;
+        }
+
+        .sub-img {
+            object-fit: contain;
+            margin-bottom: 8px;
+            height: 250px;
         }
 
         .contents {
@@ -89,10 +95,6 @@
 
         .icon {
             width: 60%;
-        }
-
-        .sub-img {
-            width: 10%;
         }
 
         .post {
@@ -153,7 +155,7 @@
     @endphp
 
     <!-- 施設イメージのループ -->
-    <!-- ここで施設のサブ画像を表示させる。 -->
+    <!-- ここで施設のtop画像を表示させる。 -->
     @foreach($selecttopstoreimages as $topstoreimage)
     {{-- <div>画像URL:{{ $topstoreimage->imageurl }}</div> --}}
     <div class="main-img-box">
@@ -250,6 +252,14 @@
                         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3324.105904470004!2d130.39798231551552!3d33.57659945009173!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3541919d51550001%3A0x6eea2b4cdf483e49!2sNO%20COFFEE!5e0!3m2!1sja!2sjp!4v1569686590593!5m2!1sja!2sjp" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
                         
                         {{-- <div>住所02:{{$store->storeaddress03}}</div> --}}
+
+                        @foreach($selectsubstoreimages as $substoreimage)
+                        {{-- <div>画像URL:{{ $topstoreimage->imageurl }}</div> --}}
+                        <div class="sub-img-box">
+                            <img class="sub-img" src={{ $substoreimage->imageurl }}>
+                        </div>
+                        @endforeach
+
                         
                         <a class="back btn btn-link pull-right" href="{{ url('/') }}"><strong>＜</strong>&nbsp;施設一覧へ戻る</a>
                     </div>
@@ -320,26 +330,7 @@
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 
     <script>
-    $(function() {
-        var area2PosTop = $('#area2').offset().top;
-        var area3PosTop = $('#area3').offset().top;
-        var ashPosTop = $('#ashColorArea').offset().top;
-        
-        $(window).scroll(function() {
-            var value = $(this).scrollTop();  //スクロール値を取得
-            $('#scrollValue').text(value);
-        
-            // Area1
-            $('#area1').css('background-position-y', value);
-        
-            // Area2
-            if (value > area2PosTop) {
-            $('#area2').css('background-position-y', value - area2PosTop);
-            console.log('area2 variable');
-            } else {
-            $('#area2').css('background-position-y', 'top');
-            console.log('area2 top');
-            }
+
     </script>
 </body>
 

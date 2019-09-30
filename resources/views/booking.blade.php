@@ -133,6 +133,10 @@
             color: #808080;
         }
 
+        .detail {
+            width: 30px;
+        }
+
 
     </style>
 </head>
@@ -153,6 +157,8 @@
         <li><img class="checkin" src="{{ asset('img/checkin.png') }}" alt="">{{ $booking->checkinday}}</li>
         <li><img class="checkout" src="{{ asset('img/checkout.png') }}" alt="">{{ $booking->checkoutday}}</li>
     </ul>
+
+
 
 
 
@@ -218,7 +224,9 @@
                                         data-checkoutday={{$booking->checkoutday}}
                                         data-createdat={{$booking->created_at}}
                                         data-paymentmoney={{$booking->paymentmoney}}
-                                        data-bookingstatus={{$booking->bookingstatus}}>詳細</button>
+                                        data-bookingstatus={{$booking->bookingstatus}}>
+                                        <img class="detail" src="{{ asset('img/detail.png') }}" alt="">
+                                    </button>
                                         
                                         {{-- Modal --}}
                                         <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" 
