@@ -177,7 +177,7 @@
                             @elseif($hostbooking->bookingstatus === 7)
                             <td>キャンセル</td>
                             @endif
-                            <td>{{ $hostbooking->guestid }}</td>
+                            <td>{{ $hostbooking->name }}</td>
                             <td>{{ $hostbooking->checkinday }}</td>
                             <td>{{ $hostbooking->checkoutday }}</td>
                             <td>{{ $hostbooking->paymentmoney }}</td>
@@ -186,12 +186,12 @@
                             <td>
                                 <form action="{{ url('hostbooking/bookingok') }}" method="POST">
                                     {{ csrf_field() }}
-                                    <input type="hidden" name="bookingid" value="{{$hostbooking->id}}">
+                                    <input type="hidden" name="bookingid" value="{{$hostbooking->bookings_id}}">
                                     <button type="submit" class="btn btn-primary">OK</button>
                                 </form>
                                 <form action="{{ url('hostbooking/bookingng') }}" method="POST">
                                     {{ csrf_field() }}
-                                    <input type="hidden" name="bookingid" value="{{$hostbooking->id}}">
+                                    <input type="hidden" name="bookingid" value="{{$hostbooking->bookings_id}}">
                                     <button type="submit" class="btn btn-danger">NG</button>
                                 </form>
                             </td>

@@ -23,15 +23,18 @@ class HostbookingController extends Controller
     //ホストの施設予約一覧表示処理
     public function index()
     {
-        $hostbookings = DB::table('stores')->where('hostid', Auth::id())
-        ->leftJoin('bookings', 'stores.storeid', '=', 'bookings.storeid')
+        $hostbookings = DB::table('bookings')
+        ->leftJoin('users', 'bookings.guestid', '=', 'users.id')
+        ->leftJoin('stores', 'bookings.storeid', '=', 'stores.storeid')
+        ->where('stores.hostid', '=', Auth::id())
+        ->leftJoin('storeimages', 'bookings.storeid', '=', 'storeimages.storeid')
+        ->where('storeimages.imagedivision', '=', '1')
+        ->orderBy('bookings.storeid', 'asc')
+        ->orderBy('bookings.id', 'asc')
+        ->select('bookings.id as bookings_id', 'bookings.guestid', 'bookings.storeid', 'bookings.checkinday', 'bookings.checkoutday', 'bookings.paymentmoney', 'bookings.bookingstatus', 'bookings.checkinstatus', 'name', 'storename')
         ->get();
 
-        $users = DB::table('users')
-        ->leftJoin('bookings', 'users.id', '=', 'bookings.guestid')
-        ->get();
-
-        return view('hostbooking', ['hostbookings' => $hostbookings, 'users' => $users]);
+        return view('hostbooking', ['hostbookings' => $hostbookings]);
     }
 
     //空室確認OKの場合の更新表示
