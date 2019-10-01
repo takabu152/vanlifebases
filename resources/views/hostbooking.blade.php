@@ -136,21 +136,25 @@
     <div class="flex-center position-ref container">
         <a href="{{ url('/hostbooking')}}" class="btn btn-primary">リロード</a>
     </div>
-    <div class="flex-center position-ref container">
 
+    <div class="flex-center position-ref container">
         <div class="contents">
             <div class="title m-b-md">
-                <table class="table">
+                <table class="table table-responsive">
                     <!-- <caption>ホスト予約確認</caption> -->
                     <thead>
                         <tr>
                             <th scope="col">No.</th>
-                            <th scope="col"><img class="host" src="{{ asset('img/host.png') }}" alt=""></th>
+                            <th scope="col">施設</th>
+                            {{-- <th scope="col"><img class="host" src="{{ asset('img/host.png') }}" alt=""></th> --}}
                             <th scope="col">予約状況</th>
-                            <th scope="col">ユーザーID</th>
-                            <th scope="col"><img class="checkin" src="{{ asset('img/checkin.png') }}" alt=""></th>
+                            <th scope="col">ゲスト</th>
+                            <th scope="col">チェックイン</th>
+                            <th scope="col">チェックアウト</th>
+                            <th scope="col">料金</th>
+                            {{-- <th scope="col"><img class="checkin" src="{{ asset('img/checkin.png') }}" alt=""></th>
                             <th scope="col"><img class="checkout" src="{{ asset('img/checkout.png') }}" alt=""></th>
-                            <th scope="col"><img class="pay" src="{{ asset('img/pay.png') }}" alt=""></th>
+                            <th scope="col"><img class="pay" src="{{ asset('img/pay.png') }}" alt=""></th> --}}
                             <th scope="col">空室</th>
                         </tr>
                     </thead>

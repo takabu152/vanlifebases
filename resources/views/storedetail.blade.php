@@ -167,11 +167,10 @@
 
             <div class="split-box main-message ">
 
-                <h1>{{ $store->storename }}【{{$store->storeaddress01}}】</h1>
-                <h2>{{$store->forusermessage}}</h2>
-                <h2>{{$store->salespointmessage}}</h2>
                 <!-- 施設メイン情報の表示 -->
-                
+                <h1>{{ $store->storename }}【{{ $store->storeaddress01 }}】</h1>
+                <h2>{{ $store->forusermessage }}</h2>
+                <h2>{{ $store->salespointmessage }}</h2>
                 
                 {{-- <div>websiteURL:{{$store->websiteurl}}</div> --}}            
                     <div class="sub-message">
@@ -190,6 +189,12 @@
                         ->where('paidserviceflg',1);
                         @endphp
 
+                        @php
+                        
+                         
+                        @endphp
+
+
                         <!-- 施設写真の取得(サブ画像のみ取得) -->
                         @php
                         $selectsubstoreimages = $storeimages
@@ -204,9 +209,8 @@
                         <img src={{ $topstoreimage->imageurl }}>
                         @endforeach --}}
 
-                        <!-- 無料施設サービスのループ -->
-                        
-                        <h3>無料施設サービス一覧</h3>
+                        <!-- 無料サービスのループ -->
+                        <h3>無料サービス一覧</h3>
                         <div class="services">
                         @foreach($selectfreestoreservices as $freestoreservice)
                         <!-- アイコン画像の取得 -->
@@ -225,9 +229,8 @@
                         @endforeach
                         </div>
                         
-                        <!-- 有料施設サービスのループ -->
-                        
-                        <h3>有料施設サービス一覧</h3>
+                        <!-- 有料サービスのループ -->
+                        <h3>有料サービス一覧</h3>
 
                         <div class="free-services">
                         @foreach($selectpaidstoreservices as $paidstoreservice)
@@ -265,54 +268,57 @@
                     </div>
                     </div>
 
-                            {{-- ユーザーログインしている場合のみ、予約画面が表示される。 --}}
-                            @if (Route::has('login'))
-                            {{-- @include('parts.reservation') --}}
-                            @auth
-                                <div class="row split-box">
+                    {{-- ユーザーログインしている場合のみ、予約画面が表示される。 --}}
+                    @if (Route::has('login'))
+                    {{-- @include('parts.reservation') --}}
+                    @auth
+                        <div class="row split-box">
+                            @include('common.errors')
+                            <form class="card form-group col-10" action="{{ url('/storedetail')}}" method="POST">
+                                {{ csrf_field() }}
+                                <!-- storename -->
+                                    <label for="storename">施設名</label>
+                                    <input type="text" id="storename" name="storename" class="form-control" value="{{$store->storename}}" readonly>
+                                <!-- checkinday -->
+                                    <label for="checkinday">チェックイン</label>
+                                    <input required type="date" id="checkinday" name="checkinday" class="form-control" >
+                                <!-- checkoutday -->
+                                    <label for="checkoutday">チェックアウト</label>
+                                    <input required type="date" id="checkoutday" name="checkoutday" class="form-control" >
+                                <!-- charge per night -->
+                                    <label for="charge">料金/１泊１台</label>
+                                    <input type="number" id="charge" name="charge" class="form-control" value="{{$store->price}}" readonly>
+                                <!-- days -->
+                                    <span id="days"></span>
+                                <!-- paymentmoney -->
+                                    <label for="paymentmoney">料金</label>
+                                    <input required type="number" id="paymentmoney" name="paymentmoney" class="form-control" >
+                                <!-- Reserveボタン -->
+                                    <button type="submit" class="btn btn-outline-secondary btn-block rounded-0" id="reserve_btn" disabled>予約</button>
+                                <!-- guestid値を送信 -->
+                                @php
+                                $user=Auth::user();
+                                @endphp
+                                <input type="hidden" name="guestid" value="{{$user->id}}">
+                                <!-- storeid値を送信 -->
+                                <input type="hidden" name="storeid" value="{{$store->storeid}}">
+                                <!-- storeemail1値を送信 -->
+                                <input type="hidden" name="storeemail1" value="{{$store->emai1}}">
+                                <!-- storeemail2を送信 -->
+                                <input type="hidden" name="storeemail2" value="{{$store->email2}}">
+                            </form>
+                    
+                    @endauth
+                    @guest
+                    {{-- ログインしていない場合は、ログインを促す。 --}}
+                    <div class="container">
+                        <p>予約にはログインが必要です。ユーザーアカウントをお持ちでない方は、まず登録をお願いします。</p>
+                        {{-- ユーザー登録・ログインページへのリンクボタン --}}
+                        <a href="{{ url('/login') }}" class="btn btn-outline-secondary btn-block rounded-0" role="button" >新規登録・ログイン</a>
+                    </div>
 
-                                    @include('common.errors')
-
-                                    <form class="card form-group col-10" action="{{ url('/storedetail')}}" method="POST">
-                                        {{ csrf_field() }}
-
-                                        <!-- storename -->
-                                            <label for="storename">施設名</label>
-                                            <input type="text" id="storename" name="storename" class="form-control" value="{{$store->storename}}" readonly>
-
-                                        <!-- checkinday -->
-                                            <label for="checkinday">チェックイン</label>
-                                            <input required type="date" id="checkinday" name="checkinday" class="form-control" >
-
-                                        <!-- checkoutday -->
-                                            <label for="checkoutday">チェックアウト</label>
-                                            <input required type="date" id="checkoutday" name="checkoutday" class="form-control" >
-
-                                        <!-- paymentmoney -->
-                                            <label for="paymentmoney">料金</label>
-                                            <input required type="number" id="paymentmoney" name="paymentmoney" class="form-control" >
-
-                                        <!-- Reserveボタン -->
-                                            <button type="submit" class="btn btn-primary col-4 send" id="reserve_btn" disabled>予約</button>
-
-                                        <!-- guestid値を送信 -->
-                                        @php
-                                        $user=Auth::user();
-                                        @endphp
-                                        <input type="hidden" name="guestid" value="{{$user->id}}">
-                                        <!-- storeid値を送信 -->
-                                        <input type="hidden" name="storeid" value="{{$store->storeid}}">
-                                        <!-- storeemail1値を送信 -->
-                                        <input type="hidden" name="storeemail1" value="{{$store->emai1}}">
-                                        <!-- storeemail2を送信 -->
-                                        <input type="hidden" name="storeemail2" value="{{$store->email2}}">
-                                    </form>
-
-                            @endauth
-                            @guest
-                                @include('parts.login')
-                            @endguest
-                            @endif
+                    @endguest
+                    @endif
 
                             
 
@@ -324,7 +330,6 @@
     </footer>
 
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-
     <script>
 
     // パララックスTsuru
@@ -350,6 +355,43 @@
     //         };
     //     });
     // });
+
+    // 予約日数の計算
+    $(function(){
+        $('#checkinday').change(function(event){
+            setDate();
+        });
+        $('#checkoutday').change(function(event){
+            setDate();
+        });
+        function setDate(){
+            var fromDate = new Date($('#checkinday').val());
+            var toDate = new Date($('#checkoutday').val());
+            if(!toDate.getDate() || fromDate.getDate()>toDate.getDate()){
+                var year = fromDate.getFullYear().toString;
+                var mm = (fromDate.getMonth()+1).toString;
+                var dd = fromDate.getDate().toString;
+                var yyyymmdd = year + '-' + (mm[1]?mm:"0"+mm[0]) + '-' + (dd[1]?dd:"0"+dd[0]);
+                $('#checkoutday').val(yyyymmdd);
+            }
+            var days = Math.floor((toDate.getTime() - fromDate.getTime()) / 86400000);
+            if (days>=1){
+                $('#days').html(' （'+days+'泊）');
+
+                // 駐車場の１泊あたりの利用料金を取得
+                console.log($('#charge').val());
+                // console.log(charge);
+
+                // 宿泊日数X１泊あたりの利用料金
+                var totalcharge = charge * days;
+                $('#paymentmoney').html(totalcharge);
+
+            }else{
+                $('#days').html('');
+            }
+        }
+    });
+
 
     // 予約フォームの未入力防止措置Yanagimoto
     $(function() {
