@@ -44,13 +44,16 @@
 
     <!-- Styles -->
     <style>
-        body {
-            color: #808080;
-            /* font-family: 'Roboto', sans-serif;
-            font-family: 'Noto Sans JP', sans-serif; */
-            height: 2000px;
+
+        html {
+            font-size: 62.5%;
         }
 
+        body {
+            color: #808080;
+            height: 2000px;
+        }
+        
         h2 {
             /* text-shadow: 1px 1px 1px gray; */
             font-weight: 500;
@@ -59,8 +62,16 @@
         }
 
         .event {
+            position: relative;
+            top: 120px;
             height: 400px;
-            font-size: 200px;
+            margin-bottom: 48px;
+        }
+
+        .event-img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
         }
 
         .card-body {
@@ -79,12 +90,16 @@
             font-family: 'Noto Sans JP', sans-serif;
         }
 
-        .main-img {
+        .card-img-top {
             width: 100%;
-            height: 100%;
-            object-fit: contain;
+            height: 300px;
+            object-fit: cover;
             border-radius: 5px;
             filter: drop-shadow(4px 4px 4px rgba(0, 0, 0, 0.4));
+        }
+        
+        .card {
+            border: none;
         }
 
         ul {
@@ -107,9 +122,7 @@
             color: gray;
         }
 
-        .card {
-            border: none;
-        }
+        
     </style>
 </head>
 
@@ -118,7 +131,8 @@
     {{-- partsフォルダのheaderを読み込む --}}
     @include('parts.header')
 
-    <div class="event">イベント要素</div>
+    {{-- イベントページのコンテンツ例（スライドにしたい） --}}
+    <div class="event"><img class="event-img" src="{{ asset('img/event.png') }}" alt=""></div>
 
     <!-- ここからコンテンツの表示を行う。 -->
     <!-- 表示領域 -->
