@@ -163,7 +163,7 @@
 
         <section class="contents container flex-center position-ref full-height">
 
-            <div class="split-box　main-message ">
+            <div class="split-box main-message ">
 
                 <h1>{{ $store->storename }}【{{$store->storeaddress01}}】</h1>
                 <h2>{{$store->forusermessage}}</h2>
@@ -268,26 +268,22 @@
 
                                         <!-- storename -->
                                             <label for="storename">施設名</label>
-                                            <input type="text" id="storename" name="storename" class="form-control" value="{{$store->storename}}">
+                                            <input type="text" id="storename" name="storename" class="form-control" value="{{$store->storename}}" readonly>
 
                                         <!-- checkinday -->
                                             <label for="checkinday">チェックイン</label>
-                                            <input type="date" id="checkinday" name="checkinday" class="form-control" >
-                                            {{-- <input type="date" id="checkinday" name="checkinday" class="form-control" value="{{$book->checkinday}}"> --}}
+                                            <input required type="date" id="checkinday" name="checkinday" class="form-control" >
 
                                         <!-- checkoutday -->
                                             <label for="checkoutday">チェックアウト</label>
-                                            <input type="date" id="checkoutday" name="checkoutday" class="form-control" >
-                                            {{-- <input type="date" id="checkoutday" name="checkoutday" class="form-control" value="{{$book->checkoutday}}"> --}}
+                                            <input required type="date" id="checkoutday" name="checkoutday" class="form-control" >
 
                                         <!-- paymentmoney -->
                                             <label for="paymentmoney">料金</label>
-                                            <input type="number" id="paymentmoney" name="paymentmoney" class="form-control" >
-                                            {{-- <input type="number" id="paymentmoney" name="paymentmoney" class="form-control" value="{{$book->paymentmoney}}"> --}}
+                                            <input required type="number" id="paymentmoney" name="paymentmoney" class="form-control" >
 
                                         <!-- Reserveボタン -->
-                                            <button type="submit" class="btn btn-primary col-4">予約</button>
-                                            {{-- <a class="btn btn-link pull-right" href="{{ url('/') }}">Back</a> --}}
+                                            <button type="submit" class="btn btn-primary col-4 send" id="reserve_btn" disabled>予約</button>
 
                                         <!-- guestid値を送信 -->
                                         @php
@@ -339,7 +335,33 @@
             } else {
             $('#area2').css('background-position-y', 'top');
             console.log('area2 top');
+            };
+        });
+    });
+
+    $(function() {
+        $('.send').prop("disabled", true); //始めにjQueryで送信ボタンを無効化する
+        $('form input:required').each(function () {
+            $(this).prev("label").addClass("required"); //始めにjQueryで必須欄を加工する
+        });
+        $('form input:required').change(function () { //入力欄の操作時
+            let flag = true; //必須項目が空かどうかフラグ
+            $('form input:required').each(function(e) { //必須項目をひとつずつチェック
+                if ($('form input:required').eq(e).val() === "") { //もし必須項目が空なら
+                    flag = false;
+                }
+            });
+            if (flag) { //全て埋まっていたら
+                $('.send').prop("disabled", false);//送信ボタンを復活
             }
+            else {
+                $('.send').prop("disabled", true); //送信ボタンを閉じる
+            }
+        });
+    });
+
+
+
     </script>
 </body>
 
