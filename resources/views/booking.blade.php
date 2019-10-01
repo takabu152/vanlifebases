@@ -153,10 +153,10 @@
         @endphp
         {{-- <a href="{{ url('storedetail/'.$bookingstorename->storeid) }}">{{
         $bookingstorename->storename }} --}}
-    <ul>
+    {{-- <ul>
         <li><img class="checkin" src="{{ asset('img/checkin.png') }}" alt="">{{ $booking->checkinday}}</li>
         <li><img class="checkout" src="{{ asset('img/checkout.png') }}" alt="">{{ $booking->checkoutday}}</li>
-    </ul>
+    </ul> --}}
 
 
 
