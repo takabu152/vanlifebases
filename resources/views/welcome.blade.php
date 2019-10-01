@@ -166,7 +166,7 @@
 
     @foreach($selectstoreimages as $storeimage)
 
-    <div class="card col-md-4 slider">
+    <div class="card col-sm-4 slider">
 
         <form action="{{ url('storedetail/'.$store->storeid) }}" method="GET">
             <a target="_blank" href="{{ url('storedetail/'.$store->storeid) }}.submit()">
