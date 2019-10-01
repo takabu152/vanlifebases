@@ -64,13 +64,13 @@
         .event {
             position: relative;
             top: 120px;
-            height: 400px;
+            height: 300px;
             margin-bottom: 48px;
         }
 
         .event-img {
             width: 100%;
-            height: 400px;
+            height: 300px;
             object-fit: cover;
         }
 
@@ -88,20 +88,24 @@
             justify-content: center;
             font-family: 'Roboto', sans-serif;
             font-family: 'Noto Sans JP', sans-serif;
+            border: none;
+            margin-top: 48px;
+            margin-bottom: 32px;
         }
 
         .card-img-top {
             width: 100%;
-            height: 300px;
-            object-fit: cover;
+            height: 20vw;
+            object-fit: fill|contain|cover|none|scale-down;
             border-radius: 5px;
             filter: drop-shadow(4px 4px 4px rgba(0, 0, 0, 0.4));
-        }
-        
-        .card {
-            border: none;
+            margin-bottom: 16px;
         }
 
+        .card h2,h3,p {
+            margin-bottom: 8px;
+        }
+        
         ul {
             list-style-type: none;
             float: left;
@@ -132,6 +136,12 @@
     @include('parts.header')
 
     {{-- イベントページのコンテンツ例（スライドにしたい） --}}
+    {{-- @php
+
+    $randstore = rand(1,8);
+    $randstoreimages = $storeimages
+    ->where('stotreid',$randstore);
+    @endphp --}}
     <div class="event"><img class="event-img" src="{{ asset('img/event.png') }}" alt=""></div>
 
     <!-- ここからコンテンツの表示を行う。 -->
@@ -163,7 +173,7 @@
                 <img class="card-img-top" src="{{ $storeimage->imageurl
             }}" alt="カードの画像">
                 <div class="card-body">
-                    <h2>{{ $store->storename }}【{{$store->storeaddress01}}】</h2>
+                    <h2>{{ $store->storename }}<br>[{{$store->storeaddress01}}]</h2>
                     <h3 class="sub-message">{{$store->forusermessage}}</h3>
                     <p class="sub-message"><a>{{$store->websiteurl}}</a></p>
                 </div>

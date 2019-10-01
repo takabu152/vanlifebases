@@ -39,7 +39,7 @@
     }
 
     .navbar-brand {
-        padding-top: 10px;
+        margin-top: 10px;
         font-size: 22px;
     }
 

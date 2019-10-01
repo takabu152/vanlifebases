@@ -70,9 +70,16 @@
         }
 
         .sub-img {
-            object-fit: contain;
-            margin-bottom: 8px;
+            object-fit: fill|contain|cover|none|scale-down;
+            margin: 0;
             height: 250px;
+            border-radius: 5px;
+            filter: drop-shadow(4px 4px 4px rgba(0, 0, 0, 0.4));
+        }
+
+        .sub-img-box {
+            margin-right: 36px;
+            margin-bottom: 56px;
         }
 
         .contents {
@@ -167,7 +174,7 @@
 
             <div class="split-box main-message ">
 
-                <h1>{{ $store->storename }}【{{$store->storeaddress01}}】</h1>
+                <h1>{{ $store->storename }}<br>[{{$store->storeaddress01}}]</h1>
                 <h2>{{$store->forusermessage}}</h2>
                 <h2>{{$store->salespointmessage}}</h2>
                 <!-- 施設メイン情報の表示 -->
@@ -245,20 +252,20 @@
                         @endforeach
                         @endforeach
                         </div>
-
-                        <h3 class="post">〒{{$store->postalcode}}&nbsp;{{$store->storeaddress02}}</h3>
-
-                        {{-- Googlemapswp差し込みたいですがDBいじってないので具体例として --}}
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3324.105904470004!2d130.39798231551552!3d33.57659945009173!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3541919d51550001%3A0x6eea2b4cdf483e49!2sNO%20COFFEE!5e0!3m2!1sja!2sjp!4v1569686590593!5m2!1sja!2sjp" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
+                        
                         
                         {{-- <div>住所02:{{$store->storeaddress03}}</div> --}}
-
+                        <h4>その他イメージ</h4>
                         @foreach($selectsubstoreimages as $substoreimage)
                         {{-- <div>画像URL:{{ $topstoreimage->imageurl }}</div> --}}
                         <div class="sub-img-box">
                             <img class="sub-img" src={{ $substoreimage->imageurl }}>
                         </div>
                         @endforeach
+
+                        <h3 class="post">〒{{$store->postalcode}}&nbsp;{{$store->storeaddress02}}</h3>
+                        {{-- Googlemapswp差し込みたいですがDBいじってないので具体例として --}}
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3324.105904470004!2d130.39798231551552!3d33.57659945009173!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3541919d51550001%3A0x6eea2b4cdf483e49!2sNO%20COFFEE!5e0!3m2!1sja!2sjp!4v1569686590593!5m2!1sja!2sjp" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
 
                         
                         <a class="back btn btn-link pull-right" href="{{ url('/') }}"><strong>＜</strong>&nbsp;施設一覧へ戻る</a>
