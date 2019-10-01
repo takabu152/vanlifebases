@@ -188,11 +188,13 @@
                                     {{ csrf_field() }}
                                     <input type="hidden" name="bookingid" value="{{$hostbooking->bookings_id}}">
                                     <button type="submit" class="btn btn-primary">OK</button>
+                                    
                                 </form>
                                 <form action="{{ url('hostbooking/bookingng') }}" method="POST">
                                     {{ csrf_field() }}
                                     <input type="hidden" name="bookingid" value="{{$hostbooking->bookings_id}}">
                                     <button type="submit" class="btn btn-danger">NG</button>
+                                    
                                 </form>
                             </td>
                             <!-- 予約ステータスが7のときNG表示 -->
@@ -233,9 +235,12 @@
 
     </footer> --}}
 
-    <script>
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script>
 
-    </script>
+
+
+</script>
+
 </body>
-
 </html>
