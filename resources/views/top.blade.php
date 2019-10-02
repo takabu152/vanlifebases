@@ -534,7 +534,7 @@
                         <label for="message-text" class="col-form-label">メッセージ:</label>
                         <textarea class="form-control" id="message" name="message"></textarea>
                     </div>
-                    <input type="submit" class="btn btn-default" value="送信">
+                    <input type="submit" class="btn btn-outline-secondary btn-block rounded-0" value="送信">
                 </form>
             </div>
         </div>

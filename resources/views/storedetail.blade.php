@@ -310,10 +310,10 @@
                                     <input type="text" id="storename" name="storename" class="form-control" value="{{$store->storename}}" readonly>
                                 <!-- checkinday -->
                                     <label for="checkinday">チェックイン</label>
-                                    <input required type="date" id="checkinday" name="checkinday" class="form-control" >
+                                    <input type="date" id="checkinday" name="checkinday" class="form-control" >
                                 <!-- checkoutday -->
                                     <label for="checkoutday">チェックアウト</label>
-                                    <input required type="date" id="checkoutday" name="checkoutday" class="form-control" >
+                                    <input type="date" id="checkoutday" name="checkoutday" class="form-control" >
                                 <!-- charge per night -->
                                     <label for="charge">料金/１泊１台</label>
                                     <input type="number" id="charge" name="charge" class="form-control" value="{{$store->price}}" readonly>
@@ -321,10 +321,13 @@
                                     <span id="days"></span>
                                 <!-- paymentmoney -->
                                     <label for="paymentmoney">料金</label>
-                                    <input required type="number" id="paymentmoney" name="paymentmoney" class="form-control" readonly >
+                                    <input type="number" id="paymentmoney" name="paymentmoney" class="form-control" value="" readonly >
                                 <!-- Reserveボタン -->
-                                    <button type="submit" class="btn btn-outline-secondary btn-block rounded-0" id="reserve_btn" disabled>予約</button>
-                                <!-- guestid値を送信 -->
+                                    {{-- <button type="button" class="reserve_btn" id="reserve_btn">予約</button> --}}
+                                    <div class="py-2">
+                                    <input type="submit" class="btn btn-lg btn-outline-secondary btn-block rounded-0" id="reserve_btn" value="送信">
+                                    </div>
+                                    <!-- guestid値を送信 -->
                                 @php
                                 $user=Auth::user();
                                 @endphp
@@ -388,61 +391,51 @@
     // });
 
     // 予約日数の計算
+    
     $(function(){
-        $('#checkinday').change(function(event){
-            setDate();
-        });
-        $('#checkoutday').change(function(event){
-            setDate();
-        });
-        function setDate(){
-            var fromDate = new Date($('#checkinday').val());
-            var toDate = new Date($('#checkoutday').val());
-            
-            if(!toDate.getDate() || fromDate.getDate()>toDate.getDate()){
-                var year = fromDate.getFullYear().toString;
-                var mm = (fromDate.getMonth()+1).toString;
-                var dd = fromDate.getDate().toString;
-                var yyyymmdd = year + '-' + (mm[1]?mm:"0"+mm[0]) + '-' + (dd[1]?dd:"0"+dd[0]);
-                $('#checkoutday').val(yyyymmdd);
-            }
-            var days = Math.floor((toDate.getTime() - fromDate.getTime()) / 86400000);
-            if (days>=1){
-                $('#days').html(' （計'+days+'泊）');
+        var charge = $('#charge').val(); // 駐車場の１泊あたりの利用料金を取得
+        var paymentmoney = $('#paymentmoney');
+
+        $(function(){
+            $('#checkinday').change(function(event){
+                setDate();
+            });
+            $('#checkoutday').change(function(event){
+                setDate();
+            });
+            function setDate(){
+                var fromDate = new Date($('#checkinday').val());
+                var toDate = new Date($('#checkoutday').val());
                 
-                // 駐車場の１泊あたりの利用料金を取得
-                var charge = $('#charge').val();
-                console.log(charge); // ここの値がうまくとれないよーーー！！！ 
+                if(!toDate.getDate() || fromDate.getDate()>toDate.getDate()){
+                    var year = fromDate.getFullYear().toString;
+                    var mm = (fromDate.getMonth()+1).toString;
+                    var dd = fromDate.getDate().toString;
+                    var yyyymmdd = year + '-' + (mm[1]?mm:"0"+mm[0]) + '-' + (dd[1]?dd:"0"+dd[0]);
+                    $('#checkoutday').val(yyyymmdd);
+                }
+                var days = Math.floor((toDate.getTime() - fromDate.getTime()) / 86400000);
 
-                // 宿泊日数X１泊あたりの利用料金
-                var totalcharge = charge * days;
-                $('#paymentmoney').html(totalcharge);
-
-            }else{
-                $('#days').html('');
+                if (days>=1){
+                    $('#days').html(' （計'+days+'泊）');
+                    $("#paymentmoney").val(days * charge); // 宿泊日数X泊の利用料金をフォームに出力
+                }else{
+                    $('#days').html('');
+                }
             }
-        }
+        });
     });
 
-
     // 予約フォームの未入力防止措置Yanagimoto
-    $(function() {
-        $('.send').prop("disabled", true); //始めにjQueryで送信ボタンを無効化する
-        $('form input:required').each(function () {
-            $(this).prev("label").addClass("required"); //始めにjQueryで必須欄を加工する
-        });
-        $('form input:required').change(function () { //入力欄の操作時
-            let flag = true; //必須項目が空かどうかフラグ
-            $('form input:required').each(function(e) { //必須項目をひとつずつチェック
-                if ($('form input:required').eq(e).val() === "") { //もし必須項目が空なら
-                    flag = false;
-                }
-            });
-            if (flag) { //全て埋まっていたら
-                $('.send').prop("disabled", false);//送信ボタンを復活
-            }
-            else {
-                $('.send').prop("disabled", true); //送信ボタンを閉じる
+    $(function(){
+        if ($("#paymentmoney").val().length == 0) {
+            $("#submit1").prop("disabled", true);
+        }
+        $("#paymentmoney").on("keydown keyup keypress change", function() {
+            if ($(this).val().length < 2) {
+                $("#paymentmoney").prop("disabled", true);
+            } else {
+                $("#paymentmoney").prop("disabled", false);
             }
         });
     });
