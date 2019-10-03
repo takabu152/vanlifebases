@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{ mix('/css/app.css') }}">
     
     {{-- CSRF対策 --}}
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -99,6 +100,14 @@
             object-fit: contain;
         }
 
+        .card {
+            border: none;
+        }
+
+        .sub-message {
+            font-size: 0.5vw;
+        }
+
         .container {
             top: 232px;
         }
@@ -111,8 +120,12 @@
             color: #808080;
         }
 
+        table {
+            width: 100%;
+        }
+
         th {
-            width: 25%;
+            width: calc(100%-24px);
             font-size: 24px;
         }
 
@@ -121,7 +134,7 @@
         }
 
         img { 
-            width: 16%;
+            width: 2vw;
         }
 
         a  {
@@ -145,21 +158,27 @@
 
     @include('parts.header')
 
-    @foreach ($bookings as $booking)
+    {{-- @foreach ($bookings as $booking)
         <!-- 施設名をstoresから取得 -->
         @php
         $bookingstorenames = $stores
         ->where('storeid', $booking->storeid);
-        @endphp
-        {{-- <a href="{{ url('storedetail/'.$bookingstorename->storeid) }}">{{
-        $bookingstorename->storename }} --}}
-    {{-- <ul>
-        <li><img class="checkin" src="{{ asset('img/checkin.png') }}" alt="">{{ $booking->checkinday}}</li>
-        <li><img class="checkout" src="{{ asset('img/checkout.png') }}" alt="">{{ $booking->checkoutday}}</li>
-    </ul> --}}
+        @endphp --}}
 
+        {{-- トップ画像表示し押すとモーダルで詳細 --}}
 
-
+        {{-- <div class="history">
+            <div class="card col-sm-4 history-contents">
+                <form action="{{ url('storedetail/'.$store->storeid) }}" method="GET">
+                    <a href="{{ url('storedetail/'.$store->storeid) }}.submit()">
+                        <img class="card-img-top" src="{{ asset('img/event.png') }}" alt="カードの画像">
+                        <div class="card-body">
+                            <p class="sub-message">{{ $booking->checkinday }}</p>
+                            <p class="sub-message">{{ $booking->checkoutday }}</p>
+                        </div>
+            </div>
+            </div>
+        </div> --}}
 
 
     <div class="flex-center position-ref container">
@@ -179,12 +198,12 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {{-- @foreach ($bookings as $booking)
+                        @foreach ($bookings as $booking)
                             <!-- 施設名をstoresから取得 -->
                             @php
                             $bookingstorenames = $stores
                             ->where('storeid', $booking->storeid);
-                            @endphp --}}
+                            @endphp
                             <tr>
                                 @foreach ($bookingstorenames as $bookingstorename)
                                     <td>
@@ -198,19 +217,19 @@
                                         @if ($booking->bookingstatus == 0)
                                         <p>予約未確定</p>
                                         @elseif ($booking->bookingstatus == 1)
-                                        <p>空き状況確認済み</p>
+                                        <p>空き状況確認済</p>
                                         @elseif ($booking->bookingstatus == 2)
                                         <p>支払い待ち</p>
                                         @elseif ($booking->bookingstatus == 3)
                                         <p>予約完了</p>
                                         @elseif ($booking->bookingstatus == 4)
-                                        <p>キャンセル申し込み</p>
+                                        <p>キャンセル申込</p>
                                         @elseif ($booking->bookingstatus == 5)
                                         <p>キャンセル承諾</p>
                                         @elseif ($booking->bookingstatus == 6)
-                                        <p>キャンセル料未払い</p>
+                                        <p>キャンセル料未払</p>
                                         @elseif ($booking->bookingstatus == 7)
-                                        <p>キャンセル済み</p>
+                                        <p>キャンセル済</p>
                                         @endif
                                     </td>
                                     <td>

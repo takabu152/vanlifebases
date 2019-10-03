@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{ mix('/css/app.css') }}">
 
     <title>VanLifebases</title>
 
@@ -34,7 +35,7 @@
         body {
             background-color: #fff;
             color: #808080;
-            font-size: 3.0rem;
+            font-size: 1.6remrem;
             font-weight: 100;
             margin: 0 auto;
         }
@@ -45,19 +46,21 @@
 
         h1 {
             border-bottom: solid 1px;
-            font-size: 3vmin;
+            font-size: 3.2rem;
             font-weight: bold;
-            margin-bottom: 96px;
+            margin-bottom: 48px;
             width: 90%;
         }
 
+        .adress {
+            font-size: 1.6rem;
+        }
+
         h2 {
-            font-size: 2.0rem;
-            margin-bottom: 96px;
+            margin-bottom: 48px;
         }
 
         h3 {
-            font-size: 2.4rem;
             margin-bottom: 24px;
         }
 
@@ -124,6 +127,7 @@
         
         .card {
             margin-top: 56px;
+            margin-left: 24px;
             position: -webkit-sticky;
             position: sticky;
             height: 100%;
@@ -135,13 +139,14 @@
         }
 
         .back {
-            font-size: 3.0rem;
+            font-size: 2.4rem;
             color: #808080;
+            text-align: left;
         }
 
         .back:hover {
             color: #808080;
-            text-decoration: none;
+            cursor: pointer;
         }
 
         iframe {
@@ -199,7 +204,8 @@
                 <h2>{{$store->forusermessage}}</h2>
                 <h2>{{$store->salespointmessage}}</h2> --}}
                 <!-- 施設メイン情報の表示 -->
-                <h1>{{ $store->storename }}【{{ $store->storeaddress01 }}】</h1>
+                <h1>{{ $store->storename }}
+                <br><span class="adress">[{{ $store->storeaddress01 }}]</span></h1>
                 <h2>{{ $store->forusermessage }}</h2>
                 <h2>{{ $store->salespointmessage }}</h2>
                 
@@ -292,9 +298,10 @@
 
                         <h3 class="post">〒{{$store->postalcode}}&nbsp;{{$store->storeaddress02}}</h3>
                         {{-- Googlemapswp差し込みたいですがDBいじってないので具体例として --}}
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3324.105904470004!2d130.39798231551552!3d33.57659945009173!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3541919d51550001%3A0x6eea2b4cdf483e49!2sNO%20COFFEE!5e0!3m2!1sja!2sjp!4v1569686590593!5m2!1sja!2sjp" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3323.718064410146!2d130.39228031551582!3d33.58666874956735!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x354191aa0929fbdf%3A0xd5e535b27b5236c6!2z44K444O844K644Ki44Kr44OH44Of44O8IEZVS1VPS0HvvI_jg5fjg63jgrDjg6njg5_jg7PjgrDjg7vjgqjjg7Pjgrjjg4vjgqLppIrmiJDjgrnjgq_jg7zjg6vvvIjlpKnnpZ7vvIk!5e0!3m2!1sja!2sjp!4v1570060999893!5m2!1sja!2sjp" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
 
                     </div>
+                    <a class="back btn btn-link pull-right" href="{{ url('/') }}">施設一覧へ戻る</a>
                     </div>
 
                     {{-- ユーザーログインしている場合のみ、予約画面が表示される。 --}}
@@ -343,7 +350,7 @@
                     @endauth
                     @guest
                     {{-- ログインしていない場合は、ログインを促す。 --}}
-                    <div class="container">
+                    <div class="container　split-box">
                         <p>予約にはログインが必要です。ユーザーアカウントをお持ちでない方は、まず登録をお願いします。</p>
                         {{-- ユーザー登録・ログインページへのリンクボタン --}}
                         <a href="{{ url('/login') }}" class="btn btn-outline-secondary btn-block rounded-0" role="button" >新規登録・ログイン</a>
@@ -356,12 +363,10 @@
 
                     </div>
         </section>
-        <div class="container">
-            <a class="back btn btn-link pull-right" href="{{ url('/') }}"><strong>＜</strong>&nbsp;施設一覧へ戻る</a>
-        </div>
-@include('parts.footer')
+ 
+        
+        @include('parts.footer')
 
-    </footer>
 
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <script>

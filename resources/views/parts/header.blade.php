@@ -50,6 +50,10 @@
     strong {
         color: green;
     }
+
+    li {
+        margin-right:2vw;
+    }
 </style>
 </head>
 

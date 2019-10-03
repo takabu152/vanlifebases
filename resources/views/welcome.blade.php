@@ -51,12 +51,12 @@
 
         body {
             color: #808080;
-            height: 2000px;
+            /* height: 2000px; */
         }
         
         h2 {
             /* text-shadow: 1px 1px 1px gray; */
-            font-weight: 500;
+            /* font-weight: 500; */
             text-align: left;
             color: #808080;
         }
