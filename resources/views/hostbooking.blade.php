@@ -36,6 +36,7 @@
             font-weight: 100;
             /* height: 100vh; */
             margin: 0 auto;
+            
         }
 
         .flex-center {
@@ -104,11 +105,11 @@
 
         table {
             color: #808080;
+            text-align: center;
         }
 
         th {
-            width: 25%;
-            font-size: 24px;
+            font-size: 3.2rem;
         }
 
         td {
