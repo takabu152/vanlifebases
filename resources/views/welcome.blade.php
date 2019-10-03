@@ -126,6 +126,23 @@
             color: gray;
         }
 
+        @media(max-width: 1000px) {
+            .card {
+            display: flex;
+        }
+        }
+
+        @media(max-width:670px) {
+            .card-img-top {
+            width: 100%;
+            height: 300px;
+            object-fit: fill|contain|cover|none|scale-down;
+            border-radius: 5px;
+            filter: drop-shadow(4px 4px 4px rgba(0, 0, 0, 0.4));
+            margin-bottom: 16px;
+        }
+        }
+
         
     </style>
 </head>
